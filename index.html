@@ -1057,45 +1057,39 @@ document.addEventListener(
 
     const paginas = obtenerPaginas();
 
-    const navegacion =
-        document.querySelector(".navigation");
+   function construirNavegacion() {
+
+    const paginas = obtenerPaginas();
+    const navegacion = document.querySelector(".navigation");
 
     if (!navegacion) return;
 
     navegacion.innerHTML = "";
 
-    paginas.forEach((pagina, indice) => {
+    paginas.forEach(function(pagina, indice) {
 
         const boton = document.createElement("button");
 
-        boton.onclick = function() {
+        boton.type = "button";
+
+        boton.addEventListener("click", function() {
             irPagina(indice);
-        };
+        });
 
         let icono = "📄";
 
         if (pagina.id === "contador") icono = "📊";
-        if (pagina.id === "muestreo") icono = "🧪";
-        if (pagina.id === "presas") icono = "🏞️";
-        if (pagina.id === "captaciones") icono = "💧";
-        if (pagina.id === "ajustes") icono = "⚙️";
+        else if (pagina.id === "muestreo") icono = "🧪";
+        else if (pagina.id === "presas") icono = "🏞️";
+        else if (pagina.id === "captaciones") icono = "💧";
+        else if (pagina.id === "ajustes") icono = "⚙️";
 
-        boton.innerHTML = `
-            ${icono}
-            <span>${pagina.nombre}</span>
-        `;
+        boton.innerHTML =
+            icono + "<span>" + pagina.nombre + "</span>";
 
         navegacion.appendChild(boton);
     });
-} function 
-    iniciarGestorPaginas() {
-
-    mostrarListaPaginas();
-
-    construirInterfazPaginas();
-
-    construirNavegacion();
-}
+} 
 );</script>
 
 </body>
