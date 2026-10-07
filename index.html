@@ -990,37 +990,38 @@ document.addEventListener(
   function construirInterfazPaginas() {
 
     const paginas = obtenerPaginas();
-
     const contenedor = document.getElementById("pages");
 
     if (!contenedor) return;
 
-    // Conservamos las páginas que ya tienen formularios
-    const paginasFijas = {
-        contador: document.querySelector('[data-pagina="contador"]'),
-        muestreo: document.querySelector('[data-pagina="muestreo"]'),
-        presas: document.querySelector('[data-pagina="presas"]'),
-        captaciones: document.querySelector('[data-pagina="captaciones"]'),
-        ajustes: document.querySelector('[data-pagina="ajustes"]')
-    };
+    paginas.forEach(function(pagina) {
 
-    paginas.forEach(pagina => {
-
+        // Las páginas fijas ya existen en el HTML
         if (pagina.fija) return;
 
-        let existente =
-            document.getElementById("page-" + pagina.id);
+        // Comprobar si la página ya está creada
+        let paginaHTML = document.getElementById(
+            "page-" + pagina.id
+        );
 
-        if (!existente) {
+        // Si no existe, crearla
+        if (!paginaHTML) {
 
-            existente = document.createElement("section");
+            paginaHTML = document.createElement("section");
 
-            existente.className = "page";
+            paginaHTML.className = "page";
 
-            existente.id = "page-" + pagina.id;
+            paginaHTML.setAttribute(
+                "data-pagina",
+                pagina.id
+            );
 
-            existente.innerHTML = `
+            paginaHTML.id =
+                "page-" + pagina.id;
+
+            paginaHTML.innerHTML = `
                 <div class="card">
+
                     <h2>📄 ${pagina.nombre}</h2>
 
                     <p>
@@ -1028,19 +1029,29 @@ document.addEventListener(
                     </p>
 
                     <p>
-                        Puedes añadirlos desde
+                        Puedes añadir parámetros desde
                         ⚙️ Ajustes.
                     </p>
+
                 </div>
             `;
 
-            contenedor.insertBefore(
-                existente,
-                paginasFijas.ajustes
-            );
+            contenedor.appendChild(paginaHTML);
+        }
+
+        // Actualizar el nombre por si se ha renombrado
+        const titulo =
+            paginaHTML.querySelector("h2");
+
+        if (titulo) {
+            titulo.textContent =
+                "📄 " + pagina.nombre;
         }
     });
 
+    // Actualizar la navegación
+    construirNavegacion();
+}
     construirNavegacion();
     } function construirNavegacion() {
 
