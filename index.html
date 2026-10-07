@@ -2,261 +2,132 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#1769aa">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b6b53">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg">
 <title>ETAP Control</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f2f5f4;
+ color:#17211e
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #eef2f5;
-  color: #1f2933;
+header{
+ background:#0b6b53;
+ color:white;
+ padding:16px;
+ text-align:center;
+ position:sticky;
+ top:0;
+ z-index:10
 }
-
-header {
-  background: #1769aa;
-  color: white;
-  padding: 16px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+h1{margin:0;font-size:22px}
+h2{margin-top:0}
+main{
+ max-width:750px;
+ margin:auto;
+ padding:15px 15px 85px
 }
-
-header h1 {
-  margin: 0;
-  font-size: 21px;
+.page{display:none}
+.page.active{display:block}
+.card{
+ background:white;
+ border-radius:14px;
+ padding:16px;
+ margin-bottom:15px;
+ box-shadow:0 2px 8px #0002
 }
-
-.app {
-  max-width: 650px;
-  margin: auto;
+label{
+ display:block;
+ font-weight:bold;
+ margin:10px 0 5px
 }
-
-.page {
-  display: none;
-  padding: 15px;
-  padding-bottom: 90px;
+input,select,textarea{
+ width:100%;
+ padding:11px;
+ border:1px solid #ccd5d2;
+ border-radius:9px;
+ font-size:16px;
+ background:white
 }
-
-.page.active {
-  display: block;
+textarea{min-height:90px}
+button{
+ border:0;
+ border-radius:9px;
+ padding:11px 14px;
+ font-weight:bold;
+ font-size:14px
 }
-
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+.primary{background:#0b6b53;color:white}
+.secondary{background:#e5ece9;color:#17352d}
+.danger{background:#c62828;color:white}
+.actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:12px
 }
-
-h2 {
-  margin-top: 0;
-  font-size: 20px;
+.item{
+ border:1px solid #d8e1de;
+ border-radius:10px;
+ padding:12px;
+ margin:8px 0
 }
-
-h3 {
-  margin-bottom: 10px;
+.muted{color:#66736f;font-size:13px}
+nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ background:white;
+ border-top:1px solid #ddd;
+ display:flex;
+ overflow-x:auto;
+ z-index:20
 }
-
-label {
-  display: block;
-  font-weight: bold;
-  margin: 12px 0 6px;
+nav button{
+ flex:0 0 auto;
+ background:white;
+ color:#345;
+ padding:10px 12px;
+ font-size:12px
 }
-
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccd3da;
-  border-radius: 8px;
-  font-size: 16px;
-  background: white;
+nav button.active{color:#0b6b53}
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#0008;
+ z-index:30;
+ padding:20px;
+ overflow:auto
 }
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
+.modal.show{display:block}
+.modalbox{
+ background:white;
+ max-width:600px;
+ margin:30px auto;
+ border-radius:14px;
+ padding:18px
 }
-
-button {
-  border: 0;
-  border-radius: 8px;
-  padding: 12px 16px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+table{
+ width:100%;
+ border-collapse:collapse;
+ font-size:14px
 }
-
-.btn {
-  background: #1769aa;
-  color: white;
-  width: 100%;
-  margin-top: 12px;
+td,th{
+ padding:8px;
+ border-bottom:1px solid #ddd;
+ text-align:left
 }
-
-.btn-secondary {
-  background: #607d8b;
-  color: white;
-}
-
-.btn-danger {
-  background: #c62828;
-  color: white;
-}
-
-.btn-warning {
-  background: #ef8f00;
-  color: white;
-}
-
-.btn-small {
-  padding: 8px 10px;
-  font-size: 13px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.value {
-  font-size: 28px;
-  font-weight: bold;
-  color: #1769aa;
-}
-
-.small {
-  font-size: 13px;
-  color: #65727e;
-}
-
-.item {
-  border: 1px solid #dce2e7;
-  border-radius: 9px;
-  padding: 12px;
-  margin-bottom: 10px;
-}
-
-.item-actions {
-  display: flex;
-  gap: 7px;
-  margin-top: 10px;
-}
-
-.item-actions button {
-  flex: 1;
-}
-
-.parameter-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.parameter-row input {
-  flex: 1;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-top: 1px solid #d5dce1;
-  display: flex;
-  justify-content: space-around;
-  padding: 7px 3px;
-  z-index: 20;
-  max-width: 650px;
-  margin: auto;
-}
-
-.bottom-nav button {
-  background: transparent;
-  color: #52606d;
-  font-size: 12px;
-  padding: 7px 4px;
-}
-
-.bottom-nav button.active {
-  color: #1769aa;
-  font-weight: bold;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-  padding: 15px;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 14px;
-  width: 100%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 18px;
-}
-
-.photo-preview {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-.success {
-  background: #e8f5e9;
-  color: #256029;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-.warning {
-  background: #fff4df;
-  color: #795500;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-.danger-box {
-  background: #ffebee;
-  color: #8b1a1a;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-}
-
-@media (max-width: 430px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+.photo{
+ max-width:100%;
+ max-height:200px;
+ border-radius:8px
 }
 </style>
 </head>
@@ -264,56 +135,34 @@ button {
 <body>
 
 <header>
-  <h1>💧 ETAP Control</h1>
+<h1>ETAP Control</h1>
 </header>
 
-<div class="app">
+<main>
 
 <!-- INICIO -->
 <section id="inicio" class="page active">
 
-  <div class="card">
-    <h2>📊 Control diario</h2>
+<div class="card">
+<h2>Lectura del contador</h2>
 
-    <label for="fecha">Fecha</label>
-    <input type="date" id="fecha">
+<label>Fecha</label>
+<input id="fechaContador" type="date">
 
-    <label for="contador">Lectura del contador (m³)</label>
-    <input type="number" id="contador" step="0.01" min="0"
-           placeholder="Ej.: 1250.50">
+<label>Lectura del contador (m³)</label>
+<input id="lecturaContador" type="number" step="0.01">
 
-    <div class="card" style="margin-top:15px;background:#f4f8fb">
-      <div class="small">Consumo diario</div>
-      <div class="value" id="consumo">—</div>
-      <div class="small">m³</div>
-    </div>
+<div class="actions">
+<button class="primary" onclick="guardarContador()">Guardar</button>
+</div>
 
-    <button class="btn" onclick="guardarLectura()">💾 Guardar</button>
-  </div>
+<p id="consumoActual" class="muted"></p>
+</div>
 
-  <div class="card">
-    <h2>📍 Puntos de muestreo</h2>
-    <div id="puntosResumen"></div>
-    <button class="btn" onclick="mostrarPagina('muestreo')">
-      Registrar muestreo
-    </button>
-  </div>
-
-  <div class="card">
-    <h2>🌊 Captaciones</h2>
-    <div id="captacionesResumen"></div>
-    <button class="btn" onclick="mostrarPagina('captaciones')">
-      Gestionar captaciones
-    </button>
-  </div>
-
-  <div class="card">
-    <h2>🏞️ Presas y embalses</h2>
-    <div id="presasResumen"></div>
-    <button class="btn" onclick="mostrarPagina('presas')">
-      Gestionar presas y embalses
-    </button>
-  </div>
+<div class="card">
+<h2>Resumen</h2>
+<div id="resumen"></div>
+</div>
 
 </section>
 
@@ -321,24 +170,27 @@ button {
 <!-- MUESTREO -->
 <section id="muestreo" class="page">
 
-  <div class="card">
-    <h2>🧪 Puntos de muestreo</h2>
+<div class="card">
 
-    <label>Fecha</label>
-    <input type="date" id="muestraFecha">
+<h2>Muestreo</h2>
 
-    <label>Punto de muestreo</label>
-    <select id="muestraPunto"></select>
+<label>Fecha</label>
+<input id="fechaMuestreo" type="date">
 
-    <div id="parametrosMuestreo"></div>
+<label>Punto de muestreo</label>
+<select id="puntoMuestreo"></select>
 
-    <button class="btn" onclick="guardarMuestreo()">💾 Guardar</button>
-  </div>
+<div id="parametros"></div>
 
-  <div class="card">
-    <h3>Registros recientes</h3>
-    <div id="listaMuestreos"></div>
-  </div>
+<label>Observaciones</label>
+<textarea id="observaciones"></textarea>
+
+<div class="actions">
+<button class="primary" onclick="guardarMuestreo()">Guardar</button>
+<button class="secondary" onclick="cancelarMuestreo()">Cancelar</button>
+</div>
+
+</div>
 
 </section>
 
@@ -346,18 +198,16 @@ button {
 <!-- CAPTACIONES -->
 <section id="captaciones" class="page">
 
-  <div class="card">
-    <h2>🌊 Captaciones</h2>
+<div class="card">
+<h2>Captaciones</h2>
 
-    <label>Nombre de la captación</label>
-    <input id="nuevaCaptacion" placeholder="Ej.: Captación Río Tiétar">
+<div id="captacionesLista"></div>
 
-    <button class="btn" onclick="agregarCaptacion()">
-      ➕ Añadir captación
-    </button>
+<button class="primary" onclick="nuevaCaptacion()">
+Añadir captación
+</button>
 
-    <div id="listaCaptaciones" style="margin-top:15px"></div>
-  </div>
+</div>
 
 </section>
 
@@ -365,18 +215,16 @@ button {
 <!-- PRESAS -->
 <section id="presas" class="page">
 
-  <div class="card">
-    <h2>🏞️ Presas y embalses</h2>
+<div class="card">
+<h2>Presas y embalses</h2>
 
-    <label>Nombre</label>
-    <input id="nuevaPresa" placeholder="Ej.: Embalse de ...">
+<div id="presasLista"></div>
 
-    <button class="btn" onclick="agregarPresa()">
-      ➕ Añadir
-    </button>
+<button class="primary" onclick="nuevaPresa()">
+Añadir presa / embalse
+</button>
 
-    <div id="listaPresas" style="margin-top:15px"></div>
-  </div>
+</div>
 
 </section>
 
@@ -384,28 +232,31 @@ button {
 <!-- INCIDENCIAS -->
 <section id="incidencias" class="page">
 
-  <div class="card">
-    <h2>⚠️ Incidencias</h2>
+<div class="card">
 
-    <label>Fecha</label>
-    <input type="date" id="incFecha">
+<h2>Incidencias</h2>
 
-    <label>Descripción</label>
-    <textarea id="incDescripcion"
-      placeholder="Describe la incidencia..."></textarea>
+<label>Fecha</label>
+<input id="incFecha" type="date">
 
-    <label>Fotografía</label>
-    <input type="file" id="incFoto" accept="image/*">
+<label>Título</label>
+<input id="incTitulo">
 
-    <button class="btn" onclick="guardarIncidencia()">
-      💾 Guardar incidencia
-    </button>
-  </div>
+<label>Descripción</label>
+<textarea id="incDescripcion"></textarea>
 
-  <div class="card">
-    <h3>Historial de incidencias</h3>
-    <div id="listaIncidencias"></div>
-  </div>
+<label>Fotografía</label>
+<input id="incFoto" type="file" accept="image/*" capture="environment">
+
+<button class="primary" onclick="guardarIncidencia()">
+Guardar incidencia
+</button>
+
+</div>
+
+<div class="card">
+<div id="incidenciasLista"></div>
+</div>
 
 </section>
 
@@ -413,15 +264,26 @@ button {
 <!-- HISTORIAL -->
 <section id="historial" class="page">
 
-  <div class="card">
-    <h2>📚 Historial</h2>
+<div class="card">
 
-    <button class="btn-secondary" onclick="exportarCSV()" style="width:100%;margin-bottom:10px">
-      📥 Exportar datos
-    </button>
+<h2>Historial</h2>
 
-    <div id="historialLista"></div>
-  </div>
+<h3>Lecturas del contador</h3>
+<div id="historialContadores"></div>
+
+<h3>Muestreos</h3>
+<div id="historialMuestreos"></div>
+
+<h3>Incidencias</h3>
+<div id="historialIncidencias"></div>
+
+<div class="actions">
+<button class="secondary" onclick="exportarCSV()">
+Exportar datos
+</button>
+</div>
+
+</div>
 
 </section>
 
@@ -429,1668 +291,1397 @@ button {
 <!-- AJUSTES -->
 <section id="ajustes" class="page">
 
-  <div class="card">
-    <h2>⚙️ Ajustes</h2>
+<div class="card">
 
-    <p class="small">
-      Desde aquí puedes modificar los parámetros utilizados por la
-      aplicación. Los cambios quedan guardados en el dispositivo.
-    </p>
-  </div>
+<h2>Ajustes</h2>
 
-  <div class="card">
-    <h3>🧪 Parámetros de muestreo</h3>
+<h3>Parámetros</h3>
+<div id="ajustesParametros"></div>
 
-    <div id="configParametros"></div>
+<button class="primary" onclick="nuevoParametro()">
+Añadir parámetro
+</button>
 
-    <button class="btn" onclick="agregarParametro()">
-      ➕ Añadir parámetro
-    </button>
+<h3>Puntos de muestreo</h3>
+<div id="ajustesPuntos"></div>
 
-    <button class="btn" onclick="guardarParametros()">
-      💾 Guardar parámetros
-    </button>
-  </div>
+<button class="primary" onclick="nuevoPunto()">
+Añadir punto
+</button>
 
-  <div class="card">
-    <h3>📍 Puntos de muestreo</h3>
+<h3>Captaciones</h3>
+<div id="ajustesCaptaciones"></div>
 
-    <div id="configPuntos"></div>
-
-    <button class="btn" onclick="agregarPuntoConfiguracion()">
-      ➕ Añadir punto
-    </button>
-
-    <button class="btn" onclick="guardarPuntos()">
-      💾 Guardar puntos
-    </button>
-  </div>
-
-  <div class="card">
-    <h3>🌊 Captaciones</h3>
-
-    <div id="configCaptaciones"></div>
-
-    <button class="btn" onclick="guardarCaptaciones()">
-      💾 Guardar captaciones
-    </button>
-  </div>
-
-  <div class="card">
-    <h3>🏞️ Presas y embalses</h3>
-
-    <div id="configPresas"></div>
-
-    <button class="btn" onclick="guardarPresas()">
-      💾 Guardar presas y embalses
-    </button>
-  </div>
-
-  <div class="card">
-    <h3>🗑️ Datos</h3>
-
-    <button class="btn btn-danger" onclick="borrarTodosLosDatos()">
-      Borrar todos los datos
-    </button>
-  </div>
-
-</section>
+<h3>Presas y embalses</h3>
+<div id="ajustesPresas"></div>
 
 </div>
 
+</section>
 
-<!-- NAVEGACIÓN -->
-<nav class="bottom-nav">
-
-  <button onclick="mostrarPagina('inicio')" id="nav-inicio">
-    🏠<br>Inicio
-  </button>
-
-  <button onclick="mostrarPagina('muestreo')" id="nav-muestreo">
-    🧪<br>Muestreo
-  </button>
-
-  <button onclick="mostrarPagina('incidencias')" id="nav-incidencias">
-    ⚠️<br>Incidencias
-  </button>
-
-  <button onclick="mostrarPagina('historial')" id="nav-historial">
-    📚<br>Historial
-  </button>
-
-  <button onclick="mostrarPagina('ajustes')" id="nav-ajustes">
-    ⚙️<br>Ajustes
-  </button>
-
-</nav>
+</main>
 
 
-<!-- MODAL EDICIÓN -->
-<div class="modal" id="modalEdicion">
+<nav id="menu"></nav>
 
-  <div class="modal-content">
 
-    <h2>✏️ Modificar registro</h2>
+<!-- MODAL -->
+<div id="modal" class="modal">
 
-    <input type="hidden" id="editId">
+<div class="modalbox">
 
-    <label>Fecha</label>
-    <input type="date" id="editFecha">
+<div id="modalContenido"></div>
 
-    <label>Lectura del contador (m³)</label>
-    <input type="number" id="editContador" step="0.01">
+<div class="actions">
+<button class="secondary" onclick="cerrarModal()">
+Cerrar
+</button>
+</div>
 
-    <div id="editParametros"></div>
-
-    <button class="btn" onclick="guardarEdicion()">
-      💾 Guardar cambios
-    </button>
-
-    <button class="btn btn-secondary" onclick="cerrarModal()">
-      Cancelar
-    </button>
-
-  </div>
+</div>
 
 </div>
 
 
 <script>
 
-const CONFIG_KEY = "etap_config_v3";
-const LECTURAS_KEY = "etap_lecturas_v3";
-const MUESTREOS_KEY = "etap_muestreos_v3";
-const INCIDENCIAS_KEY = "etap_incidencias_v3";
+const KEY="ETAP_CONTROL_DATOS";
 
-const configuracionInicial = {
-  parametros: [
-    {id:"cloro", nombre:"Cloro libre", unidad:"mg/L"},
-    {id:"ph", nombre:"pH", unidad:""},
-    {id:"turbidez", nombre:"Turbidez", unidad:"NTU"}
-  ],
-
-  puntos: [
-    "Entrada ETAP",
-    "Depósito Distribución 2"
-  ],
-
-  captaciones: [],
-
-  presas: []
+const CONFIG_DEFAULT={
+ parametros:[
+  {id:"cloro",nombre:"Cloro libre",unidad:"mg/L"},
+  {id:"ph",nombre:"pH",unidad:""},
+  {id:"turbidez",nombre:"Turbidez",unidad:"NTU"}
+ ],
+ puntos:[
+  {id:"entrada",nombre:"Entrada ETAP"},
+  {id:"deposito2",nombre:"Depósito Distribución 2"}
+ ],
+ captaciones:[],
+ presas:[]
 };
 
+let datos={
+ config:JSON.parse(JSON.stringify(CONFIG_DEFAULT)),
+ contadores:[],
+ muestreos:[],
+ incidencias:[]
+};
 
-function cargarConfig() {
+let editandoMuestreo=null;
+let editandoIncidencia=null;
 
-  const guardada = localStorage.getItem(CONFIG_KEY);
 
-  if (!guardada) {
-    localStorage.setItem(
-      CONFIG_KEY,
-      JSON.stringify(configuracionInicial)
-    );
+function cargar(){
 
-    return structuredClone(configuracionInicial);
+ try{
+
+  const guardado=localStorage.getItem(KEY);
+
+  if(guardado){
+
+   const d=JSON.parse(guardado);
+
+   datos=d;
+
+   datos.config=datos.config||JSON.parse(JSON.stringify(CONFIG_DEFAULT));
+
   }
 
-  try {
-    return JSON.parse(guardada);
-  } catch(e) {
-    localStorage.setItem(
-      CONFIG_KEY,
-      JSON.stringify(configuracionInicial)
-    );
-
-    return structuredClone(configuracionInicial);
-  }
-}
-
-
-let config = cargarConfig();
-
-
-function datos(key) {
-
-  try {
-    return JSON.parse(localStorage.getItem(key)) || [];
-  } catch(e) {
-    return [];
-  }
+ }catch(e){}
 
 }
 
 
-function guardarDatos(key, datos) {
-  localStorage.setItem(key, JSON.stringify(datos));
+function guardar(){
+
+ localStorage.setItem(KEY,JSON.stringify(datos));
+
 }
 
 
-function nuevoId() {
-  return Date.now().toString() + Math.random()
-    .toString(36).substring(2,8);
+function id(){
+
+ return Date.now().toString(36)+Math.random().toString(36).substring(2);
+
 }
 
 
-/* ---------------- NAVEGACIÓN ---------------- */
+function hoy(){
 
-function mostrarPagina(id) {
+ return new Date().toISOString().substring(0,10);
 
-  document.querySelectorAll(".page").forEach(p => {
-    p.classList.remove("active");
+}
+
+
+function escapar(x){
+
+ return String(x??"")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;");
+
+}
+
+
+/* NAVEGACIÓN */
+
+function construirMenu(){
+
+ const paginas=[
+  ["inicio","Inicio"],
+  ["muestreo","Muestreo"],
+  ["captaciones","Captaciones"],
+  ["presas","Presas"],
+  ["incidencias","Incidencias"],
+  ["historial","Historial"],
+  ["ajustes","Ajustes"]
+ ];
+
+ menu.innerHTML=paginas.map(p=>
+ `<button data-page="${p[0]}" onclick="pagina('${p[0]}')">${p[1]}</button>`
+ ).join("");
+
+}
+
+
+function pagina(nombre){
+
+ document.querySelectorAll(".page")
+ .forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(nombre)
+ .classList.add("active");
+
+ document.querySelectorAll("#menu button")
+ .forEach(x=>x.classList.toggle(
+  "active",
+  x.dataset.page===nombre
+ ));
+
+ actualizarTodo();
+
+}
+
+
+/* CONTADOR */
+
+function guardarContador(){
+
+ const fecha=fechaContador.value;
+ const lectura=parseFloat(lecturaContador.value);
+
+ if(!fecha || isNaN(lectura)){
+
+  alert("Introduce la fecha y la lectura.");
+
+  return;
+
+ }
+
+ const existente=datos.contadores.find(x=>x.fecha===fecha);
+
+ if(existente){
+
+  existente.lectura=lectura;
+
+ }else{
+
+  datos.contadores.push({
+   id:id(),
+   fecha:fecha,
+   lectura:lectura
   });
 
-  const pagina = document.getElementById(id);
+ }
 
-  if (pagina) {
-    pagina.classList.add("active");
-  }
+ datos.contadores.sort((a,b)=>a.fecha.localeCompare(b.fecha));
 
-  document.querySelectorAll(".bottom-nav button")
-    .forEach(b => b.classList.remove("active"));
+ guardar();
 
-  const boton = document.getElementById("nav-" + id);
+ lecturaContador.value="";
 
-  if (boton) {
-    boton.classList.add("active");
-  }
+ actualizarTodo();
 
-  if (id === "historial") {
-    renderHistorial();
-  }
+ alert("Lectura guardada.");
 
-  if (id === "muestreo") {
-    renderMuestreo();
-  }
-
-  if (id === "ajustes") {
-    renderAjustes();
-  }
-
-  window.scrollTo(0,0);
 }
 
 
-/* ---------------- FECHAS ---------------- */
+function calcularConsumo(){
 
-function fechaHoy() {
+ const lista=[...datos.contadores]
+ .sort((a,b)=>a.fecha.localeCompare(b.fecha));
 
-  const d = new Date();
+ if(lista.length<2)return null;
 
-  const mes = String(d.getMonth()+1).padStart(2,"0");
-  const dia = String(d.getDate()).padStart(2,"0");
+ return lista[lista.length-1].lectura-
+        lista[lista.length-2].lectura;
 
-  return d.getFullYear() + "-" + mes + "-" + dia;
 }
 
 
-document.getElementById("fecha").value = fechaHoy();
-document.getElementById("muestraFecha").value = fechaHoy();
-document.getElementById("incFecha").value = fechaHoy();
+function renderInicio(){
 
+ fechaContador.value=fechaContador.value||hoy();
 
-/* ---------------- CONTADOR ---------------- */
+ const consumo=calcularConsumo();
 
-document.getElementById("contador").addEventListener(
-  "input",
-  calcularConsumo
-);
+ consumoActual.textContent=
+ consumo===null
+ ?"Consumo diario: —"
+ :"Consumo diario: "+consumo.toFixed(2)+" m³";
 
+ const lista=[...datos.contadores]
+ .sort((a,b)=>b.fecha.localeCompare(a.fecha));
 
-function calcularConsumo() {
+ if(!lista.length){
 
-  const actual = parseFloat(
-    document.getElementById("contador").value
-  );
+  resumen.innerHTML="<p class='muted'>No hay lecturas.</p>";
 
-  if (isNaN(actual)) {
-    document.getElementById("consumo").textContent = "—";
-    return;
-  }
+  return;
 
-  const lecturas = datos(LECTURAS_KEY)
-    .sort((a,b) => b.fecha.localeCompare(a.fecha));
+ }
 
-  if (!lecturas.length) {
-    document.getElementById("consumo").textContent = "—";
-    return;
-  }
+ const x=lista[0];
 
-  const anterior = parseFloat(lecturas[0].contador);
+ resumen.innerHTML=
+ `<p><b>Última lectura:</b> ${escapar(x.lectura)} m³</p>
+  <p><b>Fecha:</b> ${escapar(x.fecha)}</p>`;
 
-  if (isNaN(anterior)) {
-    document.getElementById("consumo").textContent = "—";
-    return;
-  }
-
-  const consumo = actual - anterior;
-
-  document.getElementById("consumo").textContent =
-    consumo >= 0 ? consumo.toFixed(2) : "0.00";
 }
 
 
-function guardarLectura() {
+/* MUESTREO */
 
-  const fecha = document.getElementById("fecha").value;
-  const contador = parseFloat(
-    document.getElementById("contador").value
-  );
+function renderMuestreo(){
 
-  if (!fecha || isNaN(contador)) {
-    alert("Introduce la fecha y la lectura del contador.");
-    return;
+ fechaMuestreo.value=fechaMuestreo.value||hoy();
+
+ puntoMuestreo.innerHTML=
+ datos.config.puntos.map(p=>
+ `<option value="${escapar(p.id)}">${escapar(p.nombre)}</option>`
+ ).join("");
+
+ parametros.innerHTML=
+ datos.config.parametros.map(p=>
+
+ `<label>
+ ${escapar(p.nombre)}
+ ${p.unidad?"("+escapar(p.unidad)+")":""}
+ </label>
+ <input class="valorParametro"
+ data-id="${escapar(p.id)}">`
+
+ ).join("");
+
+ if(editandoMuestreo){
+
+  const m=datos.muestreos.find(x=>x.id===editandoMuestreo);
+
+  if(m){
+
+   fechaMuestreo.value=m.fecha;
+   puntoMuestreo.value=m.punto;
+
+   observaciones.value=m.observaciones||"";
+
+   document.querySelectorAll(".valorParametro")
+   .forEach(i=>{
+
+    i.value=m.valores?.[i.dataset.id]||"";
+
+   });
+
   }
 
-  let lecturas = datos(LECTURAS_KEY);
+ }
 
-  const existente = lecturas.findIndex(
-    x => x.fecha === fecha
+}
+
+
+function guardarMuestreo(){
+
+ if(!fechaMuestreo.value){
+
+  alert("Introduce la fecha.");
+
+  return;
+
+ }
+
+ const valores={};
+
+ document.querySelectorAll(".valorParametro")
+ .forEach(i=>{
+  valores[i.dataset.id]=i.value;
+ });
+
+ if(editandoMuestreo){
+
+  const m=datos.muestreos.find(
+   x=>x.id===editandoMuestreo
   );
 
-  const registro = {
-    id: existente >= 0 ? lecturas[existente].id : nuevoId(),
-    fecha,
-    contador
+  if(m){
+
+   m.fecha=fechaMuestreo.value;
+   m.punto=puntoMuestreo.value;
+   m.valores=valores;
+   m.observaciones=observaciones.value;
+
+  }
+
+ }else{
+
+  datos.muestreos.push({
+
+   id:id(),
+   fecha:fechaMuestreo.value,
+   punto:puntoMuestreo.value,
+   valores:valores,
+   observaciones:observaciones.value
+
+  });
+
+ }
+
+ editandoMuestreo=null;
+
+ guardar();
+
+ actualizarTodo();
+
+ alert("Muestreo guardado.");
+
+}
+
+
+function cancelarMuestreo(){
+
+ editandoMuestreo=null;
+
+ observaciones.value="";
+
+ renderMuestreo();
+
+}
+
+
+/* CAPTACIONES */
+
+function renderCaptaciones(){
+
+ if(!datos.config.captaciones.length){
+
+  captacionesLista.innerHTML=
+  "<p class='muted'>No hay captaciones.</p>";
+
+  return;
+
+ }
+
+ captacionesLista.innerHTML=
+ datos.config.captaciones.map(x=>
+
+ `<div class="item">
+ <b>${escapar(x.nombre)}</b>
+ <div class="actions">
+
+ <button class="secondary"
+ onclick="editarCaptacion('${x.id}')">
+ Modificar
+ </button>
+
+ <button class="danger"
+ onclick="borrarCaptacion('${x.id}')">
+ Borrar
+ </button>
+
+ </div>
+ </div>`
+
+ ).join("");
+
+}
+
+
+function nuevaCaptacion(){
+
+ abrirNombre("captacion","");
+
+}
+
+
+function editarCaptacion(id){
+
+ abrirNombre("captacion",id);
+
+}
+
+
+function abrirNombre(tipo,idEditar){
+
+ let lista=tipo==="captacion"
+ ?datos.config.captaciones
+ :datos.config.presas;
+
+ let x=idEditar
+ ?lista.find(a=>a.id===idEditar)
+ :null;
+
+ modalContenido.innerHTML=
+
+ `<h2>${idEditar?"Modificar":"Añadir"}
+ ${tipo==="captacion"?"captación":"presa / embalse"}</h2>
+
+ <label>Nombre</label>
+ <input id="nombreModal"
+ value="${escapar(x?.nombre||"")}">
+
+ <div class="actions">
+
+ <button class="primary"
+ onclick="guardarNombre('${tipo}','${idEditar}')">
+ Guardar
+ </button>
+
+ </div>`;
+
+ modal.classList.add("show");
+
+}
+
+
+function guardarNombre(tipo,idEditar){
+
+ const nombre=nombreModal.value.trim();
+
+ if(!nombre){
+
+  alert("Introduce un nombre.");
+
+  return;
+
+ }
+
+ let lista=tipo==="captacion"
+ ?datos.config.captaciones
+ :datos.config.presas;
+
+ if(idEditar){
+
+  const x=lista.find(a=>a.id===idEditar);
+
+  if(x)x.nombre=nombre;
+
+ }else{
+
+  lista.push({
+   id:id(),
+   nombre:nombre
+  });
+
+ }
+
+ guardar();
+
+ cerrarModal();
+
+ actualizarTodo();
+
+}
+
+
+function borrarCaptacion(id){
+
+ if(!confirm("¿Borrar esta captación?"))return;
+
+ datos.config.captaciones=
+ datos.config.captaciones.filter(x=>x.id!==id);
+
+ guardar();
+
+ actualizarTodo();
+
+}
+
+
+/* PRESAS */
+
+function renderPresas(){
+
+ if(!datos.config.presas.length){
+
+  presasLista.innerHTML=
+  "<p class='muted'>No hay presas o embalses.</p>";
+
+  return;
+
+ }
+
+ presasLista.innerHTML=
+ datos.config.presas.map(x=>
+
+ `<div class="item">
+ <b>${escapar(x.nombre)}</b>
+
+ <div class="actions">
+
+ <button class="secondary"
+ onclick="editarPresa('${x.id}')">
+ Modificar
+ </button>
+
+ <button class="danger"
+ onclick="borrarPresa('${x.id}')">
+ Borrar
+ </button>
+
+ </div>
+
+ </div>`
+
+ ).join("");
+
+}
+
+
+function nuevaPresa(){
+
+ abrirNombre("presa","");
+
+}
+
+
+function editarPresa(id){
+
+ abrirNombre("presa",id);
+
+}
+
+
+function borrarPresa(id){
+
+ if(!confirm("¿Borrar esta presa o embalse?"))return;
+
+ datos.config.presas=
+ datos.config.presas.filter(x=>x.id!==id);
+
+ guardar();
+
+ actualizarTodo();
+
+}
+
+
+/* INCIDENCIAS */
+
+function guardarIncidencia(){
+
+ const titulo=incTitulo.value.trim();
+
+ if(!titulo){
+
+  alert("Introduce un título.");
+
+  return;
+
+ }
+
+ const archivo=incFoto.files[0];
+
+ const registro={
+
+  id:editandoIncidencia||id(),
+  fecha:incFecha.value||hoy(),
+  titulo:titulo,
+  descripcion:incDescripcion.value,
+  foto:""
+
+ };
+
+ if(editandoIncidencia){
+
+  const anterior=
+  datos.incidencias.find(x=>x.id===editandoIncidencia);
+
+  if(anterior)registro.foto=anterior.foto||"";
+
+ }
+
+ function terminar(){
+
+  if(editandoIncidencia){
+
+   const pos=datos.incidencias.findIndex(
+    x=>x.id===editandoIncidencia
+   );
+
+   if(pos>=0)
+   datos.incidencias[pos]=registro;
+
+  }else{
+
+   datos.incidencias.push(registro);
+
+  }
+
+  editandoIncidencia=null;
+
+  guardar();
+
+  actualizarTodo();
+
+  alert("Incidencia guardada.");
+
+ }
+
+ if(archivo){
+
+  const lector=new FileReader();
+
+  lector.onload=()=>{
+
+   registro.foto=lector.result;
+
+   terminar();
+
   };
 
-  if (existente >= 0) {
-    lecturas[existente] = registro;
-  } else {
-    lecturas.push(registro);
-  }
+  lector.readAsDataURL(archivo);
 
-  guardarDatos(LECTURAS_KEY, lecturas);
+ }else{
 
-  calcularConsumo();
+  terminar();
 
-  alert("Lectura guardada correctamente.");
-
-  renderHistorial();
-  renderInicio();
-}
-
-
-/* ---------------- MUESTREO ---------------- */
-
-function renderMuestreo() {
-
-  const select = document.getElementById("muestraPunto");
-
-  select.innerHTML = "";
-
-  config.puntos.forEach((p,i) => {
-
-    const option = document.createElement("option");
-
-    option.value = p;
-    option.textContent = p;
-
-    select.appendChild(option);
-
-  });
-
-  const contenedor =
-    document.getElementById("parametrosMuestreo");
-
-  contenedor.innerHTML = "";
-
-  config.parametros.forEach(param => {
-
-    const label = document.createElement("label");
-
-    label.textContent =
-      param.nombre +
-      (param.unidad ? " (" + param.unidad + ")" : "");
-
-    const input = document.createElement("input");
-
-    input.type = "number";
-    input.step = "any";
-    input.id = "param_" + param.id;
-
-    contenedor.appendChild(label);
-    contenedor.appendChild(input);
-
-  });
-
-  renderListaMuestreos();
-}
-
-
-function guardarMuestreo() {
-
-  const fecha =
-    document.getElementById("muestraFecha").value;
-
-  const punto =
-    document.getElementById("muestraPunto").value;
-
-  if (!fecha || !punto) {
-    alert("Completa la fecha y el punto de muestreo.");
-    return;
-  }
-
-  const valores = {};
-
-  config.parametros.forEach(param => {
-
-    const input =
-      document.getElementById("param_" + param.id);
-
-    valores[param.id] = input ? input.value : "";
-
-  });
-
-  let registros = datos(MUESTREOS_KEY);
-
-  registros.push({
-    id: nuevoId(),
-    fecha,
-    punto,
-    valores
-  });
-
-  guardarDatos(MUESTREOS_KEY, registros);
-
-  config.parametros.forEach(param => {
-    const input =
-      document.getElementById("param_" + param.id);
-
-    if (input) input.value = "";
-  });
-
-  alert("Muestreo guardado correctamente.");
-
-  renderListaMuestreos();
-}
-
-
-function renderListaMuestreos() {
-
-  const contenedor =
-    document.getElementById("listaMuestreos");
-
-  const registros = datos(MUESTREOS_KEY)
-    .sort((a,b) => b.fecha.localeCompare(a.fecha));
-
-  if (!registros.length) {
-    contenedor.innerHTML =
-      '<p class="small">No hay registros.</p>';
-    return;
-  }
-
-  contenedor.innerHTML = "";
-
-  registros.slice(0,20).forEach(r => {
-
-    const div = document.createElement("div");
-
-    div.className = "item";
-
-    let html =
-      "<strong>" + escapar(r.fecha) + "</strong><br>" +
-      escapar(r.punto);
-
-    config.parametros.forEach(p => {
-
-      const valor =
-        r.valores && r.valores[p.id] !== undefined
-        ? r.valores[p.id]
-        : "";
-
-      html +=
-        "<br>" +
-        escapar(p.nombre) +
-        ": " +
-        escapar(valor) +
-        (p.unidad ? " " + escapar(p.unidad) : "");
-
-    });
-
-    html +=
-      '<div class="item-actions">' +
-      '<button class="btn-warning btn-small" onclick="editarMuestreo(\'' +
-      r.id +
-      '\')">✏️ Modificar</button>' +
-      '<button class="btn-danger btn-small" onclick="borrarMuestreo(\'' +
-      r.id +
-      '\')">🗑️ Borrar</button>' +
-      "</div>";
-
-    div.innerHTML = html;
-
-    contenedor.appendChild(div);
-
-  });
+ }
 
 }
 
 
-function editarMuestreo(id) {
+function renderIncidencias(){
 
-  const registros = datos(MUESTREOS_KEY);
+ if(!datos.incidencias.length){
 
-  const r = registros.find(x => x.id === id);
+  incidenciasLista.innerHTML=
+  "<p class='muted'>No hay incidencias.</p>";
 
-  if (!r) return;
+  return;
 
-  document.getElementById("muestraFecha").value = r.fecha;
+ }
 
-  const select =
-    document.getElementById("muestraPunto");
+ incidenciasLista.innerHTML=
+ datos.incidencias.slice().reverse().map(x=>
 
-  select.value = r.punto;
+ `<div class="item">
 
-  config.parametros.forEach(p => {
+ <b>${escapar(x.fecha)}</b>
+ <h3>${escapar(x.titulo)}</h3>
+ <p>${escapar(x.descripcion)}</p>
 
-    const input =
-      document.getElementById("param_" + p.id);
+ ${x.foto?
+ `<img class="photo" src="${x.foto}">`
+ :""
+ }
 
-    if (input) {
-      input.value =
-        r.valores && r.valores[p.id] !== undefined
-        ? r.valores[p.id]
-        : "";
-    }
+ <div class="actions">
 
-  });
+ <button class="secondary"
+ onclick="editarIncidencia('${x.id}')">
+ Modificar
+ </button>
 
-  r._editando = true;
+ <button class="danger"
+ onclick="borrarIncidencia('${x.id}')">
+ Borrar
+ </button>
 
-  localStorage.setItem(
-    "etap_muestreo_editando",
-    id
-  );
+ </div>
 
-  mostrarPagina("muestreo");
+ </div>`
 
-  window.scrollTo(0,0);
-}
-
-
-function borrarMuestreo(id) {
-
-  if (!confirm("¿Quieres borrar este registro de muestreo?")) {
-    return;
-  }
-
-  let registros = datos(MUESTREOS_KEY);
-
-  registros =
-    registros.filter(x => x.id !== id);
-
-  guardarDatos(MUESTREOS_KEY, registros);
-
-  renderListaMuestreos();
-}
-
-
-/* ---------------- CAPTACIONES ---------------- */
-
-function agregarCaptacion() {
-
-  const input =
-    document.getElementById("nuevaCaptacion");
-
-  const nombre = input.value.trim();
-
-  if (!nombre) {
-    alert("Introduce el nombre de la captación.");
-    return;
-  }
-
-  config.captaciones.push(nombre);
-
-  guardarConfig();
-
-  input.value = "";
-
-  renderCaptaciones();
-  renderAjustes();
-}
-
-
-function renderCaptaciones() {
-
-  const contenedor =
-    document.getElementById("listaCaptaciones");
-
-  contenedor.innerHTML = "";
-
-  config.captaciones.forEach((nombre,index) => {
-
-    const div = document.createElement("div");
-
-    div.className = "item";
-
-    div.innerHTML =
-      "<strong>" + escapar(nombre) + "</strong>" +
-      '<div class="item-actions">' +
-      '<button class="btn-warning btn-small" onclick="editarCaptacion(' +
-      index + ')">✏️ Modificar</button>' +
-      '<button class="btn-danger btn-small" onclick="borrarCaptacion(' +
-      index + ')">🗑️ Borrar</button>' +
-      "</div>";
-
-    contenedor.appendChild(div);
-
-  });
+ ).join("");
 
 }
 
 
-function editarCaptacion(index) {
+function editarIncidencia(id){
 
-  const nuevo =
-    prompt(
-      "Modificar captación:",
-      config.captaciones[index]
-    );
+ const x=datos.incidencias.find(a=>a.id===id);
 
-  if (nuevo === null) return;
+ if(!x)return;
 
-  if (!nuevo.trim()) return;
+ editandoIncidencia=id;
 
-  config.captaciones[index] = nuevo.trim();
+ incFecha.value=x.fecha;
+ incTitulo.value=x.titulo;
+ incDescripcion.value=x.descripcion;
 
-  guardarConfig();
-  renderCaptaciones();
-  renderAjustes();
-}
-
-
-function borrarCaptacion(index) {
-
-  if (!confirm("¿Borrar esta captación?")) return;
-
-  config.captaciones.splice(index,1);
-
-  guardarConfig();
-  renderCaptaciones();
-  renderAjustes();
-}
-
-
-/* ---------------- PRESAS ---------------- */
-
-function agregarPresa() {
-
-  const input =
-    document.getElementById("nuevaPresa");
-
-  const nombre = input.value.trim();
-
-  if (!nombre) {
-    alert("Introduce el nombre.");
-    return;
-  }
-
-  config.presas.push(nombre);
-
-  guardarConfig();
-
-  input.value = "";
-
-  renderPresas();
-  renderAjustes();
-}
-
-
-function renderPresas() {
-
-  const contenedor =
-    document.getElementById("listaPresas");
-
-  contenedor.innerHTML = "";
-
-  config.presas.forEach((nombre,index) => {
-
-    const div = document.createElement("div");
-
-    div.className = "item";
-
-    div.innerHTML =
-      "<strong>" + escapar(nombre) + "</strong>" +
-      '<div class="item-actions">' +
-      '<button class="btn-warning btn-small" onclick="editarPresa(' +
-      index + ')">✏️ Modificar</button>' +
-      '<button class="btn-danger btn-small" onclick="borrarPresa(' +
-      index + ')">🗑️ Borrar</button>' +
-      "</div>";
-
-    contenedor.appendChild(div);
-
-  });
+ pagina("incidencias");
 
 }
 
 
-function editarPresa(index) {
+function borrarIncidencia(id){
 
-  const nuevo =
-    prompt(
-      "Modificar presa o embalse:",
-      config.presas[index]
-    );
+ if(!confirm("¿Borrar esta incidencia?"))return;
 
-  if (nuevo === null) return;
+ datos.incidencias=
+ datos.incidencias.filter(x=>x.id!==id);
 
-  if (!nuevo.trim()) return;
+ guardar();
 
-  config.presas[index] = nuevo.trim();
-
-  guardarConfig();
-  renderPresas();
-  renderAjustes();
-}
-
-
-function borrarPresa(index) {
-
-  if (!confirm("¿Borrar esta presa o embalse?")) return;
-
-  config.presas.splice(index,1);
-
-  guardarConfig();
-  renderPresas();
-  renderAjustes();
-}
-
-
-/* ---------------- INCIDENCIAS ---------------- */
-
-function guardarIncidencia() {
-
-  const fecha =
-    document.getElementById("incFecha").value;
-
-  const descripcion =
-    document.getElementById("incDescripcion").value.trim();
-
-  const archivo =
-    document.getElementById("incFoto").files[0];
-
-  if (!fecha || !descripcion) {
-    alert("Introduce fecha y descripción.");
-    return;
-  }
-
-  if (archivo) {
-
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-
-      guardarIncidenciaDatos(
-        fecha,
-        descripcion,
-        e.target.result
-      );
-
-    };
-
-    reader.readAsDataURL(archivo);
-
-  } else {
-
-    guardarIncidenciaDatos(
-      fecha,
-      descripcion,
-      ""
-    );
-
-  }
+ actualizarTodo();
 
 }
 
 
-function guardarIncidenciaDatos(
-  fecha,
-  descripcion,
-  foto
-) {
+/* HISTORIAL */
 
-  const registros = datos(INCIDENCIAS_KEY);
+function renderHistorial(){
 
-  registros.push({
-    id: nuevoId(),
-    fecha,
-    descripcion,
-    foto
-  });
+ historialContadores.innerHTML=
+ datos.contadores.length?
 
-  guardarDatos(INCIDENCIAS_KEY, registros);
+ `<table>
+ <tr>
+ <th>Fecha</th>
+ <th>m³</th>
+ <th>Acciones</th>
+ </tr>
 
-  document.getElementById("incDescripcion").value = "";
-  document.getElementById("incFoto").value = "";
+ ${datos.contadores
+ .slice()
+ .sort((a,b)=>b.fecha.localeCompare(a.fecha))
+ .map(x=>
 
-  alert("Incidencia guardada correctamente.");
+ `<tr>
 
-  renderIncidencias();
+ <td>${escapar(x.fecha)}</td>
+
+ <td>${escapar(x.lectura)}</td>
+
+ <td>
+
+ <button class="secondary"
+ onclick="editarContador('${x.id}')">
+ Modificar
+ </button>
+
+ <button class="danger"
+ onclick="borrarContador('${x.id}')">
+ Borrar
+ </button>
+
+ </td>
+
+ </tr>`
+
+ ).join("")}
+
+ </table>`
+
+ :"Sin lecturas.";
+
+
+ historialMuestreos.innerHTML=
+ datos.muestreos.length?
+
+ datos.muestreos.slice().reverse().map(x=>{
+
+  const punto=
+  datos.config.puntos.find(p=>p.id===x.punto)?.nombre
+  ||"Punto eliminado";
+
+  const valores=
+  Object.entries(x.valores||{}).map(([id,v])=>{
+
+   const p=
+   datos.config.parametros.find(a=>a.id===id);
+
+   return p?
+   `${escapar(p.nombre)}: ${escapar(v)} ${escapar(p.unidad)}`
+   :"";
+
+  }).filter(Boolean).join(" · ");
+
+  return`
+
+  <div class="item">
+
+  <b>${escapar(x.fecha)} — ${escapar(punto)}</b>
+
+  <p>${valores}</p>
+
+  <p>${escapar(x.observaciones||"")}</p>
+
+  <div class="actions">
+
+  <button class="secondary"
+  onclick="editarMuestreo('${x.id}')">
+  Modificar
+  </button>
+
+  <button class="danger"
+  onclick="borrarMuestreo('${x.id}')">
+  Borrar
+  </button>
+
+  </div>
+
+  </div>`;
+
+ }).join("")
+
+ :"Sin muestreos.";
+
+
+ historialIncidencias.innerHTML=
+ datos.incidencias.length?
+
+ datos.incidencias.slice().reverse().map(x=>
+
+ `<div class="item">
+
+ <b>${escapar(x.fecha)} — ${escapar(x.titulo)}</b>
+
+ <p>${escapar(x.descripcion)}</p>
+
+ </div>`
+
+ ).join("")
+
+ :"Sin incidencias.";
+
 }
 
 
-function renderIncidencias() {
+function editarContador(id){
 
-  const contenedor =
-    document.getElementById("listaIncidencias");
+ const x=datos.contadores.find(a=>a.id===id);
 
-  const registros =
-    datos(INCIDENCIAS_KEY)
-      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+ if(!x)return;
 
-  contenedor.innerHTML = "";
+ modalContenido.innerHTML=
 
-  if (!registros.length) {
+ `<h2>Modificar lectura</h2>
 
-    contenedor.innerHTML =
-      '<p class="small">No hay incidencias.</p>';
+ <label>Fecha</label>
+ <input id="editFecha" type="date"
+ value="${escapar(x.fecha)}">
 
-    return;
-  }
+ <label>Lectura (m³)</label>
+ <input id="editLectura" type="number"
+ step="0.01"
+ value="${escapar(x.lectura)}">
 
-  registros.forEach(r => {
+ <div class="actions">
 
-    const div = document.createElement("div");
+ <button class="primary"
+ onclick="guardarContadorEditado('${id}')">
+ Guardar
+ </button>
 
-    div.className = "item";
+ </div>`;
 
-    let html =
-      "<strong>" + escapar(r.fecha) + "</strong><br>" +
-      escapar(r.descripcion);
-
-    if (r.foto) {
-
-      html +=
-        '<br><img class="photo-preview" src="' +
-        r.foto +
-        '">';
-
-    }
-
-    html +=
-      '<div class="item-actions">' +
-      '<button class="btn-danger btn-small" onclick="borrarIncidencia(\'' +
-      r.id +
-      '\')">🗑️ Borrar</button>' +
-      "</div>";
-
-    div.innerHTML = html;
-
-    contenedor.appendChild(div);
-
-  });
+ modal.classList.add("show");
 
 }
 
 
-function borrarIncidencia(id) {
+function guardarContadorEditado(id){
 
-  if (!confirm("¿Borrar esta incidencia?")) return;
+ const x=datos.contadores.find(a=>a.id===id);
 
-  let registros = datos(INCIDENCIAS_KEY);
+ if(!x)return;
 
-  registros =
-    registros.filter(x => x.id !== id);
+ x.fecha=editFecha.value;
+ x.lectura=parseFloat(editLectura.value);
 
-  guardarDatos(INCIDENCIAS_KEY, registros);
+ guardar();
 
-  renderIncidencias();
+ cerrarModal();
+
+ actualizarTodo();
+
 }
 
 
-/* ---------------- HISTORIAL ---------------- */
+function borrarContador(id){
 
-function renderHistorial() {
+ if(!confirm("¿Borrar esta lectura?"))return;
 
-  const contenedor =
-    document.getElementById("historialLista");
+ datos.contadores=
+ datos.contadores.filter(x=>x.id!==id);
 
-  const lecturas =
-    datos(LECTURAS_KEY)
-      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+ guardar();
 
-  const muestreos =
-    datos(MUESTREOS_KEY)
-      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+ actualizarTodo();
 
-  contenedor.innerHTML = "";
-
-  if (!lecturas.length && !muestreos.length) {
-
-    contenedor.innerHTML =
-      '<p class="small">No hay datos guardados.</p>';
-
-    return;
-  }
+}
 
 
-  if (lecturas.length) {
+function editarMuestreo(id){
 
-    const titulo =
-      document.createElement("h3");
+ editandoMuestreo=id;
 
-    titulo.textContent = "📊 Lecturas del contador";
+ pagina("muestreo");
 
-    contenedor.appendChild(titulo);
+}
 
-    lecturas.forEach((r,index) => {
 
-      let consumo = "—";
+function borrarMuestreo(id){
 
-      const siguiente =
-        lecturas[index + 1];
+ if(!confirm("¿Borrar este muestreo?"))return;
 
-      if (siguiente) {
+ datos.muestreos=
+ datos.muestreos.filter(x=>x.id!==id);
 
-        const c =
-          parseFloat(r.contador) -
-          parseFloat(siguiente.contador);
+ guardar();
 
-        if (!isNaN(c)) {
-          consumo = c.toFixed(2) + " m³";
-        }
+ actualizarTodo();
 
-      }
+}
 
-      const div =
-        document.createElement("div");
 
-      div.className = "item";
+/* AJUSTES */
 
-      div.innerHTML =
-        "<strong>" + escapar(r.fecha) + "</strong><br>" +
-        "Contador: " +
-        escapar(r.contador) +
-        " m³<br>" +
-        "Consumo diario: " +
-        consumo +
-        '<div class="item-actions">' +
-        '<button class="btn-warning btn-small" onclick="editarLectura(\'' +
-        r.id +
-        '\')">✏️ Modificar</button>' +
-        '<button class="btn-danger btn-small" onclick="borrarLectura(\'' +
-        r.id +
-        '\')">🗑️ Borrar</button>' +
-        "</div>";
+function renderAjustes(){
 
-      contenedor.appendChild(div);
+ ajustesParametros.innerHTML=
+ datos.config.parametros.map(x=>
 
-    });
+ `<div class="item">
+
+ <b>${escapar(x.nombre)}</b>
+ ${x.unidad?
+ ` (${escapar(x.unidad)})`
+ :""
+ }
+
+ <div class="actions">
+
+ <button class="secondary"
+ onclick="editarParametro('${x.id}')">
+ Modificar
+ </button>
+
+ <button class="danger"
+ onclick="borrarParametro('${x.id}')">
+ Borrar
+ </button>
+
+ </div>
+
+ </div>`
+
+ ).join("");
+
+
+ ajustesPuntos.innerHTML=
+ datos.config.puntos.map(x=>
+
+ `<div class="item">
+
+ <b>${escapar(x.nombre)}</b>
+
+ <div class="actions">
+
+ <button class="secondary"
+ onclick="editarPunto('${x.id}')">
+ Modificar
+ </button>
+
+ <button class="danger"
+ onclick="borrarPunto('${x.id}')">
+ Borrar
+ </button>
+
+ </div>
+
+ </div>`
+
+ ).join("");
+
+
+ ajustesCaptaciones.innerHTML=
+ datos.config.captaciones.length?
+
+ datos.config.captaciones.map(x=>
+
+ `<div class="item">
+ ${escapar(x.nombre)}
+ <button class="secondary"
+ onclick="editarCaptacion('${x.id}')">
+ Modificar
+ </button>
+ </div>`
+
+ ).join("")
+
+ :"No hay captaciones.";
+
+
+ ajustesPresas.innerHTML=
+ datos.config.presas.length?
+
+ datos.config.presas.map(x=>
+
+ `<div class="item">
+ ${escapar(x.nombre)}
+ <button class="secondary"
+ onclick="editarPresa('${x.id}')">
+ Modificar
+ </button>
+ </div>`
+
+ ).join("")
+
+ :"No hay presas.";
+
+}
+
+
+function nuevoParametro(){
+
+ editarParametro("");
+
+}
+
+
+function editarParametro(id){
+
+ const x=id?
+ datos.config.parametros.find(a=>a.id===id)
+ :null;
+
+ modalContenido.innerHTML=
+
+ `<h2>${id?"Modificar":"Añadir"} parámetro</h2>
+
+ <label>Nombre del parámetro</label>
+ <input id="paramNombre"
+ value="${escapar(x?.nombre||"")}">
+
+ <label>Unidad</label>
+ <input id="paramUnidad"
+ value="${escapar(x?.unidad||"")}">
+
+ <div class="actions">
+
+ <button class="primary"
+ onclick="guardarParametro('${id}')">
+ Guardar
+ </button>
+
+ </div>`;
+
+ modal.classList.add("show");
+
+}
+
+
+function guardarParametro(id){
+
+ const nombre=paramNombre.value.trim();
+ const unidad=paramUnidad.value.trim();
+
+ if(!nombre){
+
+  alert("Introduce un nombre.");
+
+  return;
+
+ }
+
+ if(id){
+
+  const x=
+  datos.config.parametros.find(a=>a.id===id);
+
+  if(x){
+
+   x.nombre=nombre;
+   x.unidad=unidad;
 
   }
 
+ }else{
 
-  if (muestreos.length) {
+  datos.config.parametros.push({
 
-    const titulo =
-      document.createElement("h3");
-
-    titulo.textContent = "🧪 Muestreos";
-
-    contenedor.appendChild(titulo);
-
-    muestreos.forEach(r => {
-
-      const div =
-        document.createElement("div");
-
-      div.className = "item";
-
-      let html =
-        "<strong>" +
-        escapar(r.fecha) +
-        "</strong><br>" +
-        escapar(r.punto);
-
-      config.parametros.forEach(p => {
-
-        const valor =
-          r.valores &&
-          r.valores[p.id] !== undefined
-          ? r.valores[p.id]
-          : "";
-
-        html +=
-          "<br>" +
-          escapar(p.nombre) +
-          ": " +
-          escapar(valor) +
-          (p.unidad
-            ? " " + escapar(p.unidad)
-            : "");
-
-      });
-
-      html +=
-        '<div class="item-actions">' +
-        '<button class="btn-warning btn-small" onclick="editarMuestreo(\'' +
-        r.id +
-        '\')">✏️ Modificar</button>' +
-        '<button class="btn-danger btn-small" onclick="borrarMuestreo(\'' +
-        r.id +
-        '\')">🗑️ Borrar</button>' +
-        "</div>";
-
-      div.innerHTML = html;
-
-      contenedor.appendChild(div);
-
-    });
-
-  }
-
-}
-
-
-function editarLectura(id) {
-
-  const lecturas =
-    datos(LECTURAS_KEY);
-
-  const r =
-    lecturas.find(x => x.id === id);
-
-  if (!r) return;
-
-  document.getElementById("editId").value = id;
-  document.getElementById("editFecha").value = r.fecha;
-  document.getElementById("editContador").value = r.contador;
-
-  document.getElementById("editParametros").innerHTML = "";
-
-  document.getElementById("modalEdicion")
-    .classList.add("show");
-
-}
-
-
-function guardarEdicion() {
-
-  const id =
-    document.getElementById("editId").value;
-
-  const fecha =
-    document.getElementById("editFecha").value;
-
-  const contador =
-    parseFloat(
-      document.getElementById("editContador").value
-    );
-
-  if (!fecha || isNaN(contador)) {
-
-    alert("Completa los datos.");
-
-    return;
-  }
-
-  let lecturas =
-    datos(LECTURAS_KEY);
-
-  const indice =
-    lecturas.findIndex(x => x.id === id);
-
-  if (indice < 0) return;
-
-  lecturas[indice].fecha = fecha;
-  lecturas[indice].contador = contador;
-
-  guardarDatos(LECTURAS_KEY, lecturas);
-
-  cerrarModal();
-
-  renderHistorial();
-
-  alert("Registro modificado correctamente.");
-
-}
-
-
-function borrarLectura(id) {
-
-  if (!confirm("¿Quieres borrar esta lectura?")) {
-    return;
-  }
-
-  let lecturas =
-    datos(LECTURAS_KEY);
-
-  lecturas =
-    lecturas.filter(x => x.id !== id);
-
-  guardarDatos(LECTURAS_KEY, lecturas);
-
-  renderHistorial();
-  renderInicio();
-}
-
-
-/* ---------------- AJUSTES ---------------- */
-
-function guardarConfig() {
-
-  localStorage.setItem(
-    CONFIG_KEY,
-    JSON.stringify(config)
-  );
-
-}
-
-
-function renderAjustes() {
-
-  renderConfigParametros();
-  renderConfigPuntos();
-  renderConfigCaptaciones();
-  renderConfigPresas();
-
-}
-
-
-function renderConfigParametros() {
-
-  const contenedor =
-    document.getElementById("configParametros");
-
-  contenedor.innerHTML = "";
-
-  config.parametros.forEach((p,index) => {
-
-    const row =
-      document.createElement("div");
-
-    row.className = "parameter-row";
-
-    row.innerHTML =
-      '<input value="' +
-      escaparAttr(p.nombre) +
-      '" placeholder="Nombre" data-param-nombre="' +
-      index +
-      '">' +
-
-      '<input value="' +
-      escaparAttr(p.unidad) +
-      '" placeholder="Unidad" data-param-unidad="' +
-      index +
-      '">' +
-
-      '<button class="btn-danger btn-small" onclick="eliminarParametro(' +
-      index +
-      ')">🗑️</button>';
-
-    contenedor.appendChild(row);
+   id:idNueva(),
+   nombre:nombre,
+   unidad:unidad
 
   });
 
-}
+ }
 
+ guardar();
 
-function agregarParametro() {
+ cerrarModal();
 
-  config.parametros.push({
-    id: "param_" + nuevoId(),
-    nombre: "Nuevo parámetro",
-    unidad: ""
-  });
-
-  renderConfigParametros();
-}
-
-
-function eliminarParametro(index) {
-
-  if (!confirm("¿Eliminar este parámetro?")) return;
-
-  config.parametros.splice(index,1);
-
-  renderConfigParametros();
-}
-
-
-function guardarParametros() {
-
-  const nombres =
-    document.querySelectorAll(
-      "[data-param-nombre]"
-    );
-
-  const unidades =
-    document.querySelectorAll(
-      "[data-param-unidad]"
-    );
-
-  config.parametros.forEach((p,index) => {
-
-    if (nombres[index]) {
-      p.nombre =
-        nombres[index].value.trim() ||
-        "Parámetro";
-    }
-
-    if (unidades[index]) {
-      p.unidad =
-        unidades[index].value.trim();
-    }
-
-  });
-
-  guardarConfig();
-
-  alert("Parámetros guardados correctamente.");
-
-  renderMuestreo();
-  renderHistorial();
+ actualizarTodo();
 
 }
 
 
-function renderConfigPuntos() {
+function idNueva(){
 
-  const contenedor =
-    document.getElementById("configPuntos");
-
-  contenedor.innerHTML = "";
-
-  config.puntos.forEach((p,index) => {
-
-    const row =
-      document.createElement("div");
-
-    row.className = "parameter-row";
-
-    row.innerHTML =
-      '<input value="' +
-      escaparAttr(p) +
-      '" data-punto="' +
-      index +
-      '">' +
-
-      '<button class="btn-danger btn-small" onclick="eliminarPunto(' +
-      index +
-      ')">🗑️</button>';
-
-    contenedor.appendChild(row);
-
-  });
+ return "p_"+Date.now();
 
 }
 
 
-function agregarPuntoConfiguracion() {
+function borrarParametro(id){
 
-  config.puntos.push("Nuevo punto");
+ if(!confirm("¿Borrar este parámetro?"))return;
 
-  renderConfigPuntos();
+ datos.config.parametros=
+ datos.config.parametros.filter(x=>x.id!==id);
 
-}
+ guardar();
 
-
-function eliminarPunto(index) {
-
-  if (!confirm("¿Eliminar este punto de muestreo?")) {
-    return;
-  }
-
-  config.puntos.splice(index,1);
-
-  renderConfigPuntos();
+ actualizarTodo();
 
 }
 
 
-function guardarPuntos() {
+function nuevoPunto(){
 
-  const inputs =
-    document.querySelectorAll(
-      "[data-punto]"
-    );
+ editarPunto("");
 
-  config.puntos = [];
+}
 
-  inputs.forEach(input => {
 
-    const valor =
-      input.value.trim();
+function editarPunto(id){
 
-    if (valor) {
-      config.puntos.push(valor);
-    }
+ const x=id?
+ datos.config.puntos.find(a=>a.id===id)
+ :null;
+
+ modalContenido.innerHTML=
+
+ `<h2>${id?"Modificar":"Añadir"} punto de muestreo</h2>
+
+ <label>Nombre</label>
+
+ <input id="puntoNombre"
+ value="${escapar(x?.nombre||"")}">
+
+ <div class="actions">
+
+ <button class="primary"
+ onclick="guardarPunto('${id}')">
+ Guardar
+ </button>
+
+ </div>`;
+
+ modal.classList.add("show");
+
+}
+
+
+function guardarPunto(id){
+
+ const nombre=puntoNombre.value.trim();
+
+ if(!nombre){
+
+  alert("Introduce un nombre.");
+
+  return;
+
+ }
+
+ if(id){
+
+  const x=datos.config.puntos.find(a=>a.id===id);
+
+  if(x)x.nombre=nombre;
+
+ }else{
+
+  datos.config.puntos.push({
+
+   id:idNueva(),
+   nombre:nombre
 
   });
 
-  guardarConfig();
+ }
 
-  alert("Puntos de muestreo guardados.");
+ guardar();
 
-  renderMuestreo();
-  renderConfigPuntos();
+ cerrarModal();
+
+ actualizarTodo();
 
 }
 
 
-function renderConfigCaptaciones() {
+function borrarPunto(id){
 
-  const contenedor =
-    document.getElementById("configCaptaciones");
+ if(!confirm("¿Borrar este punto?"))return;
 
-  contenedor.innerHTML = "";
+ datos.config.puntos=
+ datos.config.puntos.filter(x=>x.id!==id);
 
-  config.captaciones.forEach((c,index) => {
+ guardar();
 
-    const row =
-      document.createElement("div");
+ actualizarTodo();
 
-    row.className = "parameter-row";
+}
 
-    row.innerHTML =
-      '<input value="' +
-      escaparAttr(c) +
-      '" data-captacion="' +
-      index +
-      '">' +
 
-      '<button class="btn-danger btn-small" onclick="eliminarCaptacionConfig(' +
-      index +
-      ')">🗑️</button>';
+/* EXPORTAR */
 
-    contenedor.appendChild(row);
+function exportarCSV(){
+
+ let filas=[
+ ["TIPO","FECHA","LUGAR","PARAMETRO","VALOR","UNIDAD","OBSERVACIONES"]
+ ];
+
+ datos.contadores.forEach(x=>{
+
+  filas.push([
+   "Contador",
+   x.fecha,
+   "",
+   "Lectura",
+   x.lectura,
+   "m³",
+   ""
+  ]);
+
+ });
+
+
+ datos.muestreos.forEach(x=>{
+
+  const punto=
+  datos.config.puntos.find(p=>p.id===x.punto)?.nombre||"";
+
+  Object.entries(x.valores||{}).forEach(([id,v])=>{
+
+   const p=
+   datos.config.parametros.find(a=>a.id===id);
+
+   if(p){
+
+    filas.push([
+     "Muestreo",
+     x.fecha,
+     punto,
+     p.nombre,
+     v,
+     p.unidad,
+     x.observaciones||""
+    ]);
+
+   }
 
   });
 
-}
+ });
 
 
-function eliminarCaptacionConfig(index) {
+ datos.incidencias.forEach(x=>{
 
-  config.captaciones.splice(index,1);
+  filas.push([
+   "Incidencia",
+   x.fecha,
+   "",
+   x.titulo,
+   x.descripcion,
+   "",
+   ""
+  ]);
 
-  renderConfigCaptaciones();
-
-}
-
-
-function guardarCaptaciones() {
-
-  const inputs =
-    document.querySelectorAll(
-      "[data-captacion]"
-    );
-
-  config.captaciones = [];
-
-  inputs.forEach(input => {
-
-    if (input.value.trim()) {
-      config.captaciones.push(
-        input.value.trim()
-      );
-    }
-
-  });
-
-  guardarConfig();
-
-  alert("Captaciones guardadas.");
-
-  renderCaptaciones();
-
-}
+ });
 
 
-function renderConfigPresas() {
+ const csv=
+ filas.map(f=>
+ f.map(v=>
+ `"${String(v??"").replace(/"/g,'""')}"`
+ ).join(";")
+ ).join("\n");
 
-  const contenedor =
-    document.getElementById("configPresas");
 
-  contenedor.innerHTML = "";
+ const blob=
+ new Blob(["\ufeff"+csv],
+ {type:"text/csv;charset=utf-8"});
 
-  config.presas.forEach((p,index) => {
+ const a=document.createElement("a");
 
-    const row =
-      document.createElement("div");
+ a.href=URL.createObjectURL(blob);
 
-    row.className = "parameter-row";
+ a.download="ETAP_Control.csv";
 
-    row.innerHTML =
-      '<input value="' +
-      escaparAttr(p) +
-      '" data-presa="' +
-      index +
-      '">' +
-
-      '<button class="btn-danger btn-small" onclick="eliminarPresaConfig(' +
-      index +
-      ')">🗑️</button>';
-
-    contenedor.appendChild(row);
-
-  });
+ a.click();
 
 }
 
 
-function eliminarPresaConfig(index) {
+/* MODAL */
 
-  config.presas.splice(index,1);
+function cerrarModal(){
 
-  renderConfigPresas();
+ modal.classList.remove("show");
 
-}
-
-
-function guardarPresas() {
-
-  const inputs =
-    document.querySelectorAll(
-      "[data-presa]"
-    );
-
-  config.presas = [];
-
-  inputs.forEach(input => {
-
-    if (input.value.trim()) {
-      config.presas.push(
-        input.value.trim()
-      );
-    }
-
-  });
-
-  guardarConfig();
-
-  alert("Presas y embalses guardados.");
-
-  renderPresas();
+ modalContenido.innerHTML="";
 
 }
 
 
-/* ---------------- BORRADO GENERAL ---------------- */
+/* ACTUALIZAR */
 
-function borrarTodosLosDatos() {
+function actualizarTodo(){
 
-  const confirmar =
-    confirm(
-      "ATENCIÓN: se borrarán todas las lecturas, muestreos e incidencias. ¿Continuar?"
-    );
-
-  if (!confirmar) return;
-
-  localStorage.removeItem(LECTURAS_KEY);
-  localStorage.removeItem(MUESTREOS_KEY);
-  localStorage.removeItem(INCIDENCIAS_KEY);
-
-  alert("Todos los datos han sido borrados.");
-
-  renderHistorial();
-  renderIncidencias();
-  renderListaMuestreos();
-  renderInicio();
+ renderInicio();
+ renderMuestreo();
+ renderCaptaciones();
+ renderPresas();
+ renderIncidencias();
+ renderHistorial();
+ renderAjustes();
 
 }
 
 
-/* ---------------- EXPORTACIÓN ---------------- */
+/* INICIO */
 
-function exportarCSV() {
+cargar();
 
-  const lecturas = datos(LECTURAS_KEY);
-  const muestreos = datos(MUESTREOS_KEY);
-  const incidencias = datos(INCIDENCIAS_KEY);
+fechaContador.value=hoy();
+fechaMuestreo.value=hoy();
+incFecha.value=hoy();
 
-  let csv =
-    "TIPO;FECHA;PUNTO;PARAMETRO;VALOR;UNIDAD;OBSERVACIONES\n";
+construirMenu();
 
-  lecturas.forEach(r => {
+actualizarTodo();
 
-    csv +=
-      "CONTADOR;" +
-      escaparCSV(r.fecha) +
-      ";;Lectura contador;" +
-      escaparCSV(r.contador) +
-      ";m3;\n";
+pagina("inicio");
 
-  });
 
-  muestreos.forEach(r => {
+/* PWA */
 
-    config.parametros.forEach(p => {
+if("serviceWorker" in navigator){
 
-      const valor =
-        r.valores &&
-        r.valores[p.id] !== undefined
-        ? r.valores[p.id]
-        : "";
+ window.addEventListener("load",()=>{
 
-      csv +=
-        "MUESTREO;" +
-        escaparCSV(r.fecha) +
-        ";" +
-        escaparCSV(r.punto) +
-        ";" +
-        escaparCSV(p.nombre) +
-        ";" +
-        escaparCSV(valor) +
-        ";" +
-        escaparCSV(p.unidad) +
-        ";\n";
+  navigator.serviceWorker
+  .register("./sw.js")
+  .catch(()=>{});
 
-    });
-
-  });
-
-  incidencias.forEach(r => {
-
-    csv +=
-      "INCIDENCIA;" +
-      escaparCSV(r.fecha) +
-      ";;;;" +
-      escaparCSV(r.descripcion) +
-      "\n";
-
-  });
-
-  const blob =
-    new Blob(
-      ["\ufeff" + csv],
-      {type:"text/csv;charset=utf-8;"}
-    );
-
-  const url =
-    URL.createObjectURL(blob);
-
-  const a =
-    document.createElement("a");
-
-  a.href = url;
-
-  a.download =
-    "ETAP_Control_" +
-    fechaHoy() +
-    ".csv";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
+ });
 
 }
-
-
-function escaparCSV(valor) {
-
-  if (valor === undefined || valor === null) {
-    return "";
-  }
-
-  return '"' +
-    String(valor)
-      .replace(/"/g,'""') +
-    '"';
-
-}
-
-
-/* ---------------- UTILIDADES ---------------- */
-
-function escapar(valor) {
-
-  if (valor === undefined || valor === null) {
-    return "";
-  }
-
-  return String(valor)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function escaparAttr(valor) {
-
-  return escapar(valor);
-
-}
-
-
-function cerrarModal() {
-
-  document.getElementById("modalEdicion")
-    .classList.remove("show");
-
-}
-
-
-/* ---------------- RESUMEN INICIO ---------------- */
-
-function renderInicio() {
-
-  const lecturas =
-    datos(LECTURAS_KEY)
-      .sort((a,b) => b.fecha.localeCompare(a.fecha));
-
-  if (lecturas.length) {
-
-    const ultima = lecturas[0];
-
-    document.getElementById("contador").value =
-      ultima.contador;
-
-    document.getElementById("fecha").value =
-      ultima.fecha;
-
-    calcularConsumo();
-
-  }
-
-  const puntos =
-    document.getElementById("puntosResumen");
-
-  puntos.innerHTML =
-    config.puntos.length
-    ? config.puntos.map(p =>
-        "• " + escapar(p)
-      ).join("<br>")
-    : '<span class="small">No hay puntos configurados.</span>';
-
-
-  const captaciones =
-    document.getElementById("captacionesResumen");
-
-  captaciones.innerHTML =
-    config.captaciones.length
-    ? config.captaciones.map(p =>
-        "• " + escapar(p)
-      ).join("<br>")
-    : '<span class="small">No hay captaciones configuradas.</span>';
-
-
-  const presas =
-    document.getElementById("presasResumen");
-
-  presas.innerHTML =
-    config.presas.length
-    ? config.presas.map(p =>
-        "• " + escapar(p)
-      ).join("<br>")
-    : '<span class="small">No hay presas o embalses configurados.</span>';
-
-}
-
-
-/* ---------------- INICIO ---------------- */
-
-renderInicio();
-renderCaptaciones();
-renderPresas();
-renderIncidencias();
-renderMuestreo();
-
-mostrarPagina("inicio");
 
 </script>
 
