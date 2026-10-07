@@ -184,7 +184,7 @@ button {
 <div class="pages" id="pages">
 
 <!-- PÁGINA 1 -->
-<section class="page">
+<section class="page" data-pagina="contador">
 
 <div class="card">
 <h2>📊 Lectura del contador</h2>
@@ -217,7 +217,7 @@ No hay lecturas guardadas.
 </section>
 
 <!-- PÁGINA 2 -->
-<section class="page">
+<section class="page" data-pagina="muestreo">
 
 <div class="card">
 <h2>🧪 Puntos de muestreo</h2>
@@ -259,7 +259,7 @@ No hay lecturas guardadas.
 </section>
 
 <!-- PÁGINA 3 -->
-<section class="page">
+<section class="page" data-pagina="presas">
 
 <div class="card">
 <h2>🏞️ Presas y embalses</h2>
@@ -282,8 +282,8 @@ No hay lecturas guardadas.
 </section>
 
 <!-- PÁGINA 4 -->
-<section class="page">
-
+<section class="page" data-pagina="captaciones">
+    
 <div class="card">
 <h2>💧 Captaciones</h2>
 
@@ -314,7 +314,7 @@ No hay lecturas guardadas.
 </section>
 
 <!-- PÁGINA 5 -->
-<section class="page">
+<section class="page" data-pagina="ajustes">
 
 <div class="card">
 <h2>⚙️ Ajustes</h2>
@@ -774,15 +774,11 @@ function mostrarNuevaPagina() {
     if (campo) {
         campo.focus();
     }
-}
 
 function crearNuevaPagina() {
 
-    const campo =
-        document.getElementById("nombreNuevaPagina");
-
-    const nombre =
-        campo.value.trim();
+    const campo = document.getElementById("nombreNuevaPagina");
+    const nombre = campo.value.trim();
 
     if (!nombre) {
         alert("Introduce un nombre para la página.");
@@ -792,8 +788,7 @@ function crearNuevaPagina() {
     const paginas = obtenerPaginas();
 
     const existe = paginas.some(
-        pagina =>
-            pagina.nombre.toLowerCase() === nombre.toLowerCase()
+        pagina => pagina.nombre.toLowerCase() === nombre.toLowerCase()
     );
 
     if (existe) {
@@ -807,19 +802,17 @@ function crearNuevaPagina() {
         fija: false
     };
 
-    paginas.splice(
-        paginas.length - 1,
-        0,
-        nuevaPagina
-    );
+    // La página nueva se coloca antes de Ajustes
+    paginas.splice(paginas.length - 1, 0, nuevaPagina);
 
     guardarPaginas(paginas);
 
     campo.value = "";
 
-    document.getElementById(
-        "formNuevaPagina"
-    ).style.display = "none";
+    document.getElementById("formNuevaPagina").style.display = "none";
+
+    // Actualizar inmediatamente la interfaz
+    construirInterfazPaginas();
 
     mostrarListaPaginas();
 
@@ -994,7 +987,104 @@ function iniciarGestorPaginas() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    iniciarGestorPaginas
+  function construirInterfazPaginas() {
+
+    const paginas = obtenerPaginas();
+
+    const contenedor = document.getElementById("pages");
+
+    if (!contenedor) return;
+
+    // Conservamos las páginas que ya tienen formularios
+    const paginasFijas = {
+        contador: document.querySelector('[data-pagina="contador"]'),
+        muestreo: document.querySelector('[data-pagina="muestreo"]'),
+        presas: document.querySelector('[data-pagina="presas"]'),
+        captaciones: document.querySelector('[data-pagina="captaciones"]'),
+        ajustes: document.querySelector('[data-pagina="ajustes"]')
+    };
+
+    paginas.forEach(pagina => {
+
+        if (pagina.fija) return;
+
+        let existente =
+            document.getElementById("page-" + pagina.id);
+
+        if (!existente) {
+
+            existente = document.createElement("section");
+
+            existente.className = "page";
+
+            existente.id = "page-" + pagina.id;
+
+            existente.innerHTML = `
+                <div class="card">
+                    <h2>📄 ${pagina.nombre}</h2>
+
+                    <p>
+                        Esta página todavía no tiene parámetros.
+                    </p>
+
+                    <p>
+                        Puedes añadirlos desde
+                        ⚙️ Ajustes.
+                    </p>
+                </div>
+            `;
+
+            contenedor.insertBefore(
+                existente,
+                paginasFijas.ajustes
+            );
+        }
+    });
+
+    construirNavegacion();
+    } function construirNavegacion() {
+
+    const paginas = obtenerPaginas();
+
+    const navegacion =
+        document.querySelector(".navigation");
+
+    if (!navegacion) return;
+
+    navegacion.innerHTML = "";
+
+    paginas.forEach((pagina, indice) => {
+
+        const boton = document.createElement("button");
+
+        boton.onclick = function() {
+            irPagina(indice);
+        };
+
+        let icono = "📄";
+
+        if (pagina.id === "contador") icono = "📊";
+        if (pagina.id === "muestreo") icono = "🧪";
+        if (pagina.id === "presas") icono = "🏞️";
+        if (pagina.id === "captaciones") icono = "💧";
+        if (pagina.id === "ajustes") icono = "⚙️";
+
+        boton.innerHTML = `
+            ${icono}
+            <span>${pagina.nombre}</span>
+        `;
+
+        navegacion.appendChild(boton);
+    });
+} function 
+    iniciarGestorPaginas() {
+
+    mostrarListaPaginas();
+
+    construirInterfazPaginas();
+
+    construirNavegacion();
+}
 );</script>
 
 </body>
