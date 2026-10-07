@@ -1,4 +1,4 @@
-const CACHE_NAME = "etap-control-v1";
+const CACHE_NAME = "etap-control-v2";
 
 const FILES_TO_CACHE = [
   "./",
@@ -7,7 +7,6 @@ const FILES_TO_CACHE = [
   "./icon.svg"
 ];
 
-// Instalar y guardar los archivos básicos
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -16,7 +15,6 @@ self.addEventListener("install", event => {
   );
 });
 
-// Activar y eliminar versiones antiguas
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -29,37 +27,33 @@ self.addEventListener("activate", event => {
   );
 });
 
-// Servir primero desde caché y, si no existe, desde Internet
 self.addEventListener("fetch", event => {
+
+  if (event.request.method !== "GET") {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse;
+    fetch(event.request)
+      .then(response => {
+
+        if (
+          response &&
+          response.status === 200 &&
+          response.type === "basic"
+        ) {
+          const copia = response.clone();
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copia);
+          });
         }
 
-        return fetch(event.request)
-          .then(networkResponse => {
-            if (
-              !networkResponse ||
-              networkResponse.status !== 200 ||
-              networkResponse.type !== "basic"
-            ) {
-              return networkResponse;
-            }
-
-            const responseToCache = networkResponse.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return networkResponse;
-          })
-          .catch(() => {
-            return caches.match("./index.html");
-          });
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request)
+          .then(cached => cached || caches.match("./index.html"));
       })
   );
 });
