@@ -318,6 +318,37 @@ No hay lecturas guardadas.
 
 <div class="card">
 <h2>⚙️ Ajustes</h2>
+    <div class="card">
+    <h2>📑 Páginas de la aplicación</h2>
+
+    <div id="listaPaginas">
+        Cargando páginas...
+    </div>
+
+    <button class="btn-primary" onclick="mostrarNuevaPagina()">
+        ➕ Añadir nueva página
+    </button>
+
+    <div id="formNuevaPagina" style="display:none; margin-top:15px;">
+
+        <label for="nombreNuevaPagina">
+            Nombre de la página
+        </label>
+
+        <input
+            type="text"
+            id="nombreNuevaPagina"
+            placeholder="Ejemplo: Depósitos"
+        >
+
+        <button
+            class="btn-primary"
+            onclick="crearNuevaPagina()">
+            💾 Crear página
+        </button>
+
+    </div>
+</div>
 
 <label for="nombreETAP">Nombre de la ETAP</label>
 <input type="text" id="nombreETAP">
@@ -690,7 +721,281 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-</script>
+// ==========================================
+// GESTIÓN DE PÁGINAS PERSONALIZADAS
+// ==========================================
+
+const PAGINAS_DEFECTO = [
+    { id: "contador", nombre: "Contador", fija: true },
+    { id: "muestreo", nombre: "Muestreo", fija: true },
+    { id: "presas", nombre: "Presas", fija: true },
+    { id: "captaciones", nombre: "Captaciones", fija: true },
+    { id: "ajustes", nombre: "Ajustes", fija: true }
+];
+
+function obtenerPaginas() {
+    const guardadas = localStorage.getItem("paginasETAP");
+
+    if (!guardadas) {
+        localStorage.setItem(
+            "paginasETAP",
+            JSON.stringify(PAGINAS_DEFECTO)
+        );
+
+        return [...PAGINAS_DEFECTO];
+    }
+
+    try {
+        return JSON.parse(guardadas);
+    } catch (error) {
+        return [...PAGINAS_DEFECTO];
+    }
+}
+
+function guardarPaginas(paginas) {
+    localStorage.setItem(
+        "paginasETAP",
+        JSON.stringify(paginas)
+    );
+}
+
+function mostrarNuevaPagina() {
+
+    const formulario =
+        document.getElementById("formNuevaPagina");
+
+    if (!formulario) return;
+
+    formulario.style.display = "block";
+
+    const campo =
+        document.getElementById("nombreNuevaPagina");
+
+    if (campo) {
+        campo.focus();
+    }
+}
+
+function crearNuevaPagina() {
+
+    const campo =
+        document.getElementById("nombreNuevaPagina");
+
+    const nombre =
+        campo.value.trim();
+
+    if (!nombre) {
+        alert("Introduce un nombre para la página.");
+        return;
+    }
+
+    const paginas = obtenerPaginas();
+
+    const existe = paginas.some(
+        pagina =>
+            pagina.nombre.toLowerCase() === nombre.toLowerCase()
+    );
+
+    if (existe) {
+        alert("Ya existe una página con ese nombre.");
+        return;
+    }
+
+    const nuevaPagina = {
+        id: "pagina_" + Date.now(),
+        nombre: nombre,
+        fija: false
+    };
+
+    paginas.splice(
+        paginas.length - 1,
+        0,
+        nuevaPagina
+    );
+
+    guardarPaginas(paginas);
+
+    campo.value = "";
+
+    document.getElementById(
+        "formNuevaPagina"
+    ).style.display = "none";
+
+    mostrarListaPaginas();
+
+    alert("Página creada correctamente.");
+}
+
+function mostrarListaPaginas() {
+
+    const contenedor =
+        document.getElementById("listaPaginas");
+
+    if (!contenedor) return;
+
+    const paginas = obtenerPaginas();
+
+    let html = "";
+
+    paginas.forEach((pagina, indice) => {
+
+        html += `
+        <div class="historial-item">
+
+            <strong>${pagina.nombre}</strong>
+
+            <div class="acciones">
+
+                ${
+                    indice > 0
+                    ? `
+                    <button
+                        class="btn-secondary"
+                        onclick="moverPagina(${indice}, -1)">
+                        ⬆️
+                    </button>
+                    `
+                    : ""
+                }
+
+                ${
+                    indice < paginas.length - 1
+                    ? `
+                    <button
+                        class="btn-secondary"
+                        onclick="moverPagina(${indice}, 1)">
+                        ⬇️
+                    </button>
+                    `
+                    : ""
+                }
+
+                <button
+                    class="btn-edit"
+                    onclick="renombrarPagina('${pagina.id}')">
+                    ✏️
+                </button>
+
+                ${
+                    !pagina.fija
+                    ? `
+                    <button
+                        class="btn-danger"
+                        onclick="eliminarPagina('${pagina.id}')">
+                        🗑️
+                    </button>
+                    `
+                    : ""
+                }
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    contenedor.innerHTML = html;
+}
+
+function renombrarPagina(id) {
+
+    const paginas = obtenerPaginas();
+
+    const pagina =
+        paginas.find(p => p.id === id);
+
+    if (!pagina) return;
+
+    const nuevoNombre =
+        prompt(
+            "Nuevo nombre de la página:",
+            pagina.nombre
+        );
+
+    if (nuevoNombre === null) return;
+
+    const nombre =
+        nuevoNombre.trim();
+
+    if (!nombre) {
+        alert("El nombre no puede estar vacío.");
+        return;
+    }
+
+    pagina.nombre = nombre;
+
+    guardarPaginas(paginas);
+
+    mostrarListaPaginas();
+}
+
+function eliminarPagina(id) {
+
+    const paginas = obtenerPaginas();
+
+    const pagina =
+        paginas.find(p => p.id === id);
+
+    if (!pagina) return;
+
+    if (pagina.fija) {
+        alert("Esta página pertenece a la aplicación y no se puede eliminar.");
+        return;
+    }
+
+    const confirmar =
+        confirm(
+            "¿Quieres eliminar la página '" +
+            pagina.nombre +
+            "'?"
+        );
+
+    if (!confirmar) return;
+
+    const nuevasPaginas =
+        paginas.filter(p => p.id !== id);
+
+    guardarPaginas(nuevasPaginas);
+
+    mostrarListaPaginas();
+}
+
+function moverPagina(indice, direccion) {
+
+    const paginas = obtenerPaginas();
+
+    const nuevoIndice =
+        indice + direccion;
+
+    if (
+        nuevoIndice < 0 ||
+        nuevoIndice >= paginas.length
+    ) {
+        return;
+    }
+
+    const temporal =
+        paginas[indice];
+
+    paginas[indice] =
+        paginas[nuevoIndice];
+
+    paginas[nuevoIndice] =
+        temporal;
+
+    guardarPaginas(paginas);
+
+    mostrarListaPaginas();
+}
+
+function iniciarGestorPaginas() {
+    mostrarListaPaginas();
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciarGestorPaginas
+);</script>
 
 </body>
 </html>
