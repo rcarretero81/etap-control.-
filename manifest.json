@@ -1,0 +1,20 @@
+{
+  "name": "ETAP Control",
+  "short_name": "ETAP Control",
+  "description": "Control diario de ETAP, lecturas, consumo, muestreos, captaciones, embalses e incidencias.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#071b18",
+  "theme_color": "#0b6b5f",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
