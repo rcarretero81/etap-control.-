@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#176b87">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg">
+<title>ETAP Control</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f2f6f8;
+  color:#17323d;
+}
+
+header{
+  background:#176b87;
+  color:white;
+  padding:16px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+}
+
+header small{
+  opacity:.85;
+}
+
+main{
+  padding:15px 15px 90px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.card{
+  background:white;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px #0001;
+}
+
+h2{
+  margin-top:0;
+  color:#176b87;
+}
+
+h3{
+  margin-bottom:8px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin:12px 0 5px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccd8dd;
+  border-radius:9px;
+  font-size:16px;
+  background:white;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 15px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  margin:5px 3px 0 0;
+}
+
+.btn{
+  background:#176b87;
+  color:white;
+}
+
+.btn2{
+  background:#e6eef1;
+  color:#17323d;
+}
+
+.danger{
+  background:#c0392b;
+  color:white;
+}
+
+.warning{
+  background:#e0a400;
+  color:white;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.big{
+  font-size:28px;
+  font-weight:bold;
+  color:#176b87;
+}
+
+.nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  border-top:1px solid #ccd8dd;
+  display:flex;
+  overflow-x:auto;
+  z-index:20;
+}
+
+.nav button{
+  flex:0 0 auto;
+  border-radius:0;
+  background:white;
+  color:#456;
+  padding:10px 13px;
+  margin:0;
+  font-size:12px;
+}
+
+.nav button.active{
+  background:#176b87;
+  color:white;
+}
+
+.badge{
+  display:inline-block;
+  background:#e6f2f6;
+  color:#176b87;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+.photo{
+  max-width:100%;
+  max-height:220px;
+  border-radius:10px;
+  margin-top:8px;
+}
+
+.help{
+  background:#eef7fa;
+  padding:10px;
+  border-radius:8px;
+  font-size:14px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #ddd;
+  margin:15px 0;
+}
+
+@media(max-width:500px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>ETAP Control</h1>
+  <small>Control de explotación y registros</small>
+</header>
+
+<main>
+
+<section id="inicio" class="page active">
+
+  <div class="card">
+
+    <h2>Lectura del contador</h2>
+
+    <label>Fecha</label>
+    <input type="date" id="fechaContador">
+
+    <label>Lectura del contador (m³)</label>
+    <input type="number" step="0.01" id="lecturaContador">
+
+    <button class="btn" onclick="guardarContador()">
+      Guardar
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Consumo diario</h2>
+
+    <div class="big" id="consumoDiario">
+      0 m³
+    </div>
+
+    <div id="textoConsumo"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Últimas lecturas</h2>
+
+    <div id="ultimasLecturas"></div>
+
+  </div>
+
+</section>
+
+
+<section id="muestreo" class="page">
+
+  <div class="card">
+
+    <h2>Muestreo</h2>
+
+    <label>Fecha</label>
+    <input type="date" id="fechaMuestreo">
+
+    <label>Punto de muestreo</label>
+    <select id="puntoMuestreo"></select>
+
+    <div id="camposParametros"></div>
+
+    <button class="btn" onclick="guardarMuestreo()">
+      Guardar
+    </button>
+
+    <button
+      class="btn2"
+      id="cancelarMuestreo"
+      onclick="cancelarEdicionMuestreo()"
+      style="display:none">
+
+      Cancelar edición
+
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Últimos muestreos</h2>
+
+    <div id="listaMuestreos"></div>
+
+  </div>
+
+</section>
+
+
+<section id="captaciones" class="page">
+
+  <div class="card">
+
+    <h2>Captaciones</h2>
+
+    <label>Nombre</label>
+    <input id="nombreCaptacion">
+
+    <label>Observaciones</label>
+    <textarea id="obsCaptacion"></textarea>
+
+    <button class="btn" onclick="guardarCaptacion()">
+      Guardar
+    </button>
+
+    <button
+      class="btn2"
+      id="cancelarCaptacion"
+      onclick="cancelarCaptacionEdicion()"
+      style="display:none">
+
+      Cancelar
+
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Captaciones registradas</h2>
+
+    <div id="listaCaptaciones"></div>
+
+  </div>
+
+</section>
+
+
+<section id="presas" class="page">
+
+  <div class="card">
+
+    <h2>Presas y embalses</h2>
+
+    <label>Nombre</label>
+    <input id="nombrePresa">
+
+    <label>Observaciones</label>
+    <textarea id="obsPresa"></textarea>
+
+    <button class="btn" onclick="guardarPresa()">
+      Guardar
+    </button>
+
+    <button
+      class="btn2"
+      id="cancelarPresa"
+      onclick="cancelarPresaEdicion()"
+      style="display:none">
+
+      Cancelar
+
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Presas y embalses registrados</h2>
+
+    <div id="listaPresas"></div>
+
+  </div>
+
+</section>
+
+
+<section id="incidencias" class="page">
+
+  <div class="card">
+
+    <h2>Incidencias</h2>
+
+    <label>Fecha</label>
+    <input type="date" id="fechaIncidencia">
+
+    <label>Título</label>
+    <input id="tituloIncidencia">
+
+    <label>Descripción</label>
+    <textarea id="descripcionIncidencia"></textarea>
+
+    <label>Fotografía</label>
+
+    <input
+      type="file"
+      id="fotoIncidencia"
+      accept="image/*"
+      capture="environment">
+
+    <button class="btn" onclick="guardarIncidencia()">
+      Guardar
+    </button>
+
+    <button
+      class="btn2"
+      id="cancelarIncidencia"
+      onclick="cancelarIncidenciaEdicion()"
+      style="display:none">
+
+      Cancelar
+
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Incidencias registradas</h2>
+
+    <div id="listaIncidencias"></div>
+
+  </div>
+
+</section>
+
+
+<section id="historial" class="page">
+
+  <div class="card">
+
+    <h2>Historial</h2>
+
+    <button class="btn" onclick="exportarCSV()">
+      Exportar a Excel/CSV
+    </button>
+
+    <div id="historialCompleto"></div>
+
+  </div>
+
+</section>
+
+
+<section id="ajustes" class="page">
+
+  <div class="card">
+
+    <h2>Ajustes</h2>
+
+    <div class="help">
+
+      Desde aquí puedes modificar los parámetros
+      de muestreo y los puntos de muestreo.
+      Los cambios se aplican automáticamente
+      al formulario de muestreo.
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Parámetros de muestreo</h2>
+
+    <label>Nombre del parámetro</label>
+    <input id="nombreParametro">
+
+    <label>Unidad</label>
+    <input
+      id="unidadParametro"
+      placeholder="Ej.: mg/L, NTU">
+
+    <label>Tipo</label>
+
+    <select id="tipoParametro">
+
+      <option value="number">
+        Número
+      </option>
+
+      <option value="text">
+        Texto
+      </option>
+
+    </select>
+
+    <div class="grid">
+
+      <div>
+
+        <label>Mínimo permitido</label>
+
+        <input
+          type="number"
+          step="any"
+          id="minParametro">
+
+      </div>
+
+      <div>
+
+        <label>Máximo permitido</label>
+
+        <input
+          type="number"
+          step="any"
+          id="maxParametro">
+
+      </div>
+
+    </div>
+
+    <button class="btn" onclick="guardarParametro()">
+      Guardar parámetro
+    </button>
+
+    <button
+      class="btn2"
+      id="cancelarParametro"
+      onclick="cancelarParametroEdicion()"
+      style="display:none">
+
+      Cancelar
+
+    </button>
+
+    <div id="listaParametros"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Puntos de muestreo</h2>
+
+    <label>Nombre del punto</label>
+
+    <input id="nombrePunto">
+
+    <button class="btn" onclick="guardarPunto()">
+      Guardar punto
+    </button>
+
+    <button
+      class="btn2"
+      id="cancelarPunto"
+      onclick="cancelarPuntoEdicion()"
+      style="display:none">
+
+      Cancelar
+
+    </button>
+
+    <div id="listaPuntos"></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>Resumen</h2>
+
+    <div id="resumenAjustes"></div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<nav class="nav">
+
+  <button onclick="ir('inicio')" id="nav-inicio">
+    Inicio
+  </button>
+
+  <button onclick="ir('muestreo')" id="nav-muestreo">
+    Muestreo
+  </button>
+
+  <button onclick="ir('captaciones')" id="nav-captaciones">
+    Captaciones
+  </button>
+
+  <button onclick="ir('presas')" id="nav-presas">
+    Presas
+  </button>
+
+  <button onclick="ir('incidencias')" id="nav-incidencias">
+    Incidencias
+  </button>
+
+  <button onclick="ir('historial')" id="nav-historial">
+    Historial
+  </button>
+
+  <button onclick="ir('ajustes')" id="nav-ajustes">
+    Ajustes
+  </button>
+
+</nav>
+
+
+<script>
+
+const STORAGE_KEY="ETAP_CONTROL_DATOS";
+
+const DEFAULT={
+
+  parametros:[
+
+    {
+      id:1,
+      nombre:"Cloro libre",
+      unidad:"mg/L",
+      tipo:"number",
+      min:"",
+      max:""
+    },
+
+    {
+      id:2,
+      nombre:"pH",
+      unidad:"",
+      tipo:"number",
+      min:"",
+      max:""
+    },
+
+    {
+      id:3,
+      nombre:"Turbidez",
+      unidad:"NTU",
+      tipo:"number",
+      min:"",
+      max:""
+    }
+
+  ],
+
+  puntos:[
+
+    {
+      id:1,
+      nombre:"Entrada ETAP"
+    },
+
+    {
+      id:2,
+      nombre:"Depósito Distribución 2"
+    }
+
+  ],
+
+  contadores:[],
+  muestreos:[],
+  captaciones:[],
+  presas:[],
+  incidencias:[]
+
+};
+
+let datos;
+
+let editandoMuestreo=null;
+let editandoCaptacion=null;
+let editandoPresa=null;
+let editandoIncidencia=null;
+let editandoParametro=null;
+let editandoPunto=null;
+
+
+function cargarDatos(){
+
+  const guardado=
+    localStorage.getItem(STORAGE_KEY);
+
+  if(guardado){
+
+    try{
+
+      datos=JSON.parse(guardado);
+
+    }catch(e){
+
+      datos=
+        JSON.parse(JSON.stringify(DEFAULT));
+
+    }
+
+  }else{
+
+    datos=
+      JSON.parse(JSON.stringify(DEFAULT));
+
+  }
+
+}
+
+
+function guardarDatos(){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(datos)
+  );
+
+}
+
+
+function nuevoId(lista){
+
+  if(!lista.length){
+    return 1;
+  }
+
+  return Math.max(
+    ...lista.map(x=>Number(x.id)||0)
+  )+1;
+
+}
+
+
+function esc(texto){
+
+  if(
+    texto===undefined ||
+    texto===null
+  ){
+    return "";
+  }
+
+  return String(texto)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function fechaHoy(){
+
+  const d=new Date();
+
+  const mes=
+    String(d.getMonth()+1).padStart(2,"0");
+
+  const dia=
+    String(d.getDate()).padStart(2,"0");
+
+  return d.getFullYear()+
+    "-"+mes+
+    "-"+dia;
+
+}
+
+
+function ir(pagina){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(p=>{
+      p.classList.remove("active");
+    });
+
+  const paginaElemento=
+    document.getElementById(pagina);
+
+  if(paginaElemento){
+    paginaElemento.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(b=>{
+      b.classList.remove("active");
+    });
+
+  const boton=
+    document.getElementById(
+      "nav-"+pagina
+    );
+
+  if(boton){
+    boton.classList.add("active");
+  }
+
+  actualizarTodo();
+
+  window.scrollTo(0,0);
+
+}
+
+
+function actualizarTodo(){
+
+  actualizarContadores();
+
+  construirMuestreo();
+
+  listarMuestreos();
+
+  listarCaptaciones();
+
+  listarPresas();
+
+  listarIncidencias();
+
+  listarParametros();
+
+  listarPuntos();
+
+  mostrarTodoHistorial();
+
+  actualizarResumenAjustes();
+
+}
+
+
+function actualizarContadores(){
+
+  const lista=
+    [...datos.contadores]
+      .sort((a,b)=>
+        a.fecha.localeCompare(b.fecha)
+      );
+
+  const ultima=
+    lista[lista.length-1];
+
+  const anteriores=
+    lista.slice(0,-1);
+
+  let consumo=0;
+
+  if(
+    ultima &&
+    anteriores.length
+  ){
+
+    const anterior=
+      anteriores[anteriores.length-1];
+
+    consumo=
+      Number(ultima.lectura)-
+      Number(anterior.lectura);
+
+  }
+
+  document.getElementById(
+    "consumoDiario"
+  ).textContent=
+    (isNaN(consumo)?0:
+      consumo.toFixed(2))+
+    " m³";
+
+  document.getElementById(
+    "textoConsumo"
+  ).textContent=
+    ultima && anteriores.length
+      ?"Diferencia entre la última lectura y la anterior."
+      :"Introduce al menos dos lecturas para calcular el consumo.";
+
+  const cont=
+    document.getElementById(
+      "ultimasLecturas"
+    );
+
+  if(!lista.length){
+
+    cont.innerHTML=
+      "<p>No hay lecturas registradas.</p>";
+
+    return;
+
+  }
+
+  cont.innerHTML=
+    lista.slice(-5).reverse().map(x=>`
+
+      <div class="item">
+
+        <strong>${esc(x.fecha)}</strong><br>
+
+        Lectura:
+        <b>${esc(x.lectura)} m³</b>
+
+        <br>
+
+        <button
+          class="btn2"
+          onclick="editarContador(${x.id})">
+
+          Editar
+
+        </button>
+
+        <button
+          class="danger"
+          onclick="borrarContador(${x.id})">
+
+          Borrar
+
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function guardarContador(){
+
+  const fecha=
+    document.getElementById(
+      "fechaContador"
+    ).value;
+
+  const lectura=
+    document.getElementById(
+      "lecturaContador"
+    ).value;
+
+  if(!fecha || lectura===""){
+
+    alert(
+      "Introduce la fecha y la lectura."
+    );
+
+    return;
+
+  }
+
+  const existente=
+    datos.contadores.find(
+      x=>x.fecha===fecha
+    );
+
+  if(existente){
+
+    existente.lectura=
+      Number(lectura);
+
+  }else{
+
+    datos.contadores.push({
+
+      id:nuevoId(datos.contadores),
+
+      fecha,
+
+      lectura:Number(lectura)
+
+    });
+
+  }
+
+  guardarDatos();
+
+  document.getElementById(
+    "lecturaContador"
+  ).value="";
+
+  actualizarTodo();
+
+  alert("Lectura guardada.");
+
+}
+
+
+function editarContador(id){
+
+  const item=
+    datos.contadores.find(
+      x=>x.id===id
+    );
+
+  if(!item)return;
+
+  document.getElementById(
+    "fechaContador"
+  ).value=item.fecha;
+
+  document.getElementById(
+    "lecturaContador"
+  ).value=item.lectura;
+
+  ir("inicio");
+
+}
+
+
+function borrarContador(id){
+
+  if(
+    !confirm(
+      "¿Quieres borrar esta lectura?"
+    )
+  ){
+    return;
+  }
+
+  datos.contadores=
+    datos.contadores.filter(
+      x=>x.id!==id
+    );
+
+  guardarDatos();
+
+  actualizarTodo();
+
+}function construirMuestreo(){
+
+  const select=
+    document.getElementById("puntoMuestreo");
+
+  if(!select)return;
+
+  const valorActual=select.value;
+
+  select.innerHTML=
+    datos.puntos.map(p=>`
+
+      <option value="${p.id}">
+        ${esc(p.nombre)}
+      </option>
+
+    `).join("");
+
+  if(valorActual){
+    select.value=valorActual;
+  }
+
+  const cont=
+    document.getElementById("camposParametros");
+
+  cont.innerHTML=
+    datos.parametros.map(p=>`
+
+      <div>
+
+        <label>
+          ${esc(p.nombre)}
+          ${p.unidad ? " ("+esc(p.unidad)+")" : ""}
+        </label>
+
+        <input
+          type="${p.tipo==="number" ? "number" : "text"}"
+          ${p.tipo==="number" ? 'step="any"' : ""}
+          id="param_${p.id}"
+          placeholder="${p.unidad ? esc(p.unidad) : ""}"
+        >
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function guardarMuestreo(){
+
+  const fecha=
+    document.getElementById(
+      "fechaMuestreo"
+    ).value;
+
+  const puntoId=
+    Number(
+      document.getElementById(
+        "puntoMuestreo"
+      ).value
+    );
+
+  if(!fecha || !puntoId){
+
+    alert(
+      "Introduce la fecha y el punto de muestreo."
+    );
+
+    return;
+
+  }
+
+  const valores={};
+
+  let correcto=true;
+
+  datos.parametros.forEach(p=>{
+
+    const campo=
+      document.getElementById(
+        "param_"+p.id
+      );
+
+    if(!campo)return;
+
+    let valor=campo.value;
+
+    if(
+      p.tipo==="number" &&
+      valor!==""
+    ){
+
+      valor=Number(valor);
+
+      if(
+        p.min!=="" &&
+        !isNaN(Number(p.min)) &&
+        valor<Number(p.min)
+      ){
+
+        alert(
+          p.nombre+
+          ": el valor está por debajo del mínimo permitido."
+        );
+
+        correcto=false;
+
+      }
+
+      if(
+        p.max!=="" &&
+        !isNaN(Number(p.max)) &&
+        valor>Number(p.max)
+      ){
+
+        alert(
+          p.nombre+
+          ": el valor supera el máximo permitido."
+        );
+
+        correcto=false;
+
+      }
+
+    }
+
+    valores[p.id]=valor;
+
+  });
+
+  if(!correcto)return;
+
+  const punto=
+    datos.puntos.find(
+      p=>p.id===puntoId
+    );
+
+  if(editandoMuestreo!==null){
+
+    const item=
+      datos.muestreos.find(
+        x=>x.id===editandoMuestreo
+      );
+
+    if(item){
+
+      item.fecha=fecha;
+
+      item.puntoId=puntoId;
+
+      item.punto=
+        punto ? punto.nombre : "";
+
+      item.valores=valores;
+
+    }
+
+    editandoMuestreo=null;
+
+  }else{
+
+    datos.muestreos.push({
+
+      id:nuevoId(datos.muestreos),
+
+      fecha,
+
+      puntoId,
+
+      punto:
+        punto ? punto.nombre : "",
+
+      valores
+
+    });
+
+  }
+
+  guardarDatos();
+
+  limpiarFormularioMuestreo();
+
+  actualizarTodo();
+
+  alert("Muestreo guardado.");
+
+}
+
+
+function limpiarFormularioMuestreo(){
+
+  document.getElementById(
+    "fechaMuestreo"
+  ).value=fechaHoy();
+
+  document
+    .querySelectorAll(
+      "#camposParametros input"
+    )
+    .forEach(i=>{
+      i.value="";
+    });
+
+  editandoMuestreo=null;
+
+  const boton=
+    document.getElementById(
+      "cancelarMuestreo"
+    );
+
+  if(boton){
+    boton.style.display="none";
+  }
+
+}
+
+
+function listarMuestreos(){
+
+  const cont=
+    document.getElementById(
+      "listaMuestreos"
+    );
+
+  if(!cont)return;
+
+  const lista=
+    [...datos.muestreos]
+      .sort((a,b)=>
+        b.fecha.localeCompare(a.fecha)
+      );
+
+  if(!lista.length){
+
+    cont.innerHTML=
+      "<p>No hay muestreos registrados.</p>";
+
+    return;
+
+  }
+
+  cont.innerHTML=
+    lista.map(item=>{
+
+      const valores=
+        Object.entries(item.valores || {})
+          .map(([id,valor])=>{
+
+            const p=
+              datos.parametros.find(
+                x=>x.id===Number(id)
+              );
+
+            if(!p)return "";
+
+            return `
+              <div>
+                <b>${esc(p.nombre)}:</b>
+                ${esc(valor)}
+                ${p.unidad ? esc(p.unidad) : ""}
+              </div>
+            `;
+
+          }).join("");
+
+      return `
+
+        <div class="item">
+
+          <span class="badge">
+            ${esc(item.fecha)}
+          </span>
+
+          <h3>
+            ${esc(item.punto)}
+          </h3>
+
+         function guardarIncidencia(){
+
+  const fecha=
+    document.getElementById(
+      "fechaIncidencia"
+    ).value;
+
+  const titulo=
+    document.getElementById(
+      "tituloIncidencia"
+    ).value.trim();
+
+  const descripcion=
+    document.getElementById(
+      "descripcionIncidencia"
+    ).value.trim();
+
+  const archivo=
+    document.getElementById(
+      "fotoIncidencia"
+    ).files[0];
+
+  if(!fecha || !titulo){
+
+    alert(
+      "Introduce la fecha y el título de la incidencia."
+    );
+
+    return;
+
+  }
+
+  const guardarConFoto=(foto)=>{
+
+    if(editandoIncidencia!==null){
+
+      const item=
+        datos.incidencias.find(
+          x=>x.id===editandoIncidencia
+        );
+
+      if(item){
+
+        item.fecha=fecha;
+
+        item.titulo=titulo;
+
+        item.descripcion=
+          descripcion;
+
+        if(foto!==null){
+          item.foto=foto;
+        }
+
+      }
+
+      editandoIncidencia=null;
+
+    }else{
+
+      datos.incidencias.push({
+
+        id:nuevoId(datos.incidencias),
+
+        fecha,
+
+        titulo,
+
+        descripcion,
+
+        foto:foto || ""
+
+      });
+
+    }
+
+    guardarDatos();
+
+    limpiarIncidencia();
+
+    actualizarTodo();
+
+    alert("Incidencia guardada.");
+
+  };
+
+  if(archivo){
+
+    const lector=
+      new FileReader();
+
+    lector.onload=function(){
+
+      guardarConFoto(
+        lector.result
+      );
+
+    };
+
+    lector.readAsDataURL(archivo);
+
+  }else{
+
+    guardarConFoto(null);
+
+  }
+
+}
+
+
+function limpiarIncidencia(){
+
+  document.getElementById(
+    "fechaIncidencia"
+  ).value=fechaHoy();
+
+  document.getElementById(
+    "tituloIncidencia"
+  ).value="";
+
+  document.getElementById(
+    "descripcionIncidencia"
+  ).value="";
+
+  document.getElementById(
+    "fotoIncidencia"
+  ).value="";
+
+  editandoIncidencia=null;
+
+  document.getElementById(
+    "cancelarIncidencia"
+  ).style.display="none";
+
+}
+
+
+function listarIncidencias(){
+
+  const cont=
+    document.getElementById(
+      "listaIncidencias"
+    );
+
+  if(!cont)return;
+
+  const lista=
+    [...datos.incidencias]
+      .sort((a,b)=>
+        b.fecha.localeCompare(a.fecha)
+      );
+
+  if(!lista.length){
+
+    cont.innerHTML=
+      "<p>No hay incidencias registradas.</p>";
+
+    return;
+
+  }
+
+  cont.innerHTML=
+    lista.map(item=>`
+
+      <div class="item">
+
+        <span class="badge">
+          ${esc(item.fecha)}
+        </span>
+
+        <h3>
+          ${esc(item.titulo)}
+        </h3>
+
+        <p>
+          ${esc(item.descripcion || "")}
+        </p>
+
+        ${
+          item.foto
+          ?
+          `<img
+             class="photo"
+             src="${item.foto}"
+             alt="Fotografía de incidencia">`
+          :
+          ""
+        }
+
+        <br>
+
+        <button
+          class="btn2"
+          onclick="editarIncidencia(${item.id})">
+
+          Editar
+
+        </button>
+
+        <button
+          class="danger"
+          onclick="borrarIncidencia(${item.id})">
+
+          Borrar
+
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function editarIncidencia(id){
+
+  const item=
+    datos.incidencias.find(
+      x=>x.id===id
+    );
+
+  if(!item)return;
+
+  editandoIncidencia=id;
+
+  document.getElementById(
+    "fechaIncidencia"
+  ).value=item.fecha;
+
+  document.getElementById(
+    "tituloIncidencia"
+  ).value=item.titulo;
+
+  document.getElementById(
+    "descripcionIncidencia"
+  ).value=item.descripcion || "";
+
+  document.getElementById(
+    "fotoIncidencia"
+  ).value="";
+
+  document.getElementById(
+    "cancelarIncidencia"
+  ).style.display="inline-block";
+
+  ir("incidencias");
+
+}
+
+
+function borrarIncidencia(id){
+
+  if(
+    !confirm(
+      "¿Quieres borrar esta incidencia?"
+    )
+  ){
+    return;
+  }
+
+  datos.incidencias=
+    datos.incidencias.filter(
+      x=>x.id!==id
+    );
+
+  guardarDatos();
+
+  actualizarTodo();
+
+}
+
+
+function cancelarIncidenciaEdicion(){
+
+  limpiarIncidencia();
+
+}
+
+
+function guardarParametro(){
+
+  const nombre=
+    document.getElementById(
+      "nombreParametro"
+    ).value.trim();
+
+  const unidad=
+    document.getElementById(
+      "unidadParametro"
+    ).value.trim();
+
+  const tipo=
+    document.getElementById(
+      "tipoParametro"
+    ).value;
+
+  const min=
+    document.getElementById(
+      "minParametro"
+    ).value;
+
+  const max=
+    document.getElementById(
+      "maxParametro"
+    ).value;
+
+  if(!nombre){
+
+    alert(
+      "Introduce el nombre del parámetro."
+    );
+
+    return;
+
+  }
+
+  if(editandoParametro!==null){
+
+    const item=
+      datos.parametros.find(
+        x=>x.id===editandoParametro
+      );
+
+    if(item){
+
+      item.nombre=nombre;
+
+      item.unidad=unidad;
+
+      item.tipo=tipo;
+
+      item.min=min;
+
+      item.max=max;
+
+    }
+
+    editandoParametro=null;
+
+  }else{
+
+   
