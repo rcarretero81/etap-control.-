@@ -1,97 +1,2098 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071a2d"><title>ETAP Control</title><link rel="manifest" href="manifest.json"><style>
-:root{--bg:#071a2d;--panel:#0d2942;--panel2:#102f4b;--input:#071a2d;--line:#24516b;--blue:#10b9f4;--blue2:#078fc2;--text:#eef8ff;--muted:#9db6c9;--ok:#20d39b;--danger:#ff5d67;--shadow:0 8px 24px rgba(0,0,0,.18)}
-*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:linear-gradient(180deg,#071a2d 0,#061525 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}header{position:sticky;top:0;z-index:20;background:rgba(8,34,58,.97);padding:15px 16px 13px;text-align:center;border-bottom:1px solid #16415f;box-shadow:0 4px 16px rgba(0,0,0,.18)}h1{font-size:21px;letter-spacing:.7px;margin:0 0 3px}.wrap{width:min(100%,720px);margin:auto;padding:12px 12px 92px}.card{background:var(--panel);border:1px solid #194663;border-radius:16px;padding:14px;margin:10px 0;box-shadow:var(--shadow)}.title{font-weight:800;font-size:17px;line-height:1.2;margin:2px 0 12px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0a2137;border:1px solid #173f58;border-radius:12px;padding:11px 10px;margin:8px 0;min-height:52px}.item>span:first-child{min-width:0;flex:1;line-height:1.3}.item>span:last-child{display:flex;gap:6px;flex-shrink:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field{min-width:0}label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin:10px 0 5px}input,select,textarea{display:block;width:100%;max-width:100%;min-width:0;height:44px;padding:10px 11px;border-radius:10px;border:1px solid #2a5974;background:var(--input);color:var(--text);font:inherit;outline:none}select{appearance:auto}textarea{height:auto;min-height:88px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(16,185,244,.12)}button{border:0;border-radius:10px;min-height:42px;padding:10px 13px;background:var(--blue);color:#001421;font:inherit;font-weight:800;cursor:pointer;white-space:normal}.secondary{background:#173e59;color:var(--text)}.danger{background:var(--danger);color:#fff}.ok{background:var(--ok);color:#00251b}.wide{width:100%;margin-top:9px}.small{min-height:36px;padding:7px 10px;font-size:12px}.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(6,21,38,.98);border-top:1px solid #16415f;display:flex;justify-content:center;gap:7px;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));z-index:30}.nav button{flex:1;max-width:170px;min-height:44px}.hidden{display:none}.badge{font-size:12px;color:#071a2d;background:var(--blue);border-radius:20px;padding:4px 8px;font-weight:800}.muted{color:var(--muted);font-size:13px;line-height:1.4}.notice{background:#143b55;border-left:4px solid var(--blue);padding:10px;border-radius:8px;font-size:13px;margin:8px 0;line-height:1.4}.check{display:flex;gap:9px;align-items:center}.check input{width:20px;height:20px;margin:0}.tablewrap{overflow:auto}.historyrow{font-size:13px;border-top:1px solid #28516a;padding:10px 0;line-height:1.45}.param-card{background:#0a2137;border:1px solid #194663;border-radius:14px;padding:12px;margin:10px 0}.param-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.param-name{font-weight:800;min-width:0;overflow-wrap:anywhere}.param-unit{font-size:11px;color:var(--muted);white-space:nowrap}.sample-value{font-size:17px;font-weight:700;text-align:right}.sample-row{display:grid;grid-template-columns:minmax(0,1fr) 132px;gap:10px;align-items:end;padding:11px 0;border-top:1px solid #194663}.sample-row:first-of-type{border-top:0}.ref{font-size:11px;color:var(--muted);margin-top:5px}.form-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.form-actions .wide{margin-top:0}.subsection{margin-top:14px;padding-top:4px}.danger-outline{background:transparent;color:#ff8d95;border:1px solid #8b3942}
-@media(max-width:420px){.wrap{padding-left:9px;padding-right:9px}.card{padding:12px;border-radius:14px}.item{padding:10px 8px}.item>span:last-child{gap:4px}.small{padding:7px 8px}.grid{gap:8px}.sample-row{grid-template-columns:minmax(0,1fr) 118px}.nav{gap:5px}.nav button{font-size:12px;padding:9px 6px}}
-@media(min-width:700px){.wrap{padding-top:18px}.card{padding:16px}}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1769aa">
+<title>ETAP Control</title>
 
-.pages{display:flex;overflow-x:auto;overflow-y:hidden;width:100%;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.pages::-webkit-scrollbar{display:none}.page{flex:0 0 100%;width:100%;scroll-snap-align:start;scroll-snap-stop:always;min-width:0}.page-inner{min-height:100%;padding:2px 0 10px}.page-indicator{display:flex;justify-content:center;gap:7px;padding:5px 0 10px}.page-indicator .dot{width:8px;height:8px;border-radius:50%;background:#31536a;transition:.2s}.page-indicator .dot.active{background:var(--blue);width:20px;border-radius:8px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1px;color:var(--blue);margin-bottom:5px}.hero{margin-top:0}.result{margin-top:16px;padding:16px;border-radius:14px;background:#eef6fa;text-align:center}.result label{display:block;margin:0 0 5px}.result strong{font-size:26px;color:var(--blue)}.swipe-hint{text-align:center;color:var(--muted);font-size:11px;padding:4px 0 12px}
-@media(max-width:420px){.pages{margin-left:0}.page-inner{padding-left:0;padding-right:0}.page-indicator{padding-top:2px}}
-</style></head><body><header><h1>ETAP CONTROL</h1><div class="muted">Lectura diaria · funcionamiento offline</div></header><main class="wrap" id="app"></main><nav class="nav"><button onclick="home()">Lectura</button><button class="secondary" onclick="historyView()">Historial</button><button class="secondary" onclick="settings()">Ajustes</button></nav><script src="xlsx.min.js"></script><script>
-const KEY='etap_control_v1';
-const defaults={captaciones:['Captación Cerro Moro','Captación Garganta al Pajarero'],embalses:['Embalse El Pajarero','Embalse Lago Colinar','Embalse Presa Tierra Colinar'],puntos:['Decantador','Salida de ETAP','Depósito Distribución 1','Depósito Distribución 2','Médico','Ayuntamiento'],params:[{name:'Cloro libre',unit:'mg/L',min:'',max:'',enabled:true},{name:'pH',unit:'',min:'',max:'',enabled:true},{name:'Turbidez',unit:'NTU',min:'',max:'',enabled:true}],arrastres:['Ninguno','Fangos','Lodos','Hojas','Fangos y lodos','Hojas y restos vegetales','Otros'],ubicaciones:['PUNTOS DE MUESTREO','CAPTACIONES','PRESAS Y EMBALSES','RED DE DISTRIBUCION','ETAP','DEPOSITOS AGUA BRUTA','FILTROS','BOMBAS DOSIFICADORAS','MOTORES IMPULSION','ELECTROVALVULAS','CUADRO SINOPTICO']};
-let db=JSON.parse(localStorage.getItem(KEY)||'null')||{...defaults,registros:[],incidencias:[]};if(!Array.isArray(db.ubicaciones))db.ubicaciones=[...defaults.ubicaciones];save();
-function save(){localStorage.setItem(KEY,JSON.stringify(db))}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function home(targetPage=0){
-  if(!history.state || history.state.etapRoute!=='form' && history.state.etapRoute!=='sample'){history.replaceState({etapRoute:'home',page:Number(targetPage)||0},'',location.href);}
-const readings=db.registros.filter(r=>r.tipo==='Contador').sort((a,b)=>a.fecha.localeCompare(b.fecha));
-const current=readings[readings.length-1];
-const previous=readings.length>1?readings[readings.length-2]:null;
-const consumo=current&&previous?(Number(current.valor)-Number(previous.valor)):null;
-const prev=current;
-app.innerHTML=`
-<div class="page-indicator"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-<div class="pages" id="pages">
-<section class="page"><div class="page-inner">
-<div class="card hero"><div class="eyebrow">LECTURA DIARIA · 1</div><div class="title">LECTURA DEL CONTADOR</div><div class="muted">Introduce la lectura total del contador en m³.</div><label>Fecha y hora</label><input id="meterDt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><label>Lectura del contador (m³)</label><input id="meterValue" type="number" min="0" step="0.01" placeholder="0,00" value="${prev?esc(prev.valor):''}"><button class="wide ok" onclick="saveMeter()">💾 Guardar lectura</button></div>
-</div></section>
-<section class="page"><div class="page-inner">
-<div class="card hero"><div class="eyebrow">LECTURA DIARIA · 2</div><div class="title">CONSUMO DIARIO</div><div class="muted">Cálculo automático: lectura actual − lectura del día anterior.</div><div class="grid"><div><label>Lectura anterior (m³)</label><input id="previousMeter" type="number" step="0.01" value="${previous?esc(previous.valor):''}" readonly></div><div><label>Lectura actual (m³)</label><input id="currentMeter" type="number" step="0.01" value="${current?esc(current.valor):''}" readonly></div></div><div class="result"><label>Consumo diario</label><strong>${consumo!==null&&consumo>=0?consumo.toFixed(2)+' m³':'Pendiente de dos lecturas'}</strong></div></div>
-</div></section>
-<section class="page"><div class="page-inner">
-<div class="card"><div class="eyebrow">LECTURA DIARIA · 3</div><div class="title">PUNTOS DE MUESTREO</div>${listItems(db.puntos,'punto')}<button class="wide" onclick="addItem('puntos','punto de muestreo')">➕ Añadir punto de muestreo</button><button class="wide secondary" onclick="addPointFromCaptation()">➕ Añadir captación como punto</button></div>
-</div></section>
-<section class="page"><div class="page-inner">
-<div class="card"><div class="eyebrow">LECTURA DIARIA · 4</div><div class="title">PRESAS Y EMBALSES</div>${listItems(db.embalses,'embalse')}<button class="wide" onclick="addItem('embalses','embalse')">➕ Añadir presa / embalse</button></div>
-</div></section>
-<section class="page"><div class="page-inner">
-<div class="card"><div class="eyebrow">LECTURA DIARIA · 5</div><div class="title">CAPTACIONES</div>${listItems(db.captaciones,'captacion')}<button class="wide" onclick="addItem('captaciones','captación')">➕ Añadir captación</button></div>
-</div></section>
-<section class="page"><div class="page-inner">
-<div class="card"><div class="eyebrow">LECTURA DIARIA · 6</div><div class="title">INCIDENCIAS</div><div class="muted">Registra la incidencia y adjunta el parte oficial, documentos y fotografías.</div><div class="notice">📎 Los archivos y fotos quedan asociados a esta incidencia para poder consultarlos posteriormente.</div><label>Fecha y hora de detección</label><input id="idt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><div class="grid"><div><label>Tipo de incidencia</label><select id="itipo"><option value="AB">AB · Analítica</option><option value="C">C · Indicadores</option><option value="E">E · Radiactividad</option><option value="II">II · Instalación interior</option><option value="O">O · Lista de observación</option><option value="F">F · Falta de suministro</option><option value="S">S · Situación excepcional</option><option value="X">X · Otro riesgo</option><option value="AVERIA">Avería</option><option value="OTRA">Otra</option></select></div><div><label>Estado</label><select id="iest"><option>Abierta</option><option>En seguimiento</option><option>Resuelta</option></select></div></div><label>Ubicación / punto afectado</label><div class="grid"><div><select id="il">${db.ubicaciones.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}</select></div><div><button class="wide secondary" type="button" onclick="addIncidentLocation()">➕ Añadir ubicación</button></div></div><label>Descripción de la incidencia</label><textarea id="idesc" placeholder="Describe qué ha ocurrido..."></textarea><label>Causa / origen</label><textarea id="icausa" placeholder="Causa conocida o investigación realizada..."></textarea><label>Medidas correctoras y preventivas</label><textarea id="imedidas" placeholder="Medidas adoptadas..."></textarea><label>Seguimiento / observaciones</label><textarea id="iseguimiento" placeholder="Seguimiento, resultados posteriores, comunicaciones..."></textarea>
-<div class="card"><div class="title">📄 PARTE / DOCUMENTOS</div><div class="muted">Aquí podrás subir el parte oficial cuando lo tengas. Más adelante podremos utilizarlo para autorrellenarlo.</div><input id="incidentFiles" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" multiple></div>
-<div class="card"><div class="title">📷 FOTOGRAFÍAS DE LA INCIDENCIA</div><div class="muted">Puedes seleccionar varias fotos o hacerlas directamente con la cámara del móvil.</div><input id="incidentPhotos" type="file" accept="image/*" capture="environment" multiple><div id="photoPreview" class="muted" style="margin-top:8px"></div></div>
-<div class="form-actions"><button class="wide ok" onclick="saveIncident()">💾 Guardar incidencia</button><button class="wide secondary" onclick="home(5)">Limpiar / volver</button></div></div><div class="card"><div class="title">INCIDENCIAS GUARDADAS</div>${db.incidencias.slice().reverse().map((x,i)=>`<div class="historyrow"><b>${new Date(x.fecha).toLocaleString('es-ES')}</b> · ${esc(x.tipo||'')} · ${esc(x.estado||'')}<br>${esc(x.ubicacion||'')}<br>${esc(x.descripcion||'')}<br><span class="muted">${esc(x.medidas||'')}</span>${(x.archivos?.length||x.fotos?.length)?`<br><button class="small secondary" onclick="showIncidentAttachments(${db.incidencias.length-1-i})">📎 Ver adjuntos (${(x.archivos?.length||0)+(x.fotos?.length||0)})</button>`:''}</div>`).join('')||'<span class="muted">Ninguna incidencia guardada.</span>'}</div>
-</div></section>
-</div>
-<div class="swipe-hint">Desliza ← → para cambiar de página</div>`;
-const pages=document.getElementById('pages');
-if(pages){
-  const go=()=>{const idx=Math.max(0,Math.min(5,Number(targetPage)||0));pages.scrollLeft=idx*pages.clientWidth;document.querySelectorAll('.page-indicator .dot').forEach((d,i)=>d.classList.toggle('active',i===idx));};
-  pages.addEventListener('scroll',()=>{const idx=Math.round(pages.scrollLeft/pages.clientWidth);document.querySelectorAll('.page-indicator .dot').forEach((d,i)=>d.classList.toggle('active',i===idx));});
-  requestAnimationFrame(go);
+<style>
+* {
+  box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef2f5;
+  color: #1f2933;
 }
-function saveMeter(){const v=parseFloat(String(meterValue.value).replace(',','.'));if(!Number.isFinite(v)||v<0){alert('Introduce una lectura válida en m³.');return}const d=new Date(meterDt.value||Date.now());const readings=db.registros.filter(r=>r.tipo==='Contador').sort((a,b)=>a.fecha.localeCompare(b.fecha));const previous=readings.length?Number(readings[readings.length-1].valor):null;if(previous!==null&&v<previous){alert('La lectura actual no puede ser inferior a la anterior.');return}db.registros.push({fecha:d.toISOString(),tipo:'Contador',punto:'Contador general',parametro:'Lectura contador',valor:v.toFixed(2),unidad:'m³',observaciones:'',consumoDiario:previous!==null?(v-previous).toFixed(2):null});save();alert(previous!==null?'Lectura guardada. Consumo diario: '+(v-previous).toFixed(2)+' m³':'Primera lectura guardada. Mañana se calculará el consumo.');home();}
-function calculateConsumption(){home();}
-function listItems(arr,type){return arr.map((x,i)=>`<div class="item"><span>${esc(x)}</span><span><button class="small" onclick="openForm('${type}',${i})">Abrir</button><button class="small secondary" onclick="renameItem('${type}',${i})">Editar</button></span></div>`).join('')}
-function addItem(key,label){let n=prompt('Nombre de '+label+':');if(n&&n.trim()){db[key].push(n.trim());save();home()}}
-function renameItem(type,i){let key=type==='captacion'?'captaciones':type==='embalse'?'embalses':'puntos';let n=prompt('Nuevo nombre:',db[key][i]);if(n&&n.trim()){db[key][i]=n.trim();save();home()}}
-function addPointFromCaptation(){let n=prompt('¿Qué captación quieres añadir como punto de muestreo?');if(n&&n.trim()){if(!db.puntos.includes(n.trim()))db.puntos.push(n.trim());save();home()}}
-function openForm(type,i){const parentPage=type==='embalse'?3:4;history.replaceState({etapRoute:'home',page:parentPage},'',location.href);history.pushState({etapRoute:'form',type:type,index:i,parentPage:parentPage},'',location.href);let key=type==='captacion'?'captaciones':'embalses',name=db[key][i];app.innerHTML=`<div class="card"><div class="title">${esc(name)}</div><div class="muted">Registro de inspección</div><label>Fecha y hora</label><input id="dt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><label>Estado del agua</label><select id="estado"><option>Bueno</option><option>Regular</option><option>Malo</option></select><label>Volumen</label><select id="vol"><option>Alto</option><option>Medio</option><option>Bajo</option></select><label>Arrastres / materiales</label><select id="arr">${db.arrastres.map(x=>`<option>${esc(x)}</option>`).join('')}</select><div id="other"></div><label>Observaciones</label><textarea id="obs"></textarea><button class="wide ok" onclick="saveInspection('${type}',${i})">💾 Guardar lectura</button><button class="wide secondary" onclick="history.back()">Atrás</button></div>`;arr.onchange=()=>other.innerHTML=arr.value==='Otros'?'<label>Especificar otros</label><input id="otro">':''}
-function saveInspection(type,i){let key=type==='captacion'?'captaciones':'embalses',name=db[key][i],d=new Date(dt.value||Date.now());db.registros.push({fecha:d.toISOString(),tipo:type==='captacion'?'Captación':'Embalse',punto:name,parametro:'Estado agua',valor:estado.value,unidad:'',observaciones:obs.value});db.registros.push({fecha:d.toISOString(),tipo:type==='captacion'?'Captación':'Embalse',punto:name,parametro:'Volumen',valor:vol.value,unidad:'',observaciones:obs.value});db.registros.push({fecha:d.toISOString(),tipo:type==='captacion'?'Captación':'Embalse',punto:name,parametro:'Arrastres/materiales',valor:arr.value==='Otros'?('Otros: '+(document.getElementById('otro')?.value||'')):arr.value,unidad:'',observaciones:obs.value});save();alert('Lectura guardada');const pg=type==='embalse'?3:4;history.replaceState({etapRoute:'home',page:pg},'',location.href);home(pg)}
-function sampleForm(i){history.replaceState({etapRoute:'home',page:2},'',location.href);history.pushState({etapRoute:'sample',index:i,parentPage:2},'',location.href);let name=db.puntos[i];let ps=db.params.filter(p=>p.enabled);app.innerHTML=`<div class="card"><div class="section-head"><div><div class="title">PUNTO DE MUESTREO</div><div class="muted">${esc(name)}</div></div><span class="badge">${ps.length} parámetros</span></div><label>Fecha y hora</label><input id="dt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><div class="subsection"><div class="title">PARÁMETROS</div>${ps.map((p,j)=>`<div class="sample-row"><div><div class="param-name">${esc(p.name)}</div>${p.min||p.max?`<div class="ref">Referencia: ${esc(p.min||'')} ${p.max?'– '+esc(p.max):''}</div>`:''}</div><div><label style="margin-top:0">Valor${p.unit?' · '+esc(p.unit):''}</label><input class="sample-value" id="p${j}" inputmode="decimal" placeholder="—"></div></div>`).join('')}</div><label>Observaciones</label><textarea id="obs" placeholder="Observaciones del muestreo..."></textarea><div class="form-actions"><button class="ok wide" onclick="saveSample(${i})">💾 Guardar</button><button class="secondary wide" onclick="history.back()">Atrás</button></div></div>`}
-function saveSample(i){let d=new Date(dt.value||Date.now()),name=db.puntos[i],ps=db.params.filter(p=>p.enabled);ps.forEach((p,j)=>{let v=document.getElementById('p'+j).value;if(v!=='')db.registros.push({fecha:d.toISOString(),tipo:'Muestreo',punto:name,parametro:p.name,valor:v,unidad:p.unit||'',observaciones:obs.value})});save();alert('Muestreo guardado');history.replaceState({etapRoute:'home',page:2},'',location.href);home(2)}
-function historyView(){let rows=[...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha));app.innerHTML=`<div class="card"><div class="section-head"><div class="title">HISTORIAL</div><span class="badge">${rows.length}</span></div><button class="wide ok" onclick="exportXlsx()">📊 Exportar a Excel (.xlsx)</button><button class="wide secondary" onclick="goToPage(5)">⚠️ Incidencias</button>${rows.length?rows.map(r=>`<div class="historyrow"><b>${new Date(r.fecha).toLocaleString('es-ES')}</b> · ${esc(r.tipo)} · ${esc(r.punto)}<br>${esc(r.parametro)}: <b>${esc(r.valor)}</b> ${esc(r.unidad)}<br><span class="muted">${esc(r.observaciones||'')}</span></div>`).join(''):'<p class="muted">Todavía no hay lecturas.</p>'}</div>`}
-function goToPage(page){home(page);setTimeout(()=>{const el=document.getElementById('pages');if(el){el.scrollTo({left:el.clientWidth*page,behavior:'smooth'});}},0)}
-function incident(){goToPage(5)}
-function addIncidentLocation(){let n=prompt('Nombre de la nueva ubicación:');if(n&&n.trim()){n=n.trim();if(!db.ubicaciones.includes(n))db.ubicaciones.push(n);save();incident();setTimeout(()=>{const el=document.getElementById('il');if(el)el.value=n},0)}}
-function fileToDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,type:file.type,size:file.size,data:r.result});r.onerror=reject;r.readAsDataURL(file)})}
-function photoToDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const max=1600;let w=img.width,h=img.height;if(w>max||h>max){const k=Math.min(max/w,max/h);w=Math.round(w*k);h=Math.round(h*k)}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);resolve({name:file.name,type:'image/jpeg',size:0,data:c.toDataURL('image/jpeg',.78)})};img.onerror=()=>resolve({name:file.name,type:file.type,size:file.size,data:r.result});img.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
-function showIncidentAttachments(index){const x=db.incidencias[index];let html='<div class="card"><div class="title">ADJUNTOS DE LA INCIDENCIA</div>';if(x.archivos?.length){html+='<b>Documentos</b>';x.archivos.forEach((f,i)=>{html+=`<button class="wide secondary" onclick="downloadAttachment(${index},'archivo',${i})">📄 ${esc(f.name)}</button>`})}if(x.fotos?.length){html+='<b style="display:block;margin-top:12px">Fotografías</b>';x.fotos.forEach((f,i)=>{html+=`<div style="margin:8px 0"><img src="${f.data}" style="width:100%;border-radius:10px"><button class="wide secondary" onclick="downloadAttachment(${index},'foto',${i})">⬇️ Descargar foto</button></div>`})}html+='<button class="wide" onclick="incident()">Atrás</button></div>';app.innerHTML=html}
-function downloadAttachment(index,kind,i){const x=db.incidencias[index],f=kind==='archivo'?x.archivos[i]:x.fotos[i];const a=document.createElement('a');a.href=f.data;a.download=f.name||('incidencia_'+Date.now());document.body.appendChild(a);a.click();a.remove()}
-async function saveIncident(){try{const d=new Date(idt.value||Date.now());const files=[...(document.getElementById('incidentFiles')?.files||[])];const photos=[...(document.getElementById('incidentPhotos')?.files||[])];const archivos=await Promise.all(files.map(fileToDataURL));const fotos=await Promise.all(photos.map(photoToDataURL));db.incidencias.push({fecha:d.toISOString(),tipo:itipo.value,ubicacion:il.value,descripcion:idesc.value,causa:icausa.value,medidas:imedidas.value,seguimiento:iseguimiento.value,estado:iest.value,archivos,fotos});save();alert('Incidencia guardada con '+(archivos.length+fotos.length)+' adjunto(s).');goToPage(5)}catch(e){alert('No se han podido guardar los archivos adjuntos.')}}
-// intercept point opening to show sampling form
-window.addEventListener('popstate',function(e){
-  if(e.state && e.state.etapRoute==='home'){
-    home(Number(e.state.page)||0);
-  }else if(e.state && e.state.etapRoute==='form'){
-    home(Number(e.state.parentPage) || (e.state.type==='embalse'?3:4));
-  }else if(e.state && e.state.etapRoute==='sample'){
-    home(Number(e.state.parentPage)||2);
-  }else{
-    home(0);
+
+header {
+  background: #1769aa;
+  color: white;
+  padding: 16px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.app {
+  max-width: 650px;
+  margin: auto;
+}
+
+.page {
+  display: none;
+  padding: 15px;
+  padding-bottom: 90px;
+}
+
+.page.active {
+  display: block;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+h3 {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 12px 0 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccd3da;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn {
+  background: #1769aa;
+  color: white;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.btn-secondary {
+  background: #607d8b;
+  color: white;
+}
+
+.btn-danger {
+  background: #c62828;
+  color: white;
+}
+
+.btn-warning {
+  background: #ef8f00;
+  color: white;
+}
+
+.btn-small {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1769aa;
+}
+
+.small {
+  font-size: 13px;
+  color: #65727e;
+}
+
+.item {
+  border: 1px solid #dce2e7;
+  border-radius: 9px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.item-actions button {
+  flex: 1;
+}
+
+.parameter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.parameter-row input {
+  flex: 1;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #d5dce1;
+  display: flex;
+  justify-content: space-around;
+  padding: 7px 3px;
+  z-index: 20;
+  max-width: 650px;
+  margin: auto;
+}
+
+.bottom-nav button {
+  background: transparent;
+  color: #52606d;
+  font-size: 12px;
+  padding: 7px 4px;
+}
+
+.bottom-nav button.active {
+  color: #1769aa;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 15px;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 18px;
+}
+
+.photo-preview {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.success {
+  background: #e8f5e9;
+  color: #256029;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.warning {
+  background: #fff4df;
+  color: #795500;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.danger-box {
+  background: #ffebee;
+  color: #8b1a1a;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+@media (max-width: 430px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
-});
-if(!history.state || !history.state.etapRoute){history.replaceState({etapRoute:'home',page:0},'',location.href);}
-
-const oldList=listItems; listItems=function(arr,type){return arr.map((x,i)=>`<div class="item"><span>${esc(x)}</span><span><button class="small" onclick="${type==='punto'?`sampleForm(${i})`:`openForm('${type}',${i})`}">Abrir</button><button class="small secondary" onclick="renameItem('${type}',${i})">Editar</button></span></div>`).join('')};
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
-home();
-</script>
-<script>
-if ('serviceWorker' in navigator && location.protocol === 'https:') {
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>💧 ETAP Control</h1>
+</header>
+
+<div class="app">
+
+<!-- INICIO -->
+<section id="inicio" class="page active">
+
+  <div class="card">
+    <h2>📊 Control diario</h2>
+
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha">
+
+    <label for="contador">Lectura del contador (m³)</label>
+    <input type="number" id="contador" step="0.01" min="0"
+           placeholder="Ej.: 1250.50">
+
+    <div class="card" style="margin-top:15px;background:#f4f8fb">
+      <div class="small">Consumo diario</div>
+      <div class="value" id="consumo">—</div>
+      <div class="small">m³</div>
+    </div>
+
+    <button class="btn" onclick="guardarLectura()">💾 Guardar</button>
+  </div>
+
+  <div class="card">
+    <h2>📍 Puntos de muestreo</h2>
+    <div id="puntosResumen"></div>
+    <button class="btn" onclick="mostrarPagina('muestreo')">
+      Registrar muestreo
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>🌊 Captaciones</h2>
+    <div id="captacionesResumen"></div>
+    <button class="btn" onclick="mostrarPagina('captaciones')">
+      Gestionar captaciones
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>🏞️ Presas y embalses</h2>
+    <div id="presasResumen"></div>
+    <button class="btn" onclick="mostrarPagina('presas')">
+      Gestionar presas y embalses
+    </button>
+  </div>
+
+</section>
+
+
+<!-- MUESTREO -->
+<section id="muestreo" class="page">
+
+  <div class="card">
+    <h2>🧪 Puntos de muestreo</h2>
+
+    <label>Fecha</label>
+    <input type="date" id="muestraFecha">
+
+    <label>Punto de muestreo</label>
+    <select id="muestraPunto"></select>
+
+    <div id="parametrosMuestreo"></div>
+
+    <button class="btn" onclick="guardarMuestreo()">💾 Guardar</button>
+  </div>
+
+  <div class="card">
+    <h3>Registros recientes</h3>
+    <div id="listaMuestreos"></div>
+  </div>
+
+</section>
+
+
+<!-- CAPTACIONES -->
+<section id="captaciones" class="page">
+
+  <div class="card">
+    <h2>🌊 Captaciones</h2>
+
+    <label>Nombre de la captación</label>
+    <input id="nuevaCaptacion" placeholder="Ej.: Captación Río Tiétar">
+
+    <button class="btn" onclick="agregarCaptacion()">
+      ➕ Añadir captación
+    </button>
+
+    <div id="listaCaptaciones" style="margin-top:15px"></div>
+  </div>
+
+</section>
+
+
+<!-- PRESAS -->
+<section id="presas" class="page">
+
+  <div class="card">
+    <h2>🏞️ Presas y embalses</h2>
+
+    <label>Nombre</label>
+    <input id="nuevaPresa" placeholder="Ej.: Embalse de ...">
+
+    <button class="btn" onclick="agregarPresa()">
+      ➕ Añadir
+    </button>
+
+    <div id="listaPresas" style="margin-top:15px"></div>
+  </div>
+
+</section>
+
+
+<!-- INCIDENCIAS -->
+<section id="incidencias" class="page">
+
+  <div class="card">
+    <h2>⚠️ Incidencias</h2>
+
+    <label>Fecha</label>
+    <input type="date" id="incFecha">
+
+    <label>Descripción</label>
+    <textarea id="incDescripcion"
+      placeholder="Describe la incidencia..."></textarea>
+
+    <label>Fotografía</label>
+    <input type="file" id="incFoto" accept="image/*">
+
+    <button class="btn" onclick="guardarIncidencia()">
+      💾 Guardar incidencia
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>Historial de incidencias</h3>
+    <div id="listaIncidencias"></div>
+  </div>
+
+</section>
+
+
+<!-- HISTORIAL -->
+<section id="historial" class="page">
+
+  <div class="card">
+    <h2>📚 Historial</h2>
+
+    <button class="btn-secondary" onclick="exportarCSV()" style="width:100%;margin-bottom:10px">
+      📥 Exportar datos
+    </button>
+
+    <div id="historialLista"></div>
+  </div>
+
+</section>
+
+
+<!-- AJUSTES -->
+<section id="ajustes" class="page">
+
+  <div class="card">
+    <h2>⚙️ Ajustes</h2>
+
+    <p class="small">
+      Desde aquí puedes modificar los parámetros utilizados por la
+      aplicación. Los cambios quedan guardados en el dispositivo.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>🧪 Parámetros de muestreo</h3>
+
+    <div id="configParametros"></div>
+
+    <button class="btn" onclick="agregarParametro()">
+      ➕ Añadir parámetro
+    </button>
+
+    <button class="btn" onclick="guardarParametros()">
+      💾 Guardar parámetros
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>📍 Puntos de muestreo</h3>
+
+    <div id="configPuntos"></div>
+
+    <button class="btn" onclick="agregarPuntoConfiguracion()">
+      ➕ Añadir punto
+    </button>
+
+    <button class="btn" onclick="guardarPuntos()">
+      💾 Guardar puntos
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>🌊 Captaciones</h3>
+
+    <div id="configCaptaciones"></div>
+
+    <button class="btn" onclick="guardarCaptaciones()">
+      💾 Guardar captaciones
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>🏞️ Presas y embalses</h3>
+
+    <div id="configPresas"></div>
+
+    <button class="btn" onclick="guardarPresas()">
+      💾 Guardar presas y embalses
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>🗑️ Datos</h3>
+
+    <button class="btn btn-danger" onclick="borrarTodosLosDatos()">
+      Borrar todos los datos
+    </button>
+  </div>
+
+</section>
+
+</div>
+
+
+<!-- NAVEGACIÓN -->
+<nav class="bottom-nav">
+
+  <button onclick="mostrarPagina('inicio')" id="nav-inicio">
+    🏠<br>Inicio
+  </button>
+
+  <button onclick="mostrarPagina('muestreo')" id="nav-muestreo">
+    🧪<br>Muestreo
+  </button>
+
+  <button onclick="mostrarPagina('incidencias')" id="nav-incidencias">
+    ⚠️<br>Incidencias
+  </button>
+
+  <button onclick="mostrarPagina('historial')" id="nav-historial">
+    📚<br>Historial
+  </button>
+
+  <button onclick="mostrarPagina('ajustes')" id="nav-ajustes">
+    ⚙️<br>Ajustes
+  </button>
+
+</nav>
+
+
+<!-- MODAL EDICIÓN -->
+<div class="modal" id="modalEdicion">
+
+  <div class="modal-content">
+
+    <h2>✏️ Modificar registro</h2>
+
+    <input type="hidden" id="editId">
+
+    <label>Fecha</label>
+    <input type="date" id="editFecha">
+
+    <label>Lectura del contador (m³)</label>
+    <input type="number" id="editContador" step="0.01">
+
+    <div id="editParametros"></div>
+
+    <button class="btn" onclick="guardarEdicion()">
+      💾 Guardar cambios
+    </button>
+
+    <button class="btn btn-secondary" onclick="cerrarModal()">
+      Cancelar
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const CONFIG_KEY = "etap_config_v3";
+const LECTURAS_KEY = "etap_lecturas_v3";
+const MUESTREOS_KEY = "etap_muestreos_v3";
+const INCIDENCIAS_KEY = "etap_incidencias_v3";
+
+const configuracionInicial = {
+  parametros: [
+    {id:"cloro", nombre:"Cloro libre", unidad:"mg/L"},
+    {id:"ph", nombre:"pH", unidad:""},
+    {id:"turbidez", nombre:"Turbidez", unidad:"NTU"}
+  ],
+
+  puntos: [
+    "Entrada ETAP",
+    "Depósito Distribución 2"
+  ],
+
+  captaciones: [],
+
+  presas: []
+};
+
+
+function cargarConfig() {
+
+  const guardada = localStorage.getItem(CONFIG_KEY);
+
+  if (!guardada) {
+    localStorage.setItem(
+      CONFIG_KEY,
+      JSON.stringify(configuracionInicial)
+    );
+
+    return structuredClone(configuracionInicial);
+  }
+
+  try {
+    return JSON.parse(guardada);
+  } catch(e) {
+    localStorage.setItem(
+      CONFIG_KEY,
+      JSON.stringify(configuracionInicial)
+    );
+
+    return structuredClone(configuracionInicial);
+  }
+}
+
+
+let config = cargarConfig();
+
+
+function datos(key) {
+
+  try {
+    return JSON.parse(localStorage.getItem(key)) || [];
+  } catch(e) {
+    return [];
+  }
+
+}
+
+
+function guardarDatos(key, datos) {
+  localStorage.setItem(key, JSON.stringify(datos));
+}
+
+
+function nuevoId() {
+  return Date.now().toString() + Math.random()
+    .toString(36).substring(2,8);
+}
+
+
+/* ---------------- NAVEGACIÓN ---------------- */
+
+function mostrarPagina(id) {
+
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+  });
+
+  const pagina = document.getElementById(id);
+
+  if (pagina) {
+    pagina.classList.add("active");
+  }
+
+  document.querySelectorAll(".bottom-nav button")
+    .forEach(b => b.classList.remove("active"));
+
+  const boton = document.getElementById("nav-" + id);
+
+  if (boton) {
+    boton.classList.add("active");
+  }
+
+  if (id === "historial") {
+    renderHistorial();
+  }
+
+  if (id === "muestreo") {
+    renderMuestreo();
+  }
+
+  if (id === "ajustes") {
+    renderAjustes();
+  }
+
+  window.scrollTo(0,0);
+}
+
+
+/* ---------------- FECHAS ---------------- */
+
+function fechaHoy() {
+
+  const d = new Date();
+
+  const mes = String(d.getMonth()+1).padStart(2,"0");
+  const dia = String(d.getDate()).padStart(2,"0");
+
+  return d.getFullYear() + "-" + mes + "-" + dia;
+}
+
+
+document.getElementById("fecha").value = fechaHoy();
+document.getElementById("muestraFecha").value = fechaHoy();
+document.getElementById("incFecha").value = fechaHoy();
+
+
+/* ---------------- CONTADOR ---------------- */
+
+document.getElementById("contador").addEventListener(
+  "input",
+  calcularConsumo
+);
+
+
+function calcularConsumo() {
+
+  const actual = parseFloat(
+    document.getElementById("contador").value
+  );
+
+  if (isNaN(actual)) {
+    document.getElementById("consumo").textContent = "—";
+    return;
+  }
+
+  const lecturas = datos(LECTURAS_KEY)
+    .sort((a,b) => b.fecha.localeCompare(a.fecha));
+
+  if (!lecturas.length) {
+    document.getElementById("consumo").textContent = "—";
+    return;
+  }
+
+  const anterior = parseFloat(lecturas[0].contador);
+
+  if (isNaN(anterior)) {
+    document.getElementById("consumo").textContent = "—";
+    return;
+  }
+
+  const consumo = actual - anterior;
+
+  document.getElementById("consumo").textContent =
+    consumo >= 0 ? consumo.toFixed(2) : "0.00";
+}
+
+
+function guardarLectura() {
+
+  const fecha = document.getElementById("fecha").value;
+  const contador = parseFloat(
+    document.getElementById("contador").value
+  );
+
+  if (!fecha || isNaN(contador)) {
+    alert("Introduce la fecha y la lectura del contador.");
+    return;
+  }
+
+  let lecturas = datos(LECTURAS_KEY);
+
+  const existente = lecturas.findIndex(
+    x => x.fecha === fecha
+  );
+
+  const registro = {
+    id: existente >= 0 ? lecturas[existente].id : nuevoId(),
+    fecha,
+    contador
+  };
+
+  if (existente >= 0) {
+    lecturas[existente] = registro;
+  } else {
+    lecturas.push(registro);
+  }
+
+  guardarDatos(LECTURAS_KEY, lecturas);
+
+  calcularConsumo();
+
+  alert("Lectura guardada correctamente.");
+
+  renderHistorial();
+  renderInicio();
+}
+
+
+/* ---------------- MUESTREO ---------------- */
+
+function renderMuestreo() {
+
+  const select = document.getElementById("muestraPunto");
+
+  select.innerHTML = "";
+
+  config.puntos.forEach((p,i) => {
+
+    const option = document.createElement("option");
+
+    option.value = p;
+    option.textContent = p;
+
+    select.appendChild(option);
+
+  });
+
+  const contenedor =
+    document.getElementById("parametrosMuestreo");
+
+  contenedor.innerHTML = "";
+
+  config.parametros.forEach(param => {
+
+    const label = document.createElement("label");
+
+    label.textContent =
+      param.nombre +
+      (param.unidad ? " (" + param.unidad + ")" : "");
+
+    const input = document.createElement("input");
+
+    input.type = "number";
+    input.step = "any";
+    input.id = "param_" + param.id;
+
+    contenedor.appendChild(label);
+    contenedor.appendChild(input);
+
+  });
+
+  renderListaMuestreos();
+}
+
+
+function guardarMuestreo() {
+
+  const fecha =
+    document.getElementById("muestraFecha").value;
+
+  const punto =
+    document.getElementById("muestraPunto").value;
+
+  if (!fecha || !punto) {
+    alert("Completa la fecha y el punto de muestreo.");
+    return;
+  }
+
+  const valores = {};
+
+  config.parametros.forEach(param => {
+
+    const input =
+      document.getElementById("param_" + param.id);
+
+    valores[param.id] = input ? input.value : "";
+
+  });
+
+  let registros = datos(MUESTREOS_KEY);
+
+  registros.push({
+    id: nuevoId(),
+    fecha,
+    punto,
+    valores
+  });
+
+  guardarDatos(MUESTREOS_KEY, registros);
+
+  config.parametros.forEach(param => {
+    const input =
+      document.getElementById("param_" + param.id);
+
+    if (input) input.value = "";
+  });
+
+  alert("Muestreo guardado correctamente.");
+
+  renderListaMuestreos();
+}
+
+
+function renderListaMuestreos() {
+
+  const contenedor =
+    document.getElementById("listaMuestreos");
+
+  const registros = datos(MUESTREOS_KEY)
+    .sort((a,b) => b.fecha.localeCompare(a.fecha));
+
+  if (!registros.length) {
+    contenedor.innerHTML =
+      '<p class="small">No hay registros.</p>';
+    return;
+  }
+
+  contenedor.innerHTML = "";
+
+  registros.slice(0,20).forEach(r => {
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    let html =
+      "<strong>" + escapar(r.fecha) + "</strong><br>" +
+      escapar(r.punto);
+
+    config.parametros.forEach(p => {
+
+      const valor =
+        r.valores && r.valores[p.id] !== undefined
+        ? r.valores[p.id]
+        : "";
+
+      html +=
+        "<br>" +
+        escapar(p.nombre) +
+        ": " +
+        escapar(valor) +
+        (p.unidad ? " " + escapar(p.unidad) : "");
+
+    });
+
+    html +=
+      '<div class="item-actions">' +
+      '<button class="btn-warning btn-small" onclick="editarMuestreo(\'' +
+      r.id +
+      '\')">✏️ Modificar</button>' +
+      '<button class="btn-danger btn-small" onclick="borrarMuestreo(\'' +
+      r.id +
+      '\')">🗑️ Borrar</button>' +
+      "</div>";
+
+    div.innerHTML = html;
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+
+
+function editarMuestreo(id) {
+
+  const registros = datos(MUESTREOS_KEY);
+
+  const r = registros.find(x => x.id === id);
+
+  if (!r) return;
+
+  document.getElementById("muestraFecha").value = r.fecha;
+
+  const select =
+    document.getElementById("muestraPunto");
+
+  select.value = r.punto;
+
+  config.parametros.forEach(p => {
+
+    const input =
+      document.getElementById("param_" + p.id);
+
+    if (input) {
+      input.value =
+        r.valores && r.valores[p.id] !== undefined
+        ? r.valores[p.id]
+        : "";
+    }
+
+  });
+
+  r._editando = true;
+
+  localStorage.setItem(
+    "etap_muestreo_editando",
+    id
+  );
+
+  mostrarPagina("muestreo");
+
+  window.scrollTo(0,0);
+}
+
+
+function borrarMuestreo(id) {
+
+  if (!confirm("¿Quieres borrar este registro de muestreo?")) {
+    return;
+  }
+
+  let registros = datos(MUESTREOS_KEY);
+
+  registros =
+    registros.filter(x => x.id !== id);
+
+  guardarDatos(MUESTREOS_KEY, registros);
+
+  renderListaMuestreos();
+}
+
+
+/* ---------------- CAPTACIONES ---------------- */
+
+function agregarCaptacion() {
+
+  const input =
+    document.getElementById("nuevaCaptacion");
+
+  const nombre = input.value.trim();
+
+  if (!nombre) {
+    alert("Introduce el nombre de la captación.");
+    return;
+  }
+
+  config.captaciones.push(nombre);
+
+  guardarConfig();
+
+  input.value = "";
+
+  renderCaptaciones();
+  renderAjustes();
+}
+
+
+function renderCaptaciones() {
+
+  const contenedor =
+    document.getElementById("listaCaptaciones");
+
+  contenedor.innerHTML = "";
+
+  config.captaciones.forEach((nombre,index) => {
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    div.innerHTML =
+      "<strong>" + escapar(nombre) + "</strong>" +
+      '<div class="item-actions">' +
+      '<button class="btn-warning btn-small" onclick="editarCaptacion(' +
+      index + ')">✏️ Modificar</button>' +
+      '<button class="btn-danger btn-small" onclick="borrarCaptacion(' +
+      index + ')">🗑️ Borrar</button>' +
+      "</div>";
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+
+
+function editarCaptacion(index) {
+
+  const nuevo =
+    prompt(
+      "Modificar captación:",
+      config.captaciones[index]
+    );
+
+  if (nuevo === null) return;
+
+  if (!nuevo.trim()) return;
+
+  config.captaciones[index] = nuevo.trim();
+
+  guardarConfig();
+  renderCaptaciones();
+  renderAjustes();
+}
+
+
+function borrarCaptacion(index) {
+
+  if (!confirm("¿Borrar esta captación?")) return;
+
+  config.captaciones.splice(index,1);
+
+  guardarConfig();
+  renderCaptaciones();
+  renderAjustes();
+}
+
+
+/* ---------------- PRESAS ---------------- */
+
+function agregarPresa() {
+
+  const input =
+    document.getElementById("nuevaPresa");
+
+  const nombre = input.value.trim();
+
+  if (!nombre) {
+    alert("Introduce el nombre.");
+    return;
+  }
+
+  config.presas.push(nombre);
+
+  guardarConfig();
+
+  input.value = "";
+
+  renderPresas();
+  renderAjustes();
+}
+
+
+function renderPresas() {
+
+  const contenedor =
+    document.getElementById("listaPresas");
+
+  contenedor.innerHTML = "";
+
+  config.presas.forEach((nombre,index) => {
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    div.innerHTML =
+      "<strong>" + escapar(nombre) + "</strong>" +
+      '<div class="item-actions">' +
+      '<button class="btn-warning btn-small" onclick="editarPresa(' +
+      index + ')">✏️ Modificar</button>' +
+      '<button class="btn-danger btn-small" onclick="borrarPresa(' +
+      index + ')">🗑️ Borrar</button>' +
+      "</div>";
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+
+
+function editarPresa(index) {
+
+  const nuevo =
+    prompt(
+      "Modificar presa o embalse:",
+      config.presas[index]
+    );
+
+  if (nuevo === null) return;
+
+  if (!nuevo.trim()) return;
+
+  config.presas[index] = nuevo.trim();
+
+  guardarConfig();
+  renderPresas();
+  renderAjustes();
+}
+
+
+function borrarPresa(index) {
+
+  if (!confirm("¿Borrar esta presa o embalse?")) return;
+
+  config.presas.splice(index,1);
+
+  guardarConfig();
+  renderPresas();
+  renderAjustes();
+}
+
+
+/* ---------------- INCIDENCIAS ---------------- */
+
+function guardarIncidencia() {
+
+  const fecha =
+    document.getElementById("incFecha").value;
+
+  const descripcion =
+    document.getElementById("incDescripcion").value.trim();
+
+  const archivo =
+    document.getElementById("incFoto").files[0];
+
+  if (!fecha || !descripcion) {
+    alert("Introduce fecha y descripción.");
+    return;
+  }
+
+  if (archivo) {
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+      guardarIncidenciaDatos(
+        fecha,
+        descripcion,
+        e.target.result
+      );
+
+    };
+
+    reader.readAsDataURL(archivo);
+
+  } else {
+
+    guardarIncidenciaDatos(
+      fecha,
+      descripcion,
+      ""
+    );
+
+  }
+
+}
+
+
+function guardarIncidenciaDatos(
+  fecha,
+  descripcion,
+  foto
+) {
+
+  const registros = datos(INCIDENCIAS_KEY);
+
+  registros.push({
+    id: nuevoId(),
+    fecha,
+    descripcion,
+    foto
+  });
+
+  guardarDatos(INCIDENCIAS_KEY, registros);
+
+  document.getElementById("incDescripcion").value = "";
+  document.getElementById("incFoto").value = "";
+
+  alert("Incidencia guardada correctamente.");
+
+  renderIncidencias();
+}
+
+
+function renderIncidencias() {
+
+  const contenedor =
+    document.getElementById("listaIncidencias");
+
+  const registros =
+    datos(INCIDENCIAS_KEY)
+      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+
+  contenedor.innerHTML = "";
+
+  if (!registros.length) {
+
+    contenedor.innerHTML =
+      '<p class="small">No hay incidencias.</p>';
+
+    return;
+  }
+
+  registros.forEach(r => {
+
+    const div = document.createElement("div");
+
+    div.className = "item";
+
+    let html =
+      "<strong>" + escapar(r.fecha) + "</strong><br>" +
+      escapar(r.descripcion);
+
+    if (r.foto) {
+
+      html +=
+        '<br><img class="photo-preview" src="' +
+        r.foto +
+        '">';
+
+    }
+
+    html +=
+      '<div class="item-actions">' +
+      '<button class="btn-danger btn-small" onclick="borrarIncidencia(\'' +
+      r.id +
+      '\')">🗑️ Borrar</button>' +
+      "</div>";
+
+    div.innerHTML = html;
+
+    contenedor.appendChild(div);
+
+  });
+
+}
+
+
+function borrarIncidencia(id) {
+
+  if (!confirm("¿Borrar esta incidencia?")) return;
+
+  let registros = datos(INCIDENCIAS_KEY);
+
+  registros =
+    registros.filter(x => x.id !== id);
+
+  guardarDatos(INCIDENCIAS_KEY, registros);
+
+  renderIncidencias();
+}
+
+
+/* ---------------- HISTORIAL ---------------- */
+
+function renderHistorial() {
+
+  const contenedor =
+    document.getElementById("historialLista");
+
+  const lecturas =
+    datos(LECTURAS_KEY)
+      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+
+  const muestreos =
+    datos(MUESTREOS_KEY)
+      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+
+  contenedor.innerHTML = "";
+
+  if (!lecturas.length && !muestreos.length) {
+
+    contenedor.innerHTML =
+      '<p class="small">No hay datos guardados.</p>';
+
+    return;
+  }
+
+
+  if (lecturas.length) {
+
+    const titulo =
+      document.createElement("h3");
+
+    titulo.textContent = "📊 Lecturas del contador";
+
+    contenedor.appendChild(titulo);
+
+    lecturas.forEach((r,index) => {
+
+      let consumo = "—";
+
+      const siguiente =
+        lecturas[index + 1];
+
+      if (siguiente) {
+
+        const c =
+          parseFloat(r.contador) -
+          parseFloat(siguiente.contador);
+
+        if (!isNaN(c)) {
+          consumo = c.toFixed(2) + " m³";
+        }
+
+      }
+
+      const div =
+        document.createElement("div");
+
+      div.className = "item";
+
+      div.innerHTML =
+        "<strong>" + escapar(r.fecha) + "</strong><br>" +
+        "Contador: " +
+        escapar(r.contador) +
+        " m³<br>" +
+        "Consumo diario: " +
+        consumo +
+        '<div class="item-actions">' +
+        '<button class="btn-warning btn-small" onclick="editarLectura(\'' +
+        r.id +
+        '\')">✏️ Modificar</button>' +
+        '<button class="btn-danger btn-small" onclick="borrarLectura(\'' +
+        r.id +
+        '\')">🗑️ Borrar</button>' +
+        "</div>";
+
+      contenedor.appendChild(div);
+
+    });
+
+  }
+
+
+  if (muestreos.length) {
+
+    const titulo =
+      document.createElement("h3");
+
+    titulo.textContent = "🧪 Muestreos";
+
+    contenedor.appendChild(titulo);
+
+    muestreos.forEach(r => {
+
+      const div =
+        document.createElement("div");
+
+      div.className = "item";
+
+      let html =
+        "<strong>" +
+        escapar(r.fecha) +
+        "</strong><br>" +
+        escapar(r.punto);
+
+      config.parametros.forEach(p => {
+
+        const valor =
+          r.valores &&
+          r.valores[p.id] !== undefined
+          ? r.valores[p.id]
+          : "";
+
+        html +=
+          "<br>" +
+          escapar(p.nombre) +
+          ": " +
+          escapar(valor) +
+          (p.unidad
+            ? " " + escapar(p.unidad)
+            : "");
+
+      });
+
+      html +=
+        '<div class="item-actions">' +
+        '<button class="btn-warning btn-small" onclick="editarMuestreo(\'' +
+        r.id +
+        '\')">✏️ Modificar</button>' +
+        '<button class="btn-danger btn-small" onclick="borrarMuestreo(\'' +
+        r.id +
+        '\')">🗑️ Borrar</button>' +
+        "</div>";
+
+      div.innerHTML = html;
+
+      contenedor.appendChild(div);
+
+    });
+
+  }
+
+}
+
+
+function editarLectura(id) {
+
+  const lecturas =
+    datos(LECTURAS_KEY);
+
+  const r =
+    lecturas.find(x => x.id === id);
+
+  if (!r) return;
+
+  document.getElementById("editId").value = id;
+  document.getElementById("editFecha").value = r.fecha;
+  document.getElementById("editContador").value = r.contador;
+
+  document.getElementById("editParametros").innerHTML = "";
+
+  document.getElementById("modalEdicion")
+    .classList.add("show");
+
+}
+
+
+function guardarEdicion() {
+
+  const id =
+    document.getElementById("editId").value;
+
+  const fecha =
+    document.getElementById("editFecha").value;
+
+  const contador =
+    parseFloat(
+      document.getElementById("editContador").value
+    );
+
+  if (!fecha || isNaN(contador)) {
+
+    alert("Completa los datos.");
+
+    return;
+  }
+
+  let lecturas =
+    datos(LECTURAS_KEY);
+
+  const indice =
+    lecturas.findIndex(x => x.id === id);
+
+  if (indice < 0) return;
+
+  lecturas[indice].fecha = fecha;
+  lecturas[indice].contador = contador;
+
+  guardarDatos(LECTURAS_KEY, lecturas);
+
+  cerrarModal();
+
+  renderHistorial();
+
+  alert("Registro modificado correctamente.");
+
+}
+
+
+function borrarLectura(id) {
+
+  if (!confirm("¿Quieres borrar esta lectura?")) {
+    return;
+  }
+
+  let lecturas =
+    datos(LECTURAS_KEY);
+
+  lecturas =
+    lecturas.filter(x => x.id !== id);
+
+  guardarDatos(LECTURAS_KEY, lecturas);
+
+  renderHistorial();
+  renderInicio();
+}
+
+
+/* ---------------- AJUSTES ---------------- */
+
+function guardarConfig() {
+
+  localStorage.setItem(
+    CONFIG_KEY,
+    JSON.stringify(config)
+  );
+
+}
+
+
+function renderAjustes() {
+
+  renderConfigParametros();
+  renderConfigPuntos();
+  renderConfigCaptaciones();
+  renderConfigPresas();
+
+}
+
+
+function renderConfigParametros() {
+
+  const contenedor =
+    document.getElementById("configParametros");
+
+  contenedor.innerHTML = "";
+
+  config.parametros.forEach((p,index) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className = "parameter-row";
+
+    row.innerHTML =
+      '<input value="' +
+      escaparAttr(p.nombre) +
+      '" placeholder="Nombre" data-param-nombre="' +
+      index +
+      '">' +
+
+      '<input value="' +
+      escaparAttr(p.unidad) +
+      '" placeholder="Unidad" data-param-unidad="' +
+      index +
+      '">' +
+
+      '<button class="btn-danger btn-small" onclick="eliminarParametro(' +
+      index +
+      ')">🗑️</button>';
+
+    contenedor.appendChild(row);
+
+  });
+
+}
+
+
+function agregarParametro() {
+
+  config.parametros.push({
+    id: "param_" + nuevoId(),
+    nombre: "Nuevo parámetro",
+    unidad: ""
+  });
+
+  renderConfigParametros();
+}
+
+
+function eliminarParametro(index) {
+
+  if (!confirm("¿Eliminar este parámetro?")) return;
+
+  config.parametros.splice(index,1);
+
+  renderConfigParametros();
+}
+
+
+function guardarParametros() {
+
+  const nombres =
+    document.querySelectorAll(
+      "[data-param-nombre]"
+    );
+
+  const unidades =
+    document.querySelectorAll(
+      "[data-param-unidad]"
+    );
+
+  config.parametros.forEach((p,index) => {
+
+    if (nombres[index]) {
+      p.nombre =
+        nombres[index].value.trim() ||
+        "Parámetro";
+    }
+
+    if (unidades[index]) {
+      p.unidad =
+        unidades[index].value.trim();
+    }
+
+  });
+
+  guardarConfig();
+
+  alert("Parámetros guardados correctamente.");
+
+  renderMuestreo();
+  renderHistorial();
+
+}
+
+
+function renderConfigPuntos() {
+
+  const contenedor =
+    document.getElementById("configPuntos");
+
+  contenedor.innerHTML = "";
+
+  config.puntos.forEach((p,index) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className = "parameter-row";
+
+    row.innerHTML =
+      '<input value="' +
+      escaparAttr(p) +
+      '" data-punto="' +
+      index +
+      '">' +
+
+      '<button class="btn-danger btn-small" onclick="eliminarPunto(' +
+      index +
+      ')">🗑️</button>';
+
+    contenedor.appendChild(row);
+
+  });
+
+}
+
+
+function agregarPuntoConfiguracion() {
+
+  config.puntos.push("Nuevo punto");
+
+  renderConfigPuntos();
+
+}
+
+
+function eliminarPunto(index) {
+
+  if (!confirm("¿Eliminar este punto de muestreo?")) {
+    return;
+  }
+
+  config.puntos.splice(index,1);
+
+  renderConfigPuntos();
+
+}
+
+
+function guardarPuntos() {
+
+  const inputs =
+    document.querySelectorAll(
+      "[data-punto]"
+    );
+
+  config.puntos = [];
+
+  inputs.forEach(input => {
+
+    const valor =
+      input.value.trim();
+
+    if (valor) {
+      config.puntos.push(valor);
+    }
+
+  });
+
+  guardarConfig();
+
+  alert("Puntos de muestreo guardados.");
+
+  renderMuestreo();
+  renderConfigPuntos();
+
+}
+
+
+function renderConfigCaptaciones() {
+
+  const contenedor =
+    document.getElementById("configCaptaciones");
+
+  contenedor.innerHTML = "";
+
+  config.captaciones.forEach((c,index) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className = "parameter-row";
+
+    row.innerHTML =
+      '<input value="' +
+      escaparAttr(c) +
+      '" data-captacion="' +
+      index +
+      '">' +
+
+      '<button class="btn-danger btn-small" onclick="eliminarCaptacionConfig(' +
+      index +
+      ')">🗑️</button>';
+
+    contenedor.appendChild(row);
+
+  });
+
+}
+
+
+function eliminarCaptacionConfig(index) {
+
+  config.captaciones.splice(index,1);
+
+  renderConfigCaptaciones();
+
+}
+
+
+function guardarCaptaciones() {
+
+  const inputs =
+    document.querySelectorAll(
+      "[data-captacion]"
+    );
+
+  config.captaciones = [];
+
+  inputs.forEach(input => {
+
+    if (input.value.trim()) {
+      config.captaciones.push(
+        input.value.trim()
+      );
+    }
+
+  });
+
+  guardarConfig();
+
+  alert("Captaciones guardadas.");
+
+  renderCaptaciones();
+
+}
+
+
+function renderConfigPresas() {
+
+  const contenedor =
+    document.getElementById("configPresas");
+
+  contenedor.innerHTML = "";
+
+  config.presas.forEach((p,index) => {
+
+    const row =
+      document.createElement("div");
+
+    row.className = "parameter-row";
+
+    row.innerHTML =
+      '<input value="' +
+      escaparAttr(p) +
+      '" data-presa="' +
+      index +
+      '">' +
+
+      '<button class="btn-danger btn-small" onclick="eliminarPresaConfig(' +
+      index +
+      ')">🗑️</button>';
+
+    contenedor.appendChild(row);
+
+  });
+
+}
+
+
+function eliminarPresaConfig(index) {
+
+  config.presas.splice(index,1);
+
+  renderConfigPresas();
+
+}
+
+
+function guardarPresas() {
+
+  const inputs =
+    document.querySelectorAll(
+      "[data-presa]"
+    );
+
+  config.presas = [];
+
+  inputs.forEach(input => {
+
+    if (input.value.trim()) {
+      config.presas.push(
+        input.value.trim()
+      );
+    }
+
+  });
+
+  guardarConfig();
+
+  alert("Presas y embalses guardados.");
+
+  renderPresas();
+
+}
+
+
+/* ---------------- BORRADO GENERAL ---------------- */
+
+function borrarTodosLosDatos() {
+
+  const confirmar =
+    confirm(
+      "ATENCIÓN: se borrarán todas las lecturas, muestreos e incidencias. ¿Continuar?"
+    );
+
+  if (!confirmar) return;
+
+  localStorage.removeItem(LECTURAS_KEY);
+  localStorage.removeItem(MUESTREOS_KEY);
+  localStorage.removeItem(INCIDENCIAS_KEY);
+
+  alert("Todos los datos han sido borrados.");
+
+  renderHistorial();
+  renderIncidencias();
+  renderListaMuestreos();
+  renderInicio();
+
+}
+
+
+/* ---------------- EXPORTACIÓN ---------------- */
+
+function exportarCSV() {
+
+  const lecturas = datos(LECTURAS_KEY);
+  const muestreos = datos(MUESTREOS_KEY);
+  const incidencias = datos(INCIDENCIAS_KEY);
+
+  let csv =
+    "TIPO;FECHA;PUNTO;PARAMETRO;VALOR;UNIDAD;OBSERVACIONES\n";
+
+  lecturas.forEach(r => {
+
+    csv +=
+      "CONTADOR;" +
+      escaparCSV(r.fecha) +
+      ";;Lectura contador;" +
+      escaparCSV(r.contador) +
+      ";m3;\n";
+
+  });
+
+  muestreos.forEach(r => {
+
+    config.parametros.forEach(p => {
+
+      const valor =
+        r.valores &&
+        r.valores[p.id] !== undefined
+        ? r.valores[p.id]
+        : "";
+
+      csv +=
+        "MUESTREO;" +
+        escaparCSV(r.fecha) +
+        ";" +
+        escaparCSV(r.punto) +
+        ";" +
+        escaparCSV(p.nombre) +
+        ";" +
+        escaparCSV(valor) +
+        ";" +
+        escaparCSV(p.unidad) +
+        ";\n";
+
+    });
+
+  });
+
+  incidencias.forEach(r => {
+
+    csv +=
+      "INCIDENCIA;" +
+      escaparCSV(r.fecha) +
+      ";;;;" +
+      escaparCSV(r.descripcion) +
+      "\n";
+
+  });
+
+  const blob =
+    new Blob(
+      ["\ufeff" + csv],
+      {type:"text/csv;charset=utf-8;"}
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download =
+    "ETAP_Control_" +
+    fechaHoy() +
+    ".csv";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+function escaparCSV(valor) {
+
+  if (valor === undefined || valor === null) {
+    return "";
+  }
+
+  return '"' +
+    String(valor)
+      .replace(/"/g,'""') +
+    '"';
+
+}
+
+
+/* ---------------- UTILIDADES ---------------- */
+
+function escapar(valor) {
+
+  if (valor === undefined || valor === null) {
+    return "";
+  }
+
+  return String(valor)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function escaparAttr(valor) {
+
+  return escapar(valor);
+
+}
+
+
+function cerrarModal() {
+
+  document.getElementById("modalEdicion")
+    .classList.remove("show");
+
+}
+
+
+/* ---------------- RESUMEN INICIO ---------------- */
+
+function renderInicio() {
+
+  const lecturas =
+    datos(LECTURAS_KEY)
+      .sort((a,b) => b.fecha.localeCompare(a.fecha));
+
+  if (lecturas.length) {
+
+    const ultima = lecturas[0];
+
+    document.getElementById("contador").value =
+      ultima.contador;
+
+    document.getElementById("fecha").value =
+      ultima.fecha;
+
+    calcularConsumo();
+
+  }
+
+  const puntos =
+    document.getElementById("puntosResumen");
+
+  puntos.innerHTML =
+    config.puntos.length
+    ? config.puntos.map(p =>
+        "• " + escapar(p)
+      ).join("<br>")
+    : '<span class="small">No hay puntos configurados.</span>';
+
+
+  const captaciones =
+    document.getElementById("captacionesResumen");
+
+  captaciones.innerHTML =
+    config.captaciones.length
+    ? config.captaciones.map(p =>
+        "• " + escapar(p)
+      ).join("<br>")
+    : '<span class="small">No hay captaciones configuradas.</span>';
+
+
+  const presas =
+    document.getElementById("presasResumen");
+
+  presas.innerHTML =
+    config.presas.length
+    ? config.presas.map(p =>
+        "• " + escapar(p)
+      ).join("<br>")
+    : '<span class="small">No hay presas o embalses configurados.</span>';
+
+}
+
+
+/* ---------------- INICIO ---------------- */
+
+renderInicio();
+renderCaptaciones();
+renderPresas();
+renderIncidencias();
+renderMuestreo();
+
+mostrarPagina("inicio");
+
 </script>
-</body></html>
+
+</body>
+</html>
