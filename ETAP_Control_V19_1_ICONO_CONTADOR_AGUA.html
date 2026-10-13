@@ -1,0 +1,340 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071a2d"><title>ETAP Control</title><link rel="manifest" href="manifest.json"><style>
+:root{--bg:#071a2d;--panel:#0d2942;--panel2:#102f4b;--input:#071a2d;--line:#24516b;--blue:#10b9f4;--blue2:#078fc2;--text:#eef8ff;--muted:#9db6c9;--ok:#20d39b;--danger:#ff5d67;--shadow:0 8px 24px rgba(0,0,0,.18)}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;background:linear-gradient(180deg,#071a2d 0,#061525 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}header{position:sticky;top:0;z-index:20;background:rgba(8,34,58,.97);padding:15px 16px 13px;text-align:center;border-bottom:1px solid #16415f;box-shadow:0 4px 16px rgba(0,0,0,.18)}h1{font-size:21px;letter-spacing:.7px;margin:0 0 3px}.wrap{width:min(100%,720px);margin:auto;padding:12px 12px 92px}.card{background:var(--panel);border:1px solid #194663;border-radius:16px;padding:14px;margin:10px 0;box-shadow:var(--shadow)}.title{font-weight:800;font-size:17px;line-height:1.2;margin:2px 0 12px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.item{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#0a2137;border:1px solid #173f58;border-radius:12px;padding:11px 10px;margin:8px 0;min-height:52px}.item>span:first-child{min-width:0;flex:1;line-height:1.3}.item>span:last-child{display:flex;gap:6px;flex-shrink:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field{min-width:0}label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin:10px 0 5px}input,select,textarea{display:block;width:100%;max-width:100%;min-width:0;height:44px;padding:10px 11px;border-radius:10px;border:1px solid #2a5974;background:var(--input);color:var(--text);font:inherit;outline:none}select{appearance:auto}textarea{height:auto;min-height:88px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(16,185,244,.12)}button{border:0;border-radius:10px;min-height:42px;padding:10px 13px;background:var(--blue);color:#001421;font:inherit;font-weight:800;cursor:pointer;white-space:normal}.secondary{background:#173e59;color:var(--text)}.danger{background:var(--danger);color:#fff}.ok{background:var(--ok);color:#00251b}.wide{width:100%;margin-top:9px}.small{min-height:36px;padding:7px 10px;font-size:12px}.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(6,21,38,.98);border-top:1px solid #16415f;display:flex;justify-content:center;gap:7px;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));z-index:30}.nav button{flex:1;max-width:170px;min-height:44px}.nav .sos{background:#d32f2f!important;border-color:#ff6b6b!important;color:#fff!important}.hidden{display:none}.badge{font-size:12px;color:#071a2d;background:var(--blue);border-radius:20px;padding:4px 8px;font-weight:800}.muted{color:var(--muted);font-size:13px;line-height:1.4}.notice{background:#143b55;border-left:4px solid var(--blue);padding:10px;border-radius:8px;font-size:13px;margin:8px 0;line-height:1.4}.check{display:flex;gap:9px;align-items:center}.check input{width:20px;height:20px;margin:0}.tablewrap{overflow:auto}.historyrow{font-size:13px;border-top:1px solid #28516a;padding:10px 0;line-height:1.45}.param-card{background:#0a2137;border:1px solid #194663;border-radius:14px;padding:12px;margin:10px 0}.param-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}.param-name{font-weight:800;min-width:0;overflow-wrap:anywhere}.param-unit{font-size:11px;color:var(--muted);white-space:nowrap}.sample-value{font-size:17px;font-weight:700;text-align:right}.sample-row{display:grid;grid-template-columns:minmax(0,1fr) 132px;gap:10px;align-items:end;padding:11px 0;border-top:1px solid #194663}.sample-row:first-of-type{border-top:0}.ref{font-size:11px;color:var(--muted);margin-top:5px}.form-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.form-actions .wide{margin-top:0}.subsection{margin-top:14px;padding-top:4px}.danger-outline{background:transparent;color:#ff8d95;border:1px solid #8b3942} .setting-card{background:#0a2137;border:1px solid #194663;border-radius:14px;padding:12px;margin:10px 0}.setting-card.collapsible .setting-content{display:none}.setting-card.collapsible.open .setting-content{display:block}.setting-card.collapsible .setting-title{cursor:pointer}.setting-card.collapsible .setting-title:after{content:" ▸";font-size:12px;opacity:.8}.setting-card.collapsible.open .setting-title:after{content:" ▾"}.setting-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.setting-title{font-weight:800;font-size:15px}.switch-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.switch{position:relative;display:inline-block;width:52px;height:30px;flex:0 0 auto}.switch input{opacity:0;width:0;height:0;position:absolute}.slider{position:absolute;cursor:pointer;inset:0;background:#4a6577;border-radius:30px;transition:.2s}.slider:before{content:"";position:absolute;width:24px;height:24px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s}.switch input:checked + .slider{background:#20d39b}.switch input:checked + .slider:before{transform:translateX(22px)}.phone-row{display:grid;grid-template-columns:minmax(0,1fr) 74px;gap:10px;align-items:end;margin-top:9px}.phone-row .switch-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}.switch-label{font-size:10px;color:var(--muted);font-weight:700}
+@media(max-width:420px){.wrap{padding-left:9px;padding-right:9px}.card{padding:12px;border-radius:14px}.item{padding:10px 8px}.item>span:last-child{gap:4px}.small{padding:7px 8px}.grid{gap:8px}.sample-row{grid-template-columns:minmax(0,1fr) 118px}.nav{gap:5px}.nav button{font-size:12px;padding:9px 6px}}
+@media(min-width:700px){.wrap{padding-top:18px}.card{padding:16px}}
+
+.pages{display:flex;overflow-x:auto;overflow-y:hidden;width:100%;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.pages::-webkit-scrollbar{display:none}.page{flex:0 0 100%;width:100%;scroll-snap-align:start;scroll-snap-stop:always;min-width:0}.page-inner{min-height:100%;padding:2px 0 10px}.page-indicator{display:flex;justify-content:center;gap:7px;padding:5px 0 10px}.page-indicator .dot{width:8px;height:8px;border-radius:50%;background:#31536a;transition:.2s}.page-indicator .dot.active{background:var(--blue);width:20px;border-radius:8px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1px;color:var(--blue);margin-bottom:5px}.hero{margin-top:0}.result{margin-top:16px;padding:16px;border-radius:16px;background:linear-gradient(180deg,#3f8fc0 0%,#2b6f9d 100%);border:1px solid #62a7cf;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -2px 0 rgba(0,0,0,.16),0 4px 0 #1d4f72,0 7px 12px rgba(0,0,0,.24);text-align:center;color:#fff}.result label{display:block;margin:0 0 5px;color:#fff}.result strong{font-size:26px;color:#fff}.result.normal{background:linear-gradient(180deg,#3f8fc0 0%,#2b6f9d 100%)}.result.warning{background:linear-gradient(180deg,#d6a62b 0%,#a97b12 100%);border-color:#f0ca55;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 -2px 0 rgba(0,0,0,.16),0 4px 0 #76550b,0 7px 12px rgba(0,0,0,.24)}.result.alert{background:linear-gradient(180deg,#d9575f 0%,#a8323a 100%);border-color:#f1848a;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 -2px 0 rgba(0,0,0,.16),0 4px 0 #70242a,0 7px 12px rgba(0,0,0,.24)}.swipe-hint{text-align:center;color:var(--muted);font-size:11px;padding:4px 0 12px}
+@media(max-width:420px){.pages{margin-left:0}.page-inner{padding-left:0;padding-right:0}.page-indicator{padding-top:2px}}
+
+/* V15 ENLACES: botones tipo app, integrados con el estilo existente */
+.links-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+.app-link{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:11px 14px!important;text-decoration:none;border-radius:999px!important;color:#fff!important;background:radial-gradient(circle at 34% 20%,rgba(255,255,255,.32) 0 7%,rgba(255,255,255,.10) 20%,transparent 43%),linear-gradient(180deg,#58b9e5 0%,#3090bd 55%,#24779e 100%)!important;border:1px solid rgba(255,255,255,.28)!important;box-shadow:inset 0 1px 1px rgba(255,255,255,.30),inset 0 -2px 3px rgba(0,0,0,.12),0 2px 0 #1b5576,0 4px 8px rgba(0,0,0,.18)!important;font-weight:800}
+.app-link .link-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.16);font-size:18px;flex:0 0 34px}
+.app-link .link-text{display:flex;flex-direction:column;align-items:flex-start;min-width:0;text-align:left}
+.app-link .link-name{font-size:15px;line-height:1.2}
+.app-link .link-sub{font-size:11px;line-height:1.25;opacity:.86;font-weight:600;margin-top:2px;overflow-wrap:anywhere}
+.add-link{margin-top:12px!important}
+
+.map-toggle{cursor:pointer!important;border:0!important;text-align:left;position:relative}
+.map-toggle .map-chevron{margin-left:auto;font-size:20px;opacity:.9}
+.mapas-panel{margin-top:8px;padding:8px;border-radius:18px;background:rgba(0,0,0,.08)}
+.map-sub{min-height:52px!important;margin-bottom:8px;font-weight:750!important}
+.map-sub:last-child{margin-bottom:0}
+/* V12: botones burbuja 3D — SOLO ESTILO DE BOTONES */
+button{
+  background:radial-gradient(circle at 34% 20%,rgba(255,255,255,.32) 0 7%,rgba(255,255,255,.10) 20%,transparent 43%),linear-gradient(180deg,#58b9e5 0%,#3090bd 55%,#24779e 100%) !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.28) !important;
+  border-radius:999px !important;
+  padding:8px 14px !important;
+  min-height:38px !important;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.30),inset 0 -2px 3px rgba(0,0,0,.12),0 2px 0 #1b5576,0 4px 8px rgba(0,0,0,.18) !important;
+  transform:translateY(0);
+  transition:transform .08s ease,box-shadow .08s ease,filter .08s ease !important;
+}
+button:active{
+  transform:translateY(2px);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.18),inset 0 -1px 1px rgba(0,0,0,.10),0 1px 0 #1b5576,0 2px 5px rgba(0,0,0,.16) !important;
+}
+button.secondary{background:radial-gradient(circle at 34% 20%,rgba(255,255,255,.28) 0 7%,rgba(255,255,255,.08) 20%,transparent 43%),linear-gradient(180deg,#668fa6 0%,#496f83 55%,#3f6172 100%) !important}
+button.small{min-height:32px !important;padding:6px 11px !important;border-radius:999px !important}
+button.wide{border-radius:999px !important}
+button.danger{background:linear-gradient(180deg,#f06b73 0%,#c93d47 55%,#ad3039 100%) !important}
+button.ok{background:linear-gradient(180deg,#48dcae 0%,#20b987 55%,#189b72 100%) !important}
+button.sos{background:linear-gradient(180deg,#f25d64 0%,#d8323c 55%,#b92730 100%) !important;border-color:rgba(255,154,160,.72) !important}
+.item{background:linear-gradient(180deg,#3f8fc0 0%,#2b6f9d 100%) !important;border:1px solid rgba(98,167,207,.75) !important;border-radius:999px !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -2px 0 rgba(0,0,0,.13),0 2px 0 #1d4f72,0 5px 9px rgba(0,0,0,.18) !important;color:#fff !important}
+.item>span:first-child{color:#fff !important}
+
+/* V15.1: tipografía del título ETAP CONTROL — SOLO TÍTULO */
+h1{font-family:"Montserrat", "Trebuchet MS", Arial, sans-serif;font-weight:900;letter-spacing:1.6px;}
+<style>/* V15.2 — SOLO CABECERA ETAP CONTROL */
+header{position:relative;padding:18px 16px 14px!important;text-align:center!important}
+header h1{display:inline-flex!important;align-items:center!important;gap:10px!important;margin:0!important;font-family:"Trebuchet MS","Arial Rounded MT Bold",Arial,sans-serif!important;font-size:clamp(27px,7vw,38px)!important;font-weight:900!important;letter-spacing:1.4px!important;line-height:1!important;color:#eafaff!important;text-shadow:0 2px 0 #1d607f,0 4px 9px rgba(0,0,0,.28)!important}
+header h1::before{content:"💧";display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;font-size:25px;line-height:1;border-radius:50%;background:radial-gradient(circle at 32% 25%,rgba(255,255,255,.5),rgba(255,255,255,.08) 38%,rgba(16,116,158,.35) 100%);box-shadow:inset 0 1px 2px rgba(255,255,255,.45),0 2px 5px rgba(0,0,0,.22);transition:filter .15s ease}header.offline h1::before{filter:grayscale(1) sepia(1) saturate(8) hue-rotate(325deg) brightness(.95)}
+header .muted{margin-top:7px!important;font-size:12px!important;letter-spacing:.35px!important;opacity:.78!important}
+</style>
+<style>
+/* INICIO RÁPIDO — acceso directo a los bloques principales, sin alterar los bloques existentes */
+.quick-home{padding:4px 0 18px}.quick-head{text-align:center;margin:6px 0 16px}.quick-head .quick-title{font-size:18px;font-weight:900;letter-spacing:.6px}.quick-head .quick-sub{font-size:12px;color:var(--muted);margin-top:5px}.quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.quick-btn{aspect-ratio:1/1;min-height:0!important;padding:10px 6px!important;border-radius:18px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;font-weight:900!important;font-size:12px!important;line-height:1.15;position:relative}.quick-btn .qicon{font-size:27px;line-height:1}.quick-btn .qtext{max-width:96%}.quick-btn .qsub{font-size:9px;font-weight:600;opacity:.78;line-height:1.15}.quick-btn:active{transform:translateY(2px)}
+@media(max-width:380px){.quick-grid{gap:8px}.quick-btn{border-radius:16px!important;padding:8px 4px!important;font-size:11px!important}.quick-btn .qicon{font-size:24px}}
+</style>
+
+<style id="v18-9-colores-botones-unificados">
+/* V18.9: unificar únicamente el azul de los botones y elementos azules tipo botón */
+button:not(.danger):not(.ok):not(.sos),
+button.secondary,
+.item,
+.app-link {
+  background: radial-gradient(circle at 34% 20%,rgba(255,255,255,.32) 0 7%,rgba(255,255,255,.10) 20%,transparent 43%),linear-gradient(180deg,#58b9e5 0%,#3090bd 55%,#24779e 100%) !important;
+}
+.item {
+  border-color: rgba(255,255,255,.28) !important;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.30),inset 0 -2px 3px rgba(0,0,0,.12),0 2px 0 #1b5576,0 4px 8px rgba(0,0,0,.18) !important;
+}
+</style>
+</head><body><header><h1>ETAP CONTROL</h1></header><main class="wrap" id="app"></main><nav class="nav"><button class="sos" onclick="sosCall()">🆘 SOS</button><button class="secondary" onclick="goBack()">Atrás</button></nav><script src="xlsx.min.js"></script><script>
+const KEY='etap_control_v1';
+const defaults={consumoLimiteAmarillo:700,consumoLimiteRojo:1000,captaciones:['Captación Cerro Moro','Captación Garganta al Pajarero'],embalses:['Embalse El Pajarero','Embalse Lago Colinar','Embalse Presa Tierra Colinar'],puntos:['Decantador','Salida de ETAP','Depósito Distribución 1','Depósito Distribución 2','Médico','Ayuntamiento'],params:[{name:'Cloro libre',unit:'mg/L',min:'',max:'',enabled:true},{name:'pH',unit:'',min:'',max:'',enabled:true},{name:'Turbidez',unit:'NTU',min:'',max:'',enabled:true}],arrastres:['Ninguno','Fangos','Lodos','Hojas','Fangos y lodos','Hojas y restos vegetales','Otros'],enlaces:[{nombre:'SAIH TAJO',sub:'Tiempo real',url:'https://saihtajo.chtajo.es/tiemporeal'},{nombre:'Normativa agua · WEB',sub:'Código de Aguas de Consumo Humano · BOE',url:'https://www.boe.es/biblioteca_juridica/codigos/codigo.php?id=462'},{nombre:'Normativa agua · PDF',sub:'Código actualizado · BOE · 18/06/2026',url:'https://www.boe.es/biblioteca_juridica/codigos/abrir_pdf.php?fich=462_Codigo_de_Aguas_de_Consumo_Humano.pdf'},{nombre:'SINAC',sub:'Agua de consumo',url:'https://sinac.sanidad.gob.es/SinacV2/index.html'},{nombre:'AEMET',sub:'Predicción Santa María del Tiétar',url:'https://www.aemet.es/es/eltiempo/prediccion/municipios/santa-maria-del-tietar-id05227'},{nombre:'Normativa agua de consumo · WEB',sub:'Código de Aguas de Consumo Humano · BOE · actualizado 18/06/2026',url:'https://www.boe.es/biblioteca_juridica/codigos/codigo.php?id=462'},{nombre:'Normativa agua de consumo · PDF',sub:'Código de Aguas de Consumo Humano · PDF oficial · actualizado 18/06/2026',url:'https://www.boe.es/biblioteca_juridica/codigos/abrir_pdf.php?fich=462_Codigo_de_Aguas_de_Consumo_Humano.pdf'}],ubicaciones:['PUNTOS DE MUESTREO','CAPTACIONES','PRESAS Y EMBALSES','RED DE DISTRIBUCION','ETAP','DEPOSITOS AGUA BRUTA','FILTROS','BOMBAS DOSIFICADORAS','MOTORES IMPULSION','ELECTROVALVULAS','CUADRO SINOPTICO']};
+let db=JSON.parse(localStorage.getItem(KEY)||'null')||{...defaults,registros:[],incidencias:[]};if(!Array.isArray(db.ubicaciones))db.ubicaciones=[...defaults.ubicaciones];if(!Array.isArray(db.enlaces))db.enlaces=[...defaults.enlaces];const normWeb={nombre:'Normativa agua de consumo · WEB',sub:'Código de Aguas de Consumo Humano · BOE · actualizado 18/06/2026',url:'https://www.boe.es/biblioteca_juridica/codigos/codigo.php?id=462'};const normPdf={nombre:'Normativa agua de consumo · PDF',sub:'Código de Aguas de Consumo Humano · PDF oficial · actualizado 18/06/2026',url:'https://www.boe.es/biblioteca_juridica/codigos/abrir_pdf.php?fich=462_Codigo_de_Aguas_de_Consumo_Humano.pdf'};if(!db.enlaces.some(x=>x&&x.url===normWeb.url))db.enlaces.push(normWeb);if(!db.enlaces.some(x=>x&&x.url===normPdf.url))db.enlaces.push(normPdf);if(!Number.isFinite(Number(db.consumoLimiteAmarillo)))db.consumoLimiteAmarillo=defaults.consumoLimiteAmarillo;if(!Number.isFinite(Number(db.consumoLimiteRojo)))db.consumoLimiteRojo=defaults.consumoLimiteRojo;
+if(typeof db.consumoLimiteAmarilloOn!=='boolean')db.consumoLimiteAmarilloOn=true;
+if(typeof db.consumoLimiteRojoOn!=='boolean')db.consumoLimiteRojoOn=true;
+if(typeof db.sosOn!=='boolean')db.sosOn=true;
+if(!Array.isArray(db.sosTelefonos)||db.sosTelefonos.length!==3)db.sosTelefonos=['112','',''];
+if(typeof db.sosSeleccionado!=='number'||db.sosSeleccionado<0||db.sosSeleccionado>2)db.sosSeleccionado=0;
+if(db.sosTelefono&&!db.sosTelefonos[0]&&!db.sosTelefonos[1]&&!db.sosTelefonos[2])db.sosTelefonos=[db.sosTelefono,'',''];
+save();
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function home(targetPage=0){
+  if(!history.state || history.state.etapRoute!=='form' && history.state.etapRoute!=='sample'){history.replaceState({etapRoute:'home',page:Number(targetPage)||0},'',location.href);}
+const readings=db.registros.filter(r=>r.tipo==='Contador').sort((a,b)=>a.fecha.localeCompare(b.fecha));
+const current=readings[readings.length-1];
+const previous=readings.length>1?readings[readings.length-2]:null;
+const consumo=current&&previous?(Number(current.valor)-Number(previous.valor)):null;
+const prev=current;
+app.innerHTML=`
+<div class="page-indicator"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+<div class="pages" id="pages">
+<section class="page"><div class="page-inner">
+<div class="card hero"><div class="title">LECTURA DIARIA DEL CONTADOR</div><div class="muted">Introduce la lectura total del contador. El consumo diario se calcula automáticamente comparándola con la lectura anterior.</div><label>Fecha y hora</label><input id="meterDt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><label>Lectura del contador (m³)</label><input id="meterValue" type="number" min="0" step="0.01" placeholder="0,00" value="${prev?esc(prev.valor):''}"><div class="grid"><div><label>Lectura anterior (m³)</label><input id="previousMeter" type="number" step="0.01" value="${previous?esc(previous.valor):''}" readonly></div><div><label>Consumo diario calculado</label><input type="text" value="${consumo!==null?esc(consumo.toFixed(2)+' m³'):'Pendiente'}" readonly></div></div>${(()=>{let limA=Number(db.consumoLimiteAmarillo)||700,limR=Number(db.consumoLimiteRojo)||1000;let estado='normal';if(consumo!==null){if(db.consumoLimiteRojoOn&&consumo>limR)estado='alert';else if(db.consumoLimiteAmarilloOn&&consumo>=limA)estado='warning'}let texto=consumo!==null&&consumo>=0?consumo.toFixed(2)+' m³':'Pendiente de dos lecturas';let etiqueta=estado==='normal'?'🟦 Normal':estado==='warning'?'🟨 Aviso':'🟥 Alerta';return `<div class="result ${estado}"><label>Estado del consumo · ${etiqueta}</label><strong>${texto}</strong><div style="margin-top:7px;font-size:11px;opacity:.95">${db.consumoLimiteAmarilloOn?'Aviso: '+limA.toFixed(2)+' m³':'Aviso: OFF'} · ${db.consumoLimiteRojoOn?'Alerta: '+limR.toFixed(2)+' m³':'Alerta: OFF'}</div></div>`})()}<button class="wide" onclick="saveMeter()">Guardar lectura diaria</button></div>
+</div></section>
+<section class="page"><div class="page-inner">
+<div class="card"><div class="title">PUNTOS DE MUESTREO</div>${listItems(db.puntos,'punto')}<button class="wide" onclick="addItem('puntos','punto de muestreo')">➕ Añadir punto de muestreo</button><button class="wide secondary" onclick="addPointFromCaptation()">➕ Añadir captación como punto</button></div>
+</div></section>
+<section class="page"><div class="page-inner">
+<div class="card"><div class="title">PRESAS Y EMBALSES</div>${listItems(db.embalses,'embalse')}<button class="wide" onclick="addItem('embalses','embalse')">➕ Añadir presa / embalse</button></div>
+</div></section>
+<section class="page"><div class="page-inner">
+<div class="card"><div class="title">CAPTACIONES</div>${listItems(db.captaciones,'captacion')}<button class="wide" onclick="addItem('captaciones','captación')">➕ Añadir captación</button></div>
+</div></section>
+<section class="page"><div class="page-inner">
+<div class="card"><div class="title">ENLACES</div><div class="muted">Accesos directos a páginas web útiles para la gestión de la ETAP.</div><div class="links-grid">
+<button class="app-link map-toggle" type="button" onclick="toggleMapas()"><span class="link-icon">🗺️</span><span class="link-text"><span class="link-name">Mapas</span><span class="link-sub">Google Maps · Catastro · archivos y webs</span></span><span class="map-chevron" id="mapChevron">▾</span></button>
+<div id="mapasPanel" class="mapas-panel" style="display:none">
+<a class="app-link map-sub" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" onclick="return abrirGoogleMaps(event)"><span class="link-icon">📍</span><span class="link-text"><span class="link-name">Google Maps</span><span class="link-sub">Disponible sin conexión si tienes mapas descargados en Google Maps</span></span></a>
+<a class="app-link map-sub" href="https://www1.sedecatastro.gob.es/Cartografia/mapa.aspx?pest=rc&from=OVCBusqueda&final=&ZV=NO&ZR=NO&anyoZV=&tematicos=&anyotem=&historica=&coordinadas=&antecedentes=&emergencias=" target="_blank" rel="noopener noreferrer"><span class="link-icon">📐</span><span class="link-text"><span class="link-name">Planos del Catastro</span><span class="link-sub">Sede Electrónica del Catastro · visor cartográfico</span></span></a>
+${(db.mapasExtras||[]).map((x,i)=>x.tipo==='archivo'?`<a class="app-link map-sub" href="${esc(x.url)}" download="${esc(x.nombre)}"><span class="link-icon">📄</span><span class="link-text"><span class="link-name">${esc(x.nombre)}</span><span class="link-sub">Archivo guardado para consulta offline</span></span></a>`:`<a class="app-link map-sub" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer"><span class="link-icon">🌐</span><span class="link-text"><span class="link-name">${esc(x.nombre)}</span><span class="link-sub">${esc(x.sub||x.url)}</span></span></a>`).join('')}
+<button class="wide add-link" type="button" onclick="addMapaWebOArchivo()">➕ Añadir web o archivo</button>
+</div>
+${db.enlaces.map((x,i)=>`<a class="app-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer"><span class="link-icon">↗</span><span class="link-text"><span class="link-name">${esc(x.nombre)}</span><span class="link-sub">${esc(x.sub||x.url)}</span></span></a>`).join('')}
+<button class="wide add-link" onclick="addEnlace()">➕ Añadir enlace</button></div>
+</div></section>
+<section class="page"><div class="page-inner">
+<div class="card"><div class="title">PARTE DE TRABAJO DIARIO</div><div class="app-buttons"><style>.app-buttons .app-link{margin-bottom:10px}.parte-auto-wrap{position:relative}.parte-menu-btn{margin-left:auto;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:24px;font-weight:900;cursor:pointer;background:rgba(255,255,255,.18);color:#fff;flex:0 0 34px}.parte-opciones{display:none;margin:-2px 0 10px;padding:10px 12px;border-radius:14px;background:rgba(18,65,91,.9);border:1px solid rgba(255,255,255,.18)}.parte-opciones.open{display:block}.parte-opciones .switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;color:#fff;font-size:13px}.parte-opciones .switch-row+.switch-row{border-top:1px solid rgba(255,255,255,.1)}
+/* V18.8 — UNIFICACIÓN DE TEXTURA DE BOTONES: mismo brillo/destello en todos */
+button, .item {
+  background: radial-gradient(circle at 34% 20%, rgba(255,255,255,.28) 0 7%, rgba(255,255,255,.08) 20%, transparent 43%), linear-gradient(180deg,#3f8fc0 0%,#2b6f9d 55%,#245d84 100%) !important;
+  border: 1px solid rgba(98,167,207,.75) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -2px 0 rgba(0,0,0,.13), 0 2px 0 #1d4f72, 0 5px 9px rgba(0,0,0,.18) !important;
+}
+button.sos {
+  background: radial-gradient(circle at 34% 20%, rgba(255,255,255,.30) 0 7%, rgba(255,255,255,.08) 20%, transparent 43%), linear-gradient(180deg,#f25d64 0%,#d8323c 55%,#b92730 100%) !important;
+}
+button.danger {
+  background: radial-gradient(circle at 34% 20%, rgba(255,255,255,.30) 0 7%, rgba(255,255,255,.08) 20%, transparent 43%), linear-gradient(180deg,#f06b73 0%,#c93d47 55%,#ad3039 100%) !important;
+}
+button.ok {
+  background: radial-gradient(circle at 34% 20%, rgba(255,255,255,.30) 0 7%, rgba(255,255,255,.08) 20%, transparent 43%), linear-gradient(180deg,#48dcae 0%,#20b987 55%,#189b72 100%) !important;
+}
+</style><div class="parte-auto-wrap"><button class="app-link" type="button" onclick="if(event.target.closest('.parte-menu-btn'))return;generarParteAutomatico()"><span class="link-icon">⚙️</span><span class="link-text"><span class="link-name">GENERAR PARTE AUTOMÁTICO</span><span class="link-sub">Crear el parte a partir de los datos registrados</span></span><span class="parte-menu-btn" onclick="event.stopPropagation();document.getElementById('parteOpciones').classList.toggle('open')">⋮</span></button><div id="parteOpciones" class="parte-opciones"><div class="switch-row"><span>Revisión general de ETAP</span><label class="switch"><input type="checkbox" id="parteRevision" checked><span class="slider"></span></label></div><div class="switch-row"><span>Lectura diaria</span><label class="switch"><input type="checkbox" id="parteLectura" checked><span class="slider"></span></label></div><div class="switch-row"><span>Puntos de muestreo</span><label class="switch"><input type="checkbox" id="parteMuestreo" checked><span class="slider"></span></label></div><div class="switch-row"><span>Presas</span><label class="switch"><input type="checkbox" id="partePresas" checked><span class="slider"></span></label></div><div class="switch-row"><span>Captaciones</span><label class="switch"><input type="checkbox" id="parteCaptaciones" checked><span class="slider"></span></label></div><div class="switch-row"><span>Incidencias</span><label class="switch"><input type="checkbox" id="parteIncidencias" checked><span class="slider"></span></label></div><div class="switch-row"><span>Registro horario</span><label class="switch"><input type="checkbox" id="parteHorario" checked><span class="slider"></span></label></div></div></div><button class="app-link" type="button" onclick="mostrarPartesGuardados()"><span class="link-icon">📁</span><span class="link-text"><span class="link-name">PARTES GUARDADOS</span><span class="link-sub">Consultar y descargar partes generados</span></span></button><button class="app-link" type="button" onclick="alert(\'Función de generación manual pendiente de configurar.\')"><span class="link-icon">✍️</span><span class="link-text"><span class="link-name">REGISTRO HORARIO</span><span class="link-sub">Acceso al registro horario</span></span></button><button class="app-link" type="button" onclick="document.getElementById(\'parteTrabajoArchivo\').click()"><span class="link-icon">📎</span><span class="link-text"><span class="link-name">SUBIR / ESCANEAR ARCHIVO</span><span class="link-sub">Añadir un parte o documento desde el dispositivo</span></span></button><input id="parteTrabajoArchivo" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" capture="environment" multiple style="display:none" onchange="if(this.files.length) alert(this.files.length===1?\'Archivo seleccionado: \'+this.files[0].name: this.files.length+\' archivos seleccionados.\')"></div></div>
+</div></section>
+<section class="page"><div class="page-inner">
+<div class="card"><div class="title">INCIDENCIAS</div><div class="muted">Registra la incidencia y adjunta el parte oficial, documentos y fotografías.</div><div class="notice">📎 Los archivos y fotos quedan asociados a esta incidencia para poder consultarlos posteriormente.</div><label>Fecha y hora de detección</label><input id="idt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><div class="grid"><div><label>Tipo de incidencia</label><select id="itipo"><option value="AB">AB · Analítica</option><option value="C">C · Indicadores</option><option value="E">E · Radiactividad</option><option value="II">II · Instalación interior</option><option value="O">O · Lista de observación</option><option value="F">F · Falta de suministro</option><option value="S">S · Situación excepcional</option><option value="X">X · Otro riesgo</option><option value="AVERIA">Avería</option><option value="OTRA">Otra</option></select></div><div><label>Estado</label><select id="iest"><option>Abierta</option><option>En seguimiento</option><option>Resuelta</option></select></div></div><label>Ubicación / punto afectado</label><div class="grid"><div><select id="il">${db.ubicaciones.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('')}</select></div><div><button class="wide secondary" type="button" onclick="addIncidentLocation()">➕ Añadir ubicación</button></div></div><label>Descripción de la incidencia</label><textarea id="idesc" placeholder="Describe qué ha ocurrido..."></textarea><label>Causa / origen</label><textarea id="icausa" placeholder="Causa conocida o investigación realizada..."></textarea><label>Medidas correctoras y preventivas</label><textarea id="imedidas" placeholder="Medidas adoptadas..."></textarea><label>Seguimiento / observaciones</label><textarea id="iseguimiento" placeholder="Seguimiento, resultados posteriores, comunicaciones..."></textarea>
+<div class="card"><div class="title">📄 PARTE / DOCUMENTOS</div><div class="muted">Aquí podrás subir el parte oficial cuando lo tengas. Más adelante podremos utilizarlo para autorrellenarlo.</div><input id="incidentFiles" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" multiple></div>
+<div class="card"><div class="title">📷 FOTOGRAFÍAS DE LA INCIDENCIA</div><div class="muted">Puedes seleccionar varias fotos o hacerlas directamente con la cámara del móvil.</div><input id="incidentPhotos" type="file" accept="image/*" capture="environment" multiple><div id="photoPreview" class="muted" style="margin-top:8px"></div></div>
+<div class="form-actions"><button class="wide" onclick="saveIncident()">Guardar incidencia</button><button class="wide secondary" onclick="home(5)">Limpiar / volver</button></div></div><div class="card"><div class="title">INCIDENCIAS GUARDADAS</div>${db.incidencias.slice().reverse().map((x,i)=>`<div class="historyrow"><b>${new Date(x.fecha).toLocaleString('es-ES')}</b> · ${esc(x.tipo||'')} · ${esc(x.estado||'')}<br>${esc(x.ubicacion||'')}<br>${esc(x.descripcion||'')}<br><span class="muted">${esc(x.medidas||'')}</span>${(x.archivos?.length||x.fotos?.length)?`<br><button class="small secondary" onclick="showIncidentAttachments(${db.incidencias.length-1-i})">📎 Ver adjuntos (${(x.archivos?.length||0)+(x.fotos?.length||0)})</button>`:''}</div>`).join('')||'<span class="muted">Ninguna incidencia guardada.</span>'}</div>
+</div></section>
+</div>
+<div class="swipe-hint">Desliza ← → para cambiar de sección</div>`;
+const pages=document.getElementById('pages');
+if(pages){
+  const go=()=>{const idx=Math.max(0,Math.min(5,Number(targetPage)||0));pages.scrollLeft=idx*pages.clientWidth;document.querySelectorAll('.page-indicator .dot').forEach((d,i)=>d.classList.toggle('active',i===idx));};
+  pages.addEventListener('scroll',()=>{const idx=Math.round(pages.scrollLeft/pages.clientWidth);document.querySelectorAll('.page-indicator .dot').forEach((d,i)=>d.classList.toggle('active',i===idx));});
+  requestAnimationFrame(go);
+}
+}
+function saveMeter(){const v=parseFloat(String(meterValue.value).replace(',','.'));if(!Number.isFinite(v)||v<0){alert('Introduce una lectura válida en m³.');return}const d=new Date(meterDt.value||Date.now());const readings=db.registros.filter(r=>r.tipo==='Contador').sort((a,b)=>a.fecha.localeCompare(b.fecha));const previous=readings.length?Number(readings[readings.length-1].valor):null;if(previous!==null&&v<previous){alert('La lectura actual no puede ser inferior a la anterior.');return}db.registros.push({fecha:d.toISOString(),tipo:'Contador',punto:'Contador general',parametro:'Lectura contador',valor:v.toFixed(2),unidad:'m³',observaciones:'',consumoDiario:previous!==null?(v-previous).toFixed(2):null});save();alert(previous!==null?'Lectura guardada. Consumo diario: '+(v-previous).toFixed(2)+' m³':'Primera lectura guardada. Mañana se calculará el consumo.');home();}
+function calculateConsumption(){home();}
+function toggleMapas(){const p=document.getElementById('mapasPanel'),c=document.getElementById('mapChevron');if(!p)return;const open=p.style.display!=='none';p.style.display=open?'none':'block';if(c)c.textContent=open?'▾':'▴'}
+function abrirGoogleMaps(e){if(navigator.onLine)return true;e.preventDefault();try{navigator.geolocation.getCurrentPosition(pos=>{location.href='geo:'+pos.coords.latitude+','+pos.coords.longitude+'?q='+pos.coords.latitude+','+pos.coords.longitude},()=>{location.href='geo:0,0?q=Google+Maps'})}catch(err){location.href='geo:0,0?q=Google+Maps'}return false}
+function addMapaWebOArchivo(){const tipo=prompt('¿Qué quieres añadir? Escribe WEB o ARCHIVO:','WEB');if(!tipo)return;if(/^archivo$/i.test(tipo.trim())){const input=document.createElement('input');input.type='file';input.accept='.pdf,.jpg,.jpeg,.png,.webp,.doc,.docx,.xls,.xlsx,.txt';input.onchange=()=>{const f=input.files&&input.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{if(!Array.isArray(db.mapasExtras))db.mapasExtras=[];db.mapasExtras.push({tipo:'archivo',nombre:f.name,url:r.result});save();goToPage(4)};r.readAsDataURL(f)};input.click();return}const nombre=prompt('Nombre de la web:');if(!nombre||!nombre.trim())return;let url=prompt('URL de la web (https://...):');if(!url||!url.trim())return;url=url.trim();if(!/^https?:\/\//i.test(url))url='https://'+url;try{new URL(url)}catch(e){alert('La URL no es válida.');return}const sub=prompt('Descripción breve (opcional):','Acceso web')||'';if(!Array.isArray(db.mapasExtras))db.mapasExtras=[];db.mapasExtras.push({tipo:'web',nombre:nombre.trim(),sub:sub.trim(),url});save();goToPage(4)}
+function addEnlace(){
+  const nombre=prompt('Nombre del enlace:');
+  if(!nombre||!nombre.trim())return;
+  const url=prompt('URL del enlace (https://...):');
+  if(!url||!url.trim())return;
+  let u=url.trim();
+  if(!/^https?:\/\//i.test(u))u='https://'+u;
+  try{new URL(u)}catch(e){alert('La URL no es válida.');return}
+  const sub=prompt('Descripción breve (opcional):','Acceso directo')||'';
+  db.enlaces.push({nombre:nombre.trim(),sub:sub.trim(),url:u});save();goToPage(4);
+}
+function listItems(arr,type){return arr.map((x,i)=>`<div class="item"><span>${esc(x)}</span><span><button class="small" onclick="openForm('${type}',${i})">Abrir</button><button class="small secondary" onclick="renameItem('${type}',${i})">Editar</button></span></div>`).join('')}
+function addItem(key,label){let n=prompt('Nombre de '+label+':');if(n&&n.trim()){db[key].push(n.trim());save();home()}}
+function renameItem(type,i){let key=type==='captacion'?'captaciones':type==='embalse'?'embalses':'puntos';let n=prompt('Nuevo nombre:',db[key][i]);if(n&&n.trim()){db[key][i]=n.trim();save();home()}}
+function addPointFromCaptation(){let n=prompt('¿Qué captación quieres añadir como punto de muestreo?');if(n&&n.trim()){if(!db.puntos.includes(n.trim()))db.puntos.push(n.trim());save();home()}}
+function openForm(type,i){const parentPage=type==='embalse'?2:3;history.replaceState({etapRoute:'home',page:parentPage},'',location.href);history.pushState({etapRoute:'form',type:type,index:i,parentPage:parentPage},'',location.href);let key=type==='captacion'?'captaciones':'embalses',name=db[key][i];app.innerHTML=`<div class="card"><div class="title">${esc(name)}</div><div class="muted">Registro de inspección</div><label>Fecha y hora</label><input id="dt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><label>Estado del agua</label><select id="estado"><option>Bueno</option><option>Regular</option><option>Malo</option></select><label>Volumen</label><select id="vol"><option>Alto</option><option>Medio</option><option>Bajo</option></select><label>Arrastres / materiales</label><select id="arr">${db.arrastres.map(x=>`<option>${esc(x)}</option>`).join('')}</select><div id="other"></div><label>Observaciones</label><textarea id="obs"></textarea><button class="wide" onclick="saveInspection('${type}',${i})">Guardar lectura</button></div>`;arr.onchange=()=>other.innerHTML=arr.value==='Otros'?'<label>Especificar otros</label><input id="otro">':''}
+function saveInspection(type,i){let key=type==='captacion'?'captaciones':'embalses',name=db[key][i],d=new Date(dt.value||Date.now());db.registros.push({fecha:d.toISOString(),tipo:type==='captacion'?'Captación':'Embalse',punto:name,parametro:'Estado agua',valor:estado.value,unidad:'',observaciones:obs.value});db.registros.push({fecha:d.toISOString(),tipo:type==='captacion'?'Captación':'Embalse',punto:name,parametro:'Volumen',valor:vol.value,unidad:'',observaciones:obs.value});db.registros.push({fecha:d.toISOString(),tipo:type==='captacion'?'Captación':'Embalse',punto:name,parametro:'Arrastres/materiales',valor:arr.value==='Otros'?('Otros: '+(document.getElementById('otro')?.value||'')):arr.value,unidad:'',observaciones:obs.value});save();alert('Lectura guardada');const pg=type==='embalse'?2:3;history.replaceState({etapRoute:'home',page:pg},'',location.href);home(pg)}
+function sampleForm(i){history.replaceState({etapRoute:'home',page:1},'',location.href);history.pushState({etapRoute:'sample',index:i,parentPage:1},'',location.href);let name=db.puntos[i];let ps=db.params.filter(p=>p.enabled);app.innerHTML=`<div class="card"><div class="section-head"><div><div class="title">PUNTO DE MUESTREO</div><div class="muted">${esc(name)}</div></div><span class="badge">${ps.length} parámetros</span></div><label>Fecha y hora</label><input id="dt" type="datetime-local" value="${new Date().toISOString().slice(0,16)}"><div class="subsection"><div class="title">PARÁMETROS</div>${ps.map((p,j)=>`<div class="sample-row"><div><div class="param-name">${esc(p.name)}</div>${p.min||p.max?`<div class="ref">Referencia: ${esc(p.min||'')} ${p.max?'– '+esc(p.max):''}</div>`:''}</div><div><label style="margin-top:0">Valor${p.unit?' · '+esc(p.unit):''}</label><input class="sample-value" id="p${j}" inputmode="decimal" placeholder="—"></div></div>`).join('')}</div><label>Observaciones</label><textarea id="obs" placeholder="Observaciones del muestreo..."></textarea><div class="form-actions"><button class="wide" onclick="saveSample(${i})">Guardar</button></div></div>`}
+function saveSample(i){let d=new Date(dt.value||Date.now()),name=db.puntos[i],ps=db.params.filter(p=>p.enabled);ps.forEach((p,j)=>{let v=document.getElementById('p'+j).value;if(v!=='')db.registros.push({fecha:d.toISOString(),tipo:'Muestreo',punto:name,parametro:p.name,valor:v,unidad:p.unit||'',observaciones:obs.value})});save();alert('Muestreo guardado');history.replaceState({etapRoute:'home',page:1},'',location.href);home(1)}
+function sosCall(){if(db.sosOn===false){alert('SOS está desactivado en Ajustes.');return}const i=Number(db.sosSeleccionado)||0;const n=(db.sosTelefonos?.[i]||'').trim();if(!n){alert('No hay un teléfono SOS seleccionado. Configúralo en Ajustes.');return}location.href='tel:'+n.replace(/[^0-9+]/g,'')}
+function settings(){const t=db.sosTelefonos||['112','',''];app.innerHTML=`<div class="card"><div class="title">AJUSTES</div><div class="muted">Cada ajuste es independiente. Activa o desactiva cada función y guarda su configuración.</div>
+<div class="setting-card collapsible" id="setHomePages"><div class="setting-head"><div class="setting-title" onclick="toggleSetting('setHomePages')">PÁGINAS VISIBLES EN INICIO</div></div><div class="setting-content"><div class="muted">Activa las páginas que quieres mostrar en INICIO RÁPIDO. Los cambios se guardan automáticamente.</div>
+${[['lectura','Lectura diaria'],['muestreo','Puntos de muestreo'],['presas','Presas y embalses'],['captaciones','Captaciones'],['parte','Parte de trabajo'],['enlaces','Enlaces'],['incidencias','Incidencias'],['horario','Registro horario'],['historial','Historial']].map(([k,n])=>`<div class="switch-row" style="padding:7px 0;border-top:1px solid rgba(255,255,255,.08)"><span>${n}</span><label class="switch"><input type="checkbox" ${homePageVisible(k)?'checked':''} onchange="setHomePageVisible('${k}',this.checked)"><span class="slider"></span></label></div>`).join('')}</div></div>
+<div class="setting-card collapsible" id="setConsumo"><div class="setting-head"><div class="setting-title" onclick="toggleSetting('setConsumo')">ALERTA DE CONSUMO</div><label class="switch" onclick="event.stopPropagation()"><input id="consumoAlertaOn" type="checkbox" ${(db.consumoAlertaOn!==false)?'checked':''}><span class="slider"></span></label></div><div class="setting-content"><label>LÍMITE AMARILLO · AVISO</label><input id="limA" type="number" min="0" step="0.01" value="${Number(db.consumoLimiteAmarillo)||700}"><label>LÍMITE ROJO · ALERTA</label><input id="limR" type="number" min="0" step="0.01" value="${Number(db.consumoLimiteRojo)||1000}"></div></div>
+<div class="setting-card collapsible" id="setSOS"><div class="setting-head"><div class="setting-title" onclick="toggleSetting('setSOS')">SOS</div><label class="switch" onclick="event.stopPropagation()"><input id="sosOn" type="checkbox" ${db.sosOn!==false?'checked':''}><span class="slider"></span></label></div><div class="setting-content"><div class="muted">Selecciona un único teléfono para el botón SOS.</div>
+${[0,1,2].map(i=>`<div class="phone-row"><div><label>Teléfono de emergencia ${i+1}</label><input id="sosTel${i}" type="tel" value="${esc(t[i]||'')}" placeholder="${i===0?'112':'Introducir teléfono'}"></div><div class="switch-wrap"><span class="switch-label">${Number(db.sosSeleccionado)===i?'SELECCIONADO':'SELECCIONAR'}</span><label class="switch"><input id="sosSel${i}" type="checkbox" ${Number(db.sosSeleccionado)===i?'checked':''} onchange="selectSOS(${i})"><span class="slider"></span></label></div></div>`).join('')}</div></div>
+<button class="wide" onclick="saveSettings()">Guardar ajustes</button></div>`}
+function homePageVisible(key){return !db.homePageVisibility||db.homePageVisibility[key]!==false}
+function setHomePageVisible(key,enabled){if(!db.homePageVisibility)db.homePageVisibility={};db.homePageVisibility[key]=!!enabled;save()}
+function toggleSetting(id){const el=document.getElementById(id);if(el)el.classList.toggle('open')}
+
+function selectSOS(i){[0,1,2].forEach(j=>{const el=document.getElementById('sosSel'+j);if(el)el.checked=j===i});db.sosSeleccionado=i}
+function saveSettings(){const a=Number(document.getElementById('limA').value),r=Number(document.getElementById('limR').value);if(!Number.isFinite(a)||!Number.isFinite(r)||a<0||r<=a){alert('El límite rojo debe ser mayor que el límite amarillo.');return}db.consumoLimiteAmarillo=a;db.consumoLimiteRojo=r;db.consumoLimiteAmarilloOn=document.getElementById('limAOn').checked;db.consumoLimiteRojoOn=document.getElementById('limROn').checked;db.sosOn=document.getElementById('sosOn').checked;db.sosTelefonos=[0,1,2].map(i=>(document.getElementById('sosTel'+i)?.value||'').trim());if(!db.sosTelefonos[0])db.sosTelefonos[0]='112';const sel=[0,1,2].find(i=>document.getElementById('sosSel'+i)?.checked);if(sel!==undefined)db.sosSeleccionado=sel;if(!db.sosTelefonos[db.sosSeleccionado]){alert('El teléfono SOS seleccionado está vacío. Introduce un número o selecciona otro.');return}db.sosTelefono=db.sosTelefonos[db.sosSeleccionado];save();alert('Ajustes guardados.');settings()}
+function goBack(){if(document.querySelector('.sample-row')){home(1)}else{inicioRapido()}}
+function lecturaContadoresRed(){history.pushState({etapRoute:'redmeters'},'',location.href);app.innerHTML=`<div class="card" style="text-align:center;padding:26px 16px"><div style="font-size:58px;line-height:1.2;margin:8px 0 18px" aria-hidden="true"><svg width="58" height="58" viewBox="0 0 64 64" role="img" aria-label="Contador de agua" style="vertical-align:middle"><defs><linearGradient id="meterBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7fcff"/><stop offset="1" stop-color="#9db9c9"/></linearGradient></defs><path d="M22 7h20v8H22z" fill="#7895a7" stroke="#d8edf7" stroke-width="1.5"/><rect x="17" y="13" width="30" height="7" rx="2" fill="#c8dce7" stroke="#6b8da1" stroke-width="1.5"/><circle cx="32" cy="37" r="23" fill="url(#meterBody)" stroke="#d8edf7" stroke-width="2.5"/><circle cx="32" cy="37" r="18" fill="#eaf6fb" stroke="#597f95" stroke-width="1.5"/><path d="M19 32a14 14 0 0 1 26 0" fill="none" stroke="#168fc2" stroke-width="2.5" stroke-linecap="round"/><rect x="18.5" y="35" width="27" height="11" rx="2" fill="#163b4e" stroke="#6f9bb0" stroke-width="1"/><text x="32" y="43" font-family="monospace" font-size="7.5" text-anchor="middle" font-weight="bold" fill="#b8f2ce">001284</text><path d="M32 28l-5 9 5 1 5-1z" fill="#e24e4e" stroke="#a52d37" stroke-width=".8"/><circle cx="32" cy="37" r="2.5" fill="#f5ffff" stroke="#466b7e" stroke-width="1"/><path d="M10 38h4m36 0h4" stroke="#d7edf7" stroke-width="3" stroke-linecap="round"/></svg></div><div class="title" style="margin:0">LECTURA DE CONTADORES DE RED</div></div>`}
+function historyView(){let rows=[...db.registros].sort((a,b)=>b.fecha.localeCompare(a.fecha));app.innerHTML=`<div class="card"><div class="section-head"><div class="title">HISTORIAL</div><span class="badge">${rows.length}</span></div><button class="wide" onclick="exportXlsx()">📊 Exportar a Excel (.xlsx)</button><button class="wide secondary" onclick="goToPage(5)">⚠️ Incidencias</button>${rows.length?rows.map(r=>`<div class="historyrow"><b>${new Date(r.fecha).toLocaleString('es-ES')}</b> · ${esc(r.tipo)} · ${esc(r.punto)}<br>${esc(r.parametro)}: <b>${esc(r.valor)}</b> ${esc(r.unidad)}<br><span class="muted">${esc(r.observaciones||'')}</span></div>`).join(''):'<p class="muted">Todavía no hay lecturas.</p>'}</div>`}
+function goToPage(page){home(page);setTimeout(()=>{const el=document.getElementById('pages');if(el){el.scrollTo({left:el.clientWidth*page,behavior:'smooth'});}},0)}
+function incident(){goToPage(5)}
+function addIncidentLocation(){let n=prompt('Nombre de la nueva ubicación:');if(n&&n.trim()){n=n.trim();if(!db.ubicaciones.includes(n))db.ubicaciones.push(n);save();incident();setTimeout(()=>{const el=document.getElementById('il');if(el)el.value=n},0)}}
+function fileToDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve({name:file.name,type:file.type,size:file.size,data:r.result});r.onerror=reject;r.readAsDataURL(file)})}
+function photoToDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>{const max=1600;let w=img.width,h=img.height;if(w>max||h>max){const k=Math.min(max/w,max/h);w=Math.round(w*k);h=Math.round(h*k)}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);resolve({name:file.name,type:'image/jpeg',size:0,data:c.toDataURL('image/jpeg',.78)})};img.onerror=()=>resolve({name:file.name,type:file.type,size:file.size,data:r.result});img.src=r.result};r.onerror=reject;r.readAsDataURL(file)})}
+function showIncidentAttachments(index){const x=db.incidencias[index];let html='<div class="card"><div class="title">ADJUNTOS DE LA INCIDENCIA</div>';if(x.archivos?.length){html+='<b>Documentos</b>';x.archivos.forEach((f,i)=>{html+=`<button class="wide secondary" onclick="downloadAttachment(${index},'archivo',${i})">📄 ${esc(f.name)}</button>`})}if(x.fotos?.length){html+='<b style="display:block;margin-top:12px">Fotografías</b>';x.fotos.forEach((f,i)=>{html+=`<div style="margin:8px 0"><img src="${f.data}" style="width:100%;border-radius:10px"><button class="wide secondary" onclick="downloadAttachment(${index},'foto',${i})">⬇️ Descargar foto</button></div>`})}html+='<button class="wide" onclick="incident()">Atrás</button></div>';app.innerHTML=html}
+function downloadAttachment(index,kind,i){const x=db.incidencias[index],f=kind==='archivo'?x.archivos[i]:x.fotos[i];const a=document.createElement('a');a.href=f.data;a.download=f.name||('incidencia_'+Date.now());document.body.appendChild(a);a.click();a.remove()}
+async function saveIncident(){try{const d=new Date(idt.value||Date.now());const files=[...(document.getElementById('incidentFiles')?.files||[])];const photos=[...(document.getElementById('incidentPhotos')?.files||[])];const archivos=await Promise.all(files.map(fileToDataURL));const fotos=await Promise.all(photos.map(photoToDataURL));db.incidencias.push({fecha:d.toISOString(),tipo:itipo.value,ubicacion:il.value,descripcion:idesc.value,causa:icausa.value,medidas:imedidas.value,seguimiento:iseguimiento.value,estado:iest.value,archivos,fotos});save();alert('Incidencia guardada con '+(archivos.length+fotos.length)+' adjunto(s).');goToPage(5)}catch(e){alert('No se han podido guardar los archivos adjuntos.')}}
+// intercept point opening to show sampling form
+window.addEventListener('popstate',function(e){
+  if(e.state && e.state.etapRoute==='redmeters'){lecturaContadoresRed();
+  }else if(e.state && e.state.etapRoute==='home'){
+    home(Number(e.state.page)||0);
+  }else if(e.state && e.state.etapRoute==='form'){
+    home(Number(e.state.parentPage) || (e.state.type==='embalse'?2:3));
+  }else if(e.state && e.state.etapRoute==='sample'){
+    home(Number(e.state.parentPage)||1);
+  }else{
+    home(0);
+  }
+});
+if(!history.state || !history.state.etapRoute){history.replaceState({etapRoute:'home',page:0},'',location.href);}
+
+function inicioRapido(){
+  history.replaceState({etapRoute:'quickhome'},'',location.href);
+  app.innerHTML=`
+  <div class="quick-home">
+    <div class="quick-head"><div class="quick-title">INICIO RÁPIDO</div><div class="quick-sub">Acceso directo a los bloques principales de ETAP CONTROL</div></div>
+    <div class="quick-grid">
+      ${homePageVisible('lectura')?'<button class="quick-btn" onclick="goToPage(0)"><span class="qicon">📊</span><span class="qtext">Lectura diaria</span><span class="qsub">Contador y consumo</span></button>':''}
+      ${homePageVisible('muestreo')?'<button class="quick-btn" onclick="goToPage(1)"><span class="qicon">🧪</span><span class="qtext">Puntos de muestreo</span><span class="qsub">Parámetros y controles</span></button>':''}
+      ${homePageVisible('presas')?'<button class="quick-btn" onclick="goToPage(2)"><span class="qicon">🌊</span><span class="qtext">Presas y embalses</span><span class="qsub">Inspecciones</span></button>':''}
+      ${homePageVisible('captaciones')?'<button class="quick-btn" onclick="goToPage(3)"><span class="qicon">💧</span><span class="qtext">Captaciones</span><span class="qsub">Estado y volumen</span></button>':''}
+      ${homePageVisible('parte')?'<button class="quick-btn" onclick="goToPage(5)"><span class="qicon">📋</span><span class="qtext">Parte de trabajo</span><span class="qsub">Generar y gestionar</span></button>':''}
+      ${homePageVisible('enlaces')?'<button class="quick-btn" onclick="goToPage(4)"><span class="qicon">🔗</span><span class="qtext">Enlaces</span><span class="qsub">Mapas, webs y archivos</span></button>':''}
+      ${homePageVisible('incidencias')?'<button class="quick-btn" onclick="goToPage(6)"><span class="qicon">⚠️</span><span class="qtext">Incidencias</span><span class="qsub">Registrar y consultar</span></button>':''}
+      ${homePageVisible('horario')?'<button class="quick-btn" onclick="alert(&#39;Función de generación manual pendiente de configurar.&#39;)"><span class="qicon">🕒</span><span class="qtext">Registro horario</span><span class="qsub">Acceso al registro</span></button>':''}
+      ${homePageVisible('historial')?'<button class="quick-btn" onclick="historialArchivosPorFechaBloques()"><span class="qicon">🗂️</span><span class="qtext">Historial</span><span class="qsub">Archivos por fecha y bloques</span></button>':''}
+      <button class="quick-btn" onclick="lecturaContadoresRed()"><span class="qicon"><svg width="30" height="30" viewBox="0 0 64 64" role="img" aria-label="Contador de agua" style="vertical-align:middle"><rect x="22" y="6" width="20" height="8" rx="2" fill="#b9d6e4"/><circle cx="32" cy="36" r="25" fill="#eaf6fb" stroke="#7898aa" stroke-width="4"/><circle cx="32" cy="36" r="19" fill="#d5eaf3" stroke="#4e778d" stroke-width="2"/><rect x="17" y="34" width="30" height="12" rx="2" fill="#163b4e"/><text x="32" y="42.5" font-family="monospace" font-size="8" text-anchor="middle" font-weight="bold" fill="#b8f2ce">001284</text><path d="M32 20l-5 14 5 2 5-2z" fill="#e24e4e"/><circle cx="32" cy="36" r="2.5" fill="#fff" stroke="#466b7e" stroke-width="1"/></svg></span><span class="qtext">Lectura de Contadores de Red</span><span class="qsub">Lecturas de usuarios · Próximamente</span></button>
+      <button class="quick-btn" onclick="settings()"><span class="qicon">⚙️</span><span class="qtext">Ajustes</span><span class="qsub">Configuración</span></button>
+      <button class="quick-btn" onclick="sosCall()"><span class="qicon">🆘</span><span class="qtext">SOS</span><span class="qsub">Asistencia</span></button>
+    </div>
+  </div>`;
+}
+
+const oldList=listItems; listItems=function(arr,type){return arr.map((x,i)=>`<div class="item"><span onclick="${type==='punto'?`sampleForm(${i})`:`openForm('${type}',${i})`}" style="cursor:pointer;font-weight:800">${esc(x)}</span></div>`).join('')};
+function updateCoverageIndicator(){document.querySelector('header')?.classList.toggle('offline',!navigator.onLine)}
+window.addEventListener('online',updateCoverageIndicator);window.addEventListener('offline',updateCoverageIndicator);updateCoverageIndicator();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2').catch(()=>{}));}
+inicioRapido();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=2').catch(()=>{}));
+}
+
+function pdfEscape(s){return String(s??'').replace(/\\/g,'\\\\').replace(/\(/g,'\\(').replace(/\)/g,'\\)')}
+function crearPDFParte(titulo,lineas){
+  const W=595,H=842,margin=42,leading=18;
+  const clean=(x)=>String(x??'').replace(/\r?\n/g,' ').replace(/[^\x20-\x7E\xA0-\xFF]/g,'');
+  let content='BT\n/F1 16 Tf\n'+margin+' '+(H-55)+' Td\n('+pdfEscape(clean(titulo))+') Tj\n/F1 10 Tf\n';
+  lineas.forEach((line,i)=>{content+=(i===0?'0 -20 Td':'0 -'+leading+' Td')+'\n('+pdfEscape(clean(line))+') Tj\n';});
+  content+='ET';
+  const objects=[];
+  objects[1]='<< /Type /Catalog /Pages 2 0 R >>';
+  objects[2]='<< /Type /Pages /Kids [3 0 R] /Count 1 >>';
+  objects[3]='<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+W+' '+H+'] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >>';
+  objects[4]='<< /Length '+content.length+' >>\nstream\n'+content+'\nendstream';
+  objects[5]='<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>';
+  let pdf='%PDF-1.4\n%\xE2\xE3\xCF\xD3\n',offsets=[0];
+  for(let i=1;i<objects.length;i++){offsets[i]=pdf.length;pdf+=i+' 0 obj\n'+objects[i]+'\nendobj\n';}
+  const xref=pdf.length;pdf+='xref\n0 '+objects.length+'\n0000000000 65535 f \n';
+  for(let i=1;i<objects.length;i++)pdf+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';
+  pdf+='trailer\n<< /Size '+objects.length+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF';
+  let bytes=new Uint8Array(pdf.length);for(let i=0;i<pdf.length;i++)bytes[i]=pdf.charCodeAt(i)&255;
+  let bin='';for(let i=0;i<bytes.length;i++)bin+=String.fromCharCode(bytes[i]);
+  return 'data:application/pdf;base64,'+btoa(bin);
+}
+function generarParteAutomatico(){
+  const checks=[['Revisión general de ETAP','parteRevision'],['Lectura diaria','parteLectura'],['Puntos de muestreo','parteMuestreo'],['Presas','partePresas'],['Captaciones','parteCaptaciones'],['Incidencias','parteIncidencias'],['Registro horario','parteHorario']];
+  const seleccionados=checks.filter(x=>document.getElementById(x[1])?.checked).map(x=>x[0]);
+  const ahora=new Date(),fecha=ahora.toLocaleDateString('es-ES'),hora=ahora.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  const lineas=['Fecha: '+fecha+' · Hora: '+hora,'Parámetros incluidos:'];
+  if(seleccionados.length)seleccionados.forEach((x,i)=>lineas.push((i+1)+'. '+x));else lineas.push('Ningún parámetro seleccionado.');
+  const data=crearPDFParte('PARTE DE TRABAJO DIARIO',lineas);
+  const nombre='Parte_Diario_'+ahora.getFullYear()+'-'+String(ahora.getMonth()+1).padStart(2,'0')+'-'+String(ahora.getDate()).padStart(2,'0')+'_'+String(ahora.getHours()).padStart(2,'0')+String(ahora.getMinutes()).padStart(2,'0')+'.pdf';
+  if(!Array.isArray(db.partesGuardados))db.partesGuardados=[];
+  db.partesGuardados.unshift({id:Date.now(),nombre,fecha:ahora.toISOString(),seleccionados,data});save();
+  const a=document.createElement('a');a.href=data;a.download=nombre;document.body.appendChild(a);a.click();a.remove();
+  alert('Parte automático generado y guardado en PARTES GUARDADOS.');
+}
+function historialArchivosPorFechaBloques(anio,mes,fechaSeleccionada){
+  const partes=Array.isArray(db.partesGuardados)?db.partesGuardados:[];
+  const registros=Array.isArray(db.registros)?db.registros:[];
+  const ordenBloques=['LECTURA CONTADOR','PUNTOS DE MUESTREO','PRESAS Y EMBALSES','CAPTACIONES','PARTES DE TRABAJO'];
+  function fechaClave(valor){const d=new Date(valor||Date.now());return Number.isNaN(d.getTime())?'fecha-desconocida':d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function fechaDesdeClave(k){const p=k.split('-').map(Number);return new Date(p[0],p[1]-1,p[2])}
+  function etiquetaFecha(k){const d=fechaDesdeClave(k);return d.toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
+  const grupos={};
+  function meter(fecha,bloque,item){const k=fechaClave(fecha);if(!grupos[k])grupos[k]={bloques:{}};if(!grupos[k].bloques[bloque])grupos[k].bloques[bloque]=[];grupos[k].bloques[bloque].push(item)}
+  registros.forEach((r,i)=>{let bloque='';if(r.tipo==='Contador')bloque='LECTURA CONTADOR';else if(r.tipo==='Muestreo')bloque='PUNTOS DE MUESTREO';else if(r.tipo==='Embalse'||/presa|embalse/i.test(String(r.tipo||'')))bloque='PRESAS Y EMBALSES';else if(r.tipo==='Captación'||/captaci[oó]n/i.test(String(r.tipo||'')))bloque='CAPTACIONES';if(bloque)meter(r.fecha,bloque,{tipo:'registro',dato:r,indice:i})});
+  partes.forEach((p,i)=>meter(p.fecha||p.id,'PARTES DE TRABAJO',{tipo:'parte',dato:p,indice:i}));
+  const fechas=Object.keys(grupos).filter(k=>k!=='fecha-desconocida').sort((a,b)=>b.localeCompare(a));
+  const hoy=new Date();
+  const seleccion=fechaSeleccionada||null;
+  const selDate=seleccion?fechaDesdeClave(seleccion):hoy;
+  const y=Number.isInteger(anio)?anio:selDate.getFullYear(),m=Number.isInteger(mes)?mes:selDate.getMonth();
+  const primerDia=new Date(y,m,1),diasMes=new Date(y,m+1,0).getDate(),desfase=(primerDia.getDay()+6)%7;
+  const conteo={};Object.keys(grupos).forEach(k=>{conteo[k]=Object.values(grupos[k].bloques).reduce((n,a)=>n+a.length,0)});
+  let html='<div class="card"><div class="section-head"><div class="title">HISTORIAL</div><span class="badge">'+(registros.length+partes.length)+'</span></div><div class="muted">Selecciona un día del calendario para consultar las lecturas guardadas, ordenadas por fecha y por bloques.</div>';
+  html+='<div class="param-card"><div class="row" style="display:flex;align-items:center;justify-content:space-between;gap:8px"><button class="small secondary" onclick="historialArchivosPorFechaBloques('+new Date(y,m-1,1).getFullYear()+','+new Date(y,m-1,1).getMonth()+(seleccion?',\''+seleccion+'\'':'')+')">‹</button><div class="title" style="text-align:center">'+esc(new Date(y,m,1).toLocaleDateString('es-ES',{month:'long',year:'numeric'}))+'</div><button class="small secondary" onclick="historialArchivosPorFechaBloques('+new Date(y,m+1,1).getFullYear()+','+new Date(y,m+1,1).getMonth()+(seleccion?',\''+seleccion+'\'':'')+')">›</button></div>';
+  html+='<div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:10px">';
+  ['L','M','X','J','V','S','D'].forEach(d=>html+='<div style="text-align:center;font-weight:700;padding:5px 0">'+d+'</div>');
+  for(let i=0;i<desfase;i++)html+='<div></div>';
+  for(let dia=1;dia<=diasMes;dia++){
+    const k=y+'-'+String(m+1).padStart(2,'0')+'-'+String(dia).padStart(2,'0'),hay=conteo[k]||0,activo=!!seleccion&&k===seleccion;
+    html+='<button class="small '+(activo?'':'secondary')+'" style="min-width:0;width:100%;min-height:42px;padding:4px 1px;'+(activo?'outline:2px solid var(--accent);':'')+'" onclick="historialArchivosPorFechaBloques('+y+','+m+',\''+k+'\')">'+dia+(hay?'<div style="font-size:10px;font-weight:700">• '+hay+'</div>':'')+'</button>';
+  }
+  html+='</div><div class="muted" style="margin-top:8px">• indica que hay lecturas o partes guardados ese día.</div></div>';
+  if(seleccion){
+    html+='<div class="param-card"><div class="title">📅 '+esc(etiquetaFecha(seleccion))+'</div>';
+    if(!grupos[seleccion])grupos[seleccion]={bloques:{}};
+    ordenBloques.forEach(b=>{const items=grupos[seleccion].bloques[b]||[];html+='<div class="subsection" style="margin-top:10px;padding:12px;border-radius:12px;border:1px solid var(--border,rgba(120,140,160,.25))"><b>📂 '+esc(b)+'</b>';if(!items.length){html+='<p class="muted" style="margin:8px 0 0">Sin registros para esta fecha.</p>'}else{items.sort((a,b)=>new Date((b.dato.fecha||b.dato.id||0))-new Date((a.dato.fecha||a.dato.id||0)));items.forEach(x=>{const d=x.dato;if(x.tipo==='parte'){html+='<div class="historyrow"><button class="wide secondary" onclick="descargarParteGuardado('+x.indice+')">📄 '+esc(d.nombre||'Parte guardado')+'</button><span class="muted">'+esc(new Date(d.fecha||d.id||Date.now()).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))+'</span></div>'}else{const hora=new Date(d.fecha||Date.now()).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});const nombre=d.tipo==='Contador'?'Contador general · '+(d.valor||'')+' '+(d.unidad||''):(d.punto||d.tipo||'Lectura')+' · '+(d.parametro||'Registro')+(d.valor!==undefined?': '+d.valor+' '+(d.unidad||''):'');const extra=d.consumoDiario!==undefined&&d.consumoDiario!==null?' · Consumo diario: '+d.consumoDiario+' m³':'';html+='<div class="historyrow"><button class="wide secondary" onclick="abrirLecturaHistorial('+x.indice+')">📋 '+esc(nombre)+'</button><span class="muted">'+esc(hora+extra)+'</span></div>'}})}html+='</div>'});
+    html+='</div>';
+  }
+  html+='<button class="wide" onclick="exportXlsx()">📊 Exportar a Excel (.xlsx)</button><button class="wide secondary" onclick="goToPage(5)">⚠️ Incidencias</button><button class="wide" onclick="inicioRapido()">Atrás</button></div>';app.innerHTML=html;
+}
+function abrirLecturaHistorial(i){
+  const r=(db.registros||[])[i];if(!r)return;
+  const fecha=new Date(r.fecha||Date.now()).toLocaleString('es-ES');
+  const titulo=r.tipo==='Contador'?'LECTURA DEL CONTADOR':r.tipo==='Muestreo'?'LECTURA DE PUNTO DE MUESTREO':r.tipo==='Embalse'?'LECTURA DE PRESA':r.tipo==='Captación'?'LECTURA DE CAPTACIÓN':'LECTURA GUARDADA';
+  app.innerHTML='<div class="card"><div class="title">'+esc(titulo)+'</div><div class="muted">'+esc(fecha)+'</div><div class="param-card"><div class="param-name">'+esc(r.punto||r.tipo||'Registro')+'</div><div class="subsection"><b>'+esc(r.parametro||'Lectura')+'</b><h2>'+esc(r.valor===undefined?'—':r.valor)+' '+esc(r.unidad||'')+'</h2></div>'+(r.consumoDiario!==undefined&&r.consumoDiario!==null?'<p>Consumo diario: <b>'+esc(r.consumoDiario)+' m³</b></p>':'')+'<p>'+esc(r.observaciones||'Sin observaciones')+'</p></div><button class="wide" onclick="historialArchivosPorFechaBloques()">← Volver al historial</button></div>';
+}
+function mostrarPartesGuardados(){
+  const partes=Array.isArray(db.partesGuardados)?db.partesGuardados:[];
+  let html='<div class="card"><div class="title">PARTES GUARDADOS</div><div class="muted">Partes automáticos generados desde esta aplicación.</div>';
+  if(!partes.length)html+='<p class="muted">Todavía no hay partes guardados.</p>';
+  else partes.forEach((p,i)=>{const nombres=(p.seleccionados||[]).join(', ')||'Sin parámetros';html+='<div class="historyrow"><b>'+esc(new Date(p.fecha).toLocaleString('es-ES'))+'</b><br>'+esc(p.nombre)+'<br><span class="muted">'+esc(nombres)+'</span><button class="wide secondary" onclick="descargarParteGuardado('+i+')">⬇️ Descargar PDF</button></div>';});
+  html+='<button class="wide" onclick="home(6)">Atrás</button></div>';app.innerHTML=html;
+}
+function descargarParteGuardado(i){const p=(db.partesGuardados||[])[i];if(!p?.data)return;const win=window.open('about:blank','_blank');fetch(p.data).then(r=>r.blob()).then(blob=>{const pdfUrl=URL.createObjectURL(blob);if(win)win.location.href=pdfUrl;else alert('No se ha podido abrir el PDF. Permite ventanas emergentes para ETAP CONTROL.');setTimeout(()=>URL.revokeObjectURL(pdfUrl),60000)}).catch(()=>{if(win)win.close();alert('No se ha podido abrir el PDF.')})}
+</script>
+</body></html>
