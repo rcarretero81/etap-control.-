@@ -1,0 +1,21 @@
+
+{
+  "id": "./ETAP_Control_V19_1_ICONO_CONTADOR_AGUA.html",
+  "name": "ETAP CONTROL V19",
+  "short_name": "ETAP V19",
+  "start_url": "./ETAP_Control_V19_1_ICONO_CONTADOR_AGUA.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#071a2d",
+  "theme_color": "#071a2d",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
